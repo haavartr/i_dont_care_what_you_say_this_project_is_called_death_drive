@@ -1,7 +1,7 @@
 package daoimpl;
 
-import dao.PersonDao;
-import entities.Person;
+import dao.ExerciseDao;
+import entities.Exercise;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
@@ -9,19 +9,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class PersonImpl implements PersonDao{
+public class PersonImpl implements ExerciseDao{
     @Override
-    public void createPersonTable() {
+    public void createExerciseTable() {
         Connection connection = null;
         Statement statement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS person (" +
+            statement.execute("CREATE TABLE IF NOT EXISTS Exercise (" +
                     "id int primary key unique auto_increment," +
-                    "first_name varchar(55)," +
-                    "last_name varchar(55))");
+                    "name varchar(55)," +
+                    "description varchar(255))");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -44,17 +44,17 @@ public class PersonImpl implements PersonDao{
     }
 
     @Override
-    public void insert(Person person) {
+    public void insert(Exercise exercise) {
 
     }
 
     @Override
-    public Person selectById(int id) {
+    public Exercise selectById(int id) {
         return null;
     }
 
     @Override
-    public List<Person> selectAll() {
+    public List<Exercise> selectAll() {
         return null;
     }
 
