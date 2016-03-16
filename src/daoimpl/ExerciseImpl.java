@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class PersonImpl implements ExerciseDao{
+public class ExerciseImpl implements ExerciseDao{
     @Override
     public void createExerciseTable() {
         Connection connection = null;
