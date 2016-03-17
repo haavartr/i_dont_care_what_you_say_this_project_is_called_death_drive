@@ -5,21 +5,21 @@ package entities;
  */
 public class WorkoutExercise {
     private int id;
-    private String workout;
+    private String exercise;
     private int load;
     private int repetitions;
     private int sets;
-    private int form;
-    private int preformance;
+    private Integer form;
+    private Integer preformance;
     private int group;
 
     public WorkoutExercise () {
 
     }
 
-    public WorkoutExercise(int id, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
+    public WorkoutExercise(int id, String exercise, int load, int repetitions, int sets, Integer form, Integer preformance, int group) {
         this.id = id;
-        this.workout = workout;
+        this.exercise = exercise;
         this.load = load;
         this.repetitions = repetitions;
         this.sets = sets;
@@ -32,8 +32,8 @@ public class WorkoutExercise {
         return id;
     }
 
-    public String getWorkout() {
-        return workout;
+    public String getExercise() {
+        return exercise;
     }
 
     public int getLoad() {
@@ -64,8 +64,8 @@ public class WorkoutExercise {
         this.id = id;
     }
 
-    public void setWorkout(String workout) {
-        this.workout = workout;
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
     }
 
     public void setLoad(int load) {
@@ -90,5 +90,9 @@ public class WorkoutExercise {
 
     public void setGroup(int group) {
         this.group = group;
+    }
+
+    public String toString() {
+        return this.getSets() + "x" + this.getRepetitions() + " - " + this.getExercise() + " (" + this.getLoad() + " kg)";
     }
 }

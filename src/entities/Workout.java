@@ -1,7 +1,9 @@
 package entities;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  * Created by Magnus on 16.03.2016.
@@ -17,8 +19,9 @@ public class Workout {
     private String weather;
     private String airQuality;
     private Integer spectators;
+    private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
-    public Workout(LocalDate date, LocalTime time, Integer hours, Integer minutes, Integer seconds, String note, Float temperature, String weather, String airQuality, Integer spectators) {
+    public Workout(LocalDate date, LocalTime time, Integer hours, Integer minutes, Integer seconds, String note, Float temperature, String weather, String airQuality, Integer spectators, ArrayList<WorkoutExercise> workoutExercises) {
         this.date = date;
         this.time = time;
         this.hours = hours;
@@ -29,10 +32,15 @@ public class Workout {
         this.weather = weather;
         this.airQuality = airQuality;
         this.spectators = spectators;
+        this.workoutExercises = workoutExercises;
     }
 
     public Workout(LocalDate date, LocalTime time, Integer hours, Integer minutes, Integer seconds, String note) {
-        this(date, time, hours, minutes, seconds, note, null, null, null, null);
+        this(date, time, hours, minutes, seconds, note, null, null, null, null, null);
+    }
+
+    public ArrayList<WorkoutExercise> getWorkoutExercises() {
+        return this.workoutExercises;
     }
 
     public String getName() {
@@ -49,5 +57,10 @@ public class Workout {
 
     public String getNote() {
         return note;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }
