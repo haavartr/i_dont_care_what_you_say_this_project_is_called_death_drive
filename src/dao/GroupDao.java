@@ -1,7 +1,18 @@
 package dao;
 
-/**
- * Created by tryma on 16-Mar-16.
- */
+import entities.Group;
+import java.util.List;
+
 public interface GroupDao {
+    void createGroupTable();
+
+    void insert(Group group);
+
+    Group selectById(int id);
+
+    List<Group> selectAll();
+
+    void delete(int id);
+
+    void update();
 }

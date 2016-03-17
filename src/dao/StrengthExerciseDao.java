@@ -1,7 +1,19 @@
 package dao;
 
-/**
- * Created by tryma on 16-Mar-16.
- */
+import entities.StrengthExercise;
+
+import java.util.List;
+
 public interface StrengthExerciseDao {
+    void createStrengthExerciseTable();
+
+    void insert(StrengthExercise strengthExercise);
+
+    StrengthExercise selectById(int id);
+
+    List<StrengthExercise> selectAll();
+
+    void delete(int id);
+
+    void update();
 }
