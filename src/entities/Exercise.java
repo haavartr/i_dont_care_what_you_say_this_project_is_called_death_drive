@@ -8,9 +8,9 @@ public class Exercise {
     public Exercise() {
 
     }
-    public Exercise(String firstName, String lastName) {
-        this.name = firstName;
-        this.description = lastName;
+    public Exercise(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public int getId() {
