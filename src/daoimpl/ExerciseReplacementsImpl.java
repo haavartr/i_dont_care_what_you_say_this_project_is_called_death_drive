@@ -1,11 +1,13 @@
 package daoimpl;
 
 import dao.ExerciseReplacementsDao;
+import entities.ExerciseReplacements;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     @Override
@@ -39,5 +41,30 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(ExerciseReplacements exerciseReplacements) {
+
+    }
+
+    @Override
+    public ExerciseReplacements selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<ExerciseReplacements> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

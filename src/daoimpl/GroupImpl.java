@@ -1,12 +1,15 @@
 package daoimpl;
 
+import dao.GroupDao;
+import entities.Group;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-public class GroupImpl {
+public class GroupImpl implements GroupDao {
     @Override
     public void createGroupTable() {
         Connection connection = null;
@@ -38,5 +41,30 @@ public class GroupImpl {
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(Group group) {
+
+    }
+
+    @Override
+    public Group selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Group> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

@@ -1,11 +1,13 @@
 package daoimpl;
 
 import dao.IndoorWorkoutDao;
+import entities.IndoorWorkout;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class IndoorWorkoutImpl implements IndoorWorkoutDao {
     @Override
@@ -39,5 +41,30 @@ public class IndoorWorkoutImpl implements IndoorWorkoutDao {
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(IndoorWorkout indoorWorkout) {
+
+    }
+
+    @Override
+    public IndoorWorkout selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<IndoorWorkout> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }
