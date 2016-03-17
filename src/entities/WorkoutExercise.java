@@ -2,89 +2,90 @@ package entities;
 
 // WorkoutExercise means a specific occurence of an exercise. The name is awful, we all know that.
 public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExercise
-    private int weId;  // Auto-incremented
-    private String workout;
-    private int load;
-    private int repetitions;
-    private int sets;
+    private Integer id;  // Auto-incremented
+    private Integer workoutCollectionId;
+    private Integer exerciseId;
+    private Integer load;
+    private Integer repetitions;
+    private Integer sets;
     private Integer form;
     private Integer performance;
-    private int group;
 
     public WorkoutExercise(){}
 
-    public WorkoutExercise(int weId, String workout, int load, int repetitions, int sets, int form, int performance, int group) {
-        this.weId = weId;
-        this.workout = workout;
+    public WorkoutExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer load,
+                           Integer repetitions, Integer sets, Integer form, Integer performance) {
+        this.id = id;
+        this.workoutCollectionId = workoutCollectionId;
+        this.exerciseId = exerciseId;
         this.load = load;
         this.repetitions = repetitions;
         this.sets = sets;
         this.form = form;
         this.performance = performance;
-        this.group = group;
     }
 
-    public int getWeId() {
-        return weId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getWorkout() {
-        return workout;
+    public Integer getWorkoutCollectionId() {
+        return workoutCollectionId;
     }
 
-    public int getLoad() {
+    public Integer getExerciseId() {
+        return exerciseId;
+    }
+
+    public Integer getLoad() {
         return load;
     }
 
-    public int getRepetitions() {
+    public Integer getRepetitions() {
         return repetitions;
     }
 
-    public int getSets() {
+    public Integer getSets() {
         return sets;
     }
 
-    public int getForm() {
+    public Integer getForm() {
         return form;
     }
 
-    public int getPerformance() {
+    public Integer getPerformance() {
         return performance;
     }
 
-    public int getGroup() {
-        return group;
+    public void setWorkoutCollectionId(Integer workoutCollectionId) {
+        this.workoutCollectionId = workoutCollectionId;
     }
 
-    public void setWorkout(String workout) {
-        this.workout = workout;
+    public void setExerciseId(Integer exerciseId) {
+        this.exerciseId = exerciseId;
     }
 
-    public void setLoad(int load) {
+    public void setLoad(Integer load) {
         this.load = load;
     }
 
-    public void setRepetitions(int repetitions) {
+    public void setRepetitions(Integer repetitions) {
         this.repetitions = repetitions;
     }
 
-    public void setSets(int sets) {
+    public void setSets(Integer sets) {
         this.sets = sets;
     }
 
-    public void setForm(int form) {
+    public void setForm(Integer form) {
         this.form = form;
     }
 
-    public void setPerformance(int performance) {
+    public void setPerformance(Integer performance) {
         this.performance = performance;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
-    }
-
     public String toString() {
-        return this.getSets() + "x" + this.getRepetitions() + " - " + this.getWorkout() + " (" + this.getLoad() + " kg)";
+        return this.getSets() + "x" + this.getRepetitions() + " - " + " (" + this.getLoad() + " kg)";
     }
 }

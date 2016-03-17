@@ -3,30 +3,30 @@ package entities;
 import java.time.LocalDate;
 
 public class IndoorWorkout extends Workout {
-    private int airQuality;
-    private int spectators;
+    private Integer airQuality;
+    private Integer spectators;
 
-    public IndoorWorkout(int workoutId, String name, LocalDate date, int length, String note, int airQuality, int spectators) {
-        super(workoutId, name, date, length, note);
+    public IndoorWorkout(Integer id, String name, LocalDate date, Integer length, String note, Integer airQuality, Integer spectators) {
+        super(id, name, date, length, note);
         this.airQuality = airQuality;
         this.spectators = spectators;
     }
 
     public IndoorWorkout(){}
 
-    public int getAirQuality() {
+    public Integer getAirQuality() {
         return airQuality;
     }
 
-    public int getSpectators() {
+    public Integer getSpectators() {
         return spectators;
     }
 
-    public void setAirQuality(int airQuality) {
+    public void setAirQuality(Integer airQuality) {
         this.airQuality = airQuality;
     }
 
-    public void setSpectators(int spectators) {
+    public void setSpectators(Integer spectators) {
         this.spectators = spectators;
     }
 }

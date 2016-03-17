@@ -1,31 +1,31 @@
 package entities;
 
 public class CardioExercise extends WorkoutExercise {
-    private int distance;
-    private int time;
+    private Integer distance;
+    private Integer time;
 
-    public CardioExercise(int weId, String workout, int load, int repetitions, int sets, int form, int performance,
-                          int group, int distance, int time) {
-        super(weId, workout, load, repetitions, sets, form, performance, group);
+    public CardioExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer load, Integer repetitions,
+                          Integer sets, Integer form, Integer performance, Integer distance, Integer time) {
+        super(id, workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         this.distance = distance;
         this.time = time;
     }
 
     public CardioExercise(){}
 
-    public int getDistance() {
+    public Integer getDistance() {
         return distance;
     }
 
-    public int getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(Integer distance) {
         this.distance = distance;
     }
 
-    public void setTime(int time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 }

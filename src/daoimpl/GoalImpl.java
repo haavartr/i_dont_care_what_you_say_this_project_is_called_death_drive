@@ -1,17 +1,13 @@
 package daoimpl;
 
-import dao.GoalsDao;
-import entities.Goals;
-import util.ConnectionConfiguration;
+import dao.GoalDao;
+import entities.Goal;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import static daoimpl.RunQuery.runQuery;
 
-public class GoalsImpl implements GoalsDao {
+public class GoalImpl implements GoalDao {
     @Override
     public void createGoalsTable() {
         String q = "CREATE TABLE IF NOT EXISTS goals (" +
@@ -23,17 +19,17 @@ public class GoalsImpl implements GoalsDao {
     }
 
     @Override
-    public void insert(Goals goals) {
+    public void insert(Goal goal) {
 
     }
 
     @Override
-    public Goals selectById(int id) {
+    public Goal selectById(int id) {
         return null;
     }
 
     @Override
-    public List<Goals> selectAll() {
+    public List<Goal> selectAll() {
         return null;
     }
 

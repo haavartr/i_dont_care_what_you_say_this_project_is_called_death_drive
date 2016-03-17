@@ -6,8 +6,8 @@ public class OutdoorWorkout extends Workout{
     private float temperature;
     private String weather;
 
-    public OutdoorWorkout(int workoutId, String name, LocalDate date, int length, String note, float temperature, String weather) {
-        super(workoutId, name, date, length, note);
+    public OutdoorWorkout(Integer id, String name, LocalDate date, Integer length, String note, float temperature, String weather) {
+        super(id, name, date, length, note);
         this.temperature = temperature;
         this.weather = weather;
     }
