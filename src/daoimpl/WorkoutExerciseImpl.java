@@ -1,11 +1,13 @@
 package daoimpl;
 
 import dao.WorkoutExerciseDao;
+import entities.WorkoutExercise;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class WorkoutExerciseImpl implements WorkoutExerciseDao {
     @Override
@@ -41,10 +43,35 @@ public class WorkoutExerciseImpl implements WorkoutExerciseDao {
             if (connection != null) {
                 try {
                     connection.close();
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(WorkoutExercise exercise) {
+
+    }
+
+    @Override
+    public WorkoutExercise selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<WorkoutExercise> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }

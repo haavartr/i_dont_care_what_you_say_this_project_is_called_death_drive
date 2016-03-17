@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 
 public class Main extends Application {
 
@@ -15,6 +18,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        final Connection connection = ConnectionConfiguration.getConnection();
     }
 
     public static void main(String[] args) {
