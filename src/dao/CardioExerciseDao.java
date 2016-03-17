@@ -5,9 +5,9 @@ import entities.CardioExercise;
 import java.util.List;
 
 public interface CardioExerciseDao {
-    void createExerciseTable();
+    void createCardioExerciseTable();
 
-    void insert(CardioExercise person);
+    void insert(CardioExercise cardioExercise);
 
     CardioExercise selectById(int id);
 

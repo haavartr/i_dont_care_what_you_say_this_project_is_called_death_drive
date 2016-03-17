@@ -1,7 +1,7 @@
 package daoimpl;
 
-import dao.WorkoutExerciseDao;
-import entities.WorkoutExercise;
+import dao.WorkoutCollectionDao;
+import entities.WorkoutCollection;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
@@ -9,26 +9,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class WorkoutExerciseImpl implements WorkoutExerciseDao {
+public class WorkoutCollectionImpl implements WorkoutCollectionDao{
     @Override
-    public void createWorkoutExerciseTable() {
+    public void createWorkoutCollectionTable() {
         Connection connection = null;
         Statement statement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS workout_exercise (" +
-                    "weid int primary key unique auto_increment," +
-                    "workout int NOT NULL," +
-                    "exercise varchar(255)," +
-                    "load int ," +
-                    "repetitions int," +
-                    "sets int," +
-                    "form int," +
-                    "preformance int," +
-                    "group int )");
-
+            statement.execute("CREATE TABLE IF NOT EXISTS workout_collection (" +
+                    "id int primary key unique auto_increment," +
+                    "name varchar(55)," +
+                    "description varchar(255))");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -43,7 +36,7 @@ public class WorkoutExerciseImpl implements WorkoutExerciseDao {
             if (connection != null) {
                 try {
                     connection.close();
-                } catch (SQLException e) {
+                } catch (SQLException e){
                     e.printStackTrace();
                 }
             }
@@ -51,17 +44,17 @@ public class WorkoutExerciseImpl implements WorkoutExerciseDao {
     }
 
     @Override
-    public void insert(WorkoutExercise exercise) {
+    public void insert(WorkoutCollection workoutCollection) {
 
     }
 
     @Override
-    public WorkoutExercise selectById(int id) {
+    public WorkoutCollection selectById(int id) {
         return null;
     }
 
     @Override
-    public List<WorkoutExercise> selectAll() {
+    public List<WorkoutCollection> selectAll() {
         return null;
     }
 

@@ -1,8 +1,5 @@
 package entities;
 
-/**
- * Created by tryma on 16-Mar-16.
- */
 public class CardioExercise {
     private int WEID;
     private int DISTANCE;
