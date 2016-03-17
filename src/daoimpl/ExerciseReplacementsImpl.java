@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
 public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
@@ -23,7 +24,7 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
 
     @Override
     public void insert(ExerciseReplacements exerciseReplacements) {
-
+        insertInto("exercise_replacements", );
     }
 
     @Override
