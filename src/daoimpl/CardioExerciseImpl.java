@@ -45,7 +45,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
 
     @Override
     public void insert(CardioExercise cardioExercise) {
-        
+
     }
 
     @Override
