@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
 public class ExerciseImpl implements ExerciseDao{
@@ -18,17 +19,17 @@ public class ExerciseImpl implements ExerciseDao{
                 "id int primary key unique auto_increment," +
                 "name varchar(55)," +
                 "description varchar(255))");
-
         runQuery(q);
     }
 
     @Override
     public void insert(Exercise exercise) {
-
+        insertInto("exercise", exercise.getName(), exercise.getDescription());
     }
 
     @Override
     public Exercise selectById(int id) {
+
         return null;
     }
 
