@@ -1,22 +1,21 @@
 package daoimpl;
 
-import dao.CardioExerciseDao;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class CardioExerciseImpl implements CardioExerciseDao {
+public class GroupImpl {
     @Override
-    public void createCardioExerciseTable() {
+    public void createGroupTable() {
         Connection connection = null;
         Statement statement = null;
 
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS cardio_exercise (" +
+            statement.execute("CREATE TABLE IF NOT EXISTS group (" +
                     "id int primary key unique auto_increment," +
                     "name varchar(55)," +
                     "description varchar(255))");
@@ -40,5 +39,4 @@ public class CardioExerciseImpl implements CardioExerciseDao {
             }
         }
     }
-
 }

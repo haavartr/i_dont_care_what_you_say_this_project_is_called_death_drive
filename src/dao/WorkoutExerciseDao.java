@@ -4,14 +4,10 @@ import entities.WorkoutExercise;
 
 import java.util.List;
 
-/**
- * Created by hans on 17.03.16.
- */
 public interface WorkoutExerciseDao {
     void createWorkoutExerciseTable();
 
-
-    void insert(WorkoutExercise exercise);
+    void insert(WorkoutExercise workoutExercise);
 
     WorkoutExercise selectById(int id);
 

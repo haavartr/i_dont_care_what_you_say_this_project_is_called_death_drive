@@ -9,9 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-/**
- * Created by hans on 16.03.16.
- */
 public class WorkoutExerciseImpl implements WorkoutExerciseDao {
     @Override
     public void createWorkoutExerciseTable() {
@@ -21,7 +18,7 @@ public class WorkoutExerciseImpl implements WorkoutExerciseDao {
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS WorKout_Exercise (" +
+            statement.execute("CREATE TABLE IF NOT EXISTS workout_exercise (" +
                     "weid int primary key unique auto_increment," +
                     "workout int NOT NULL," +
                     "exercise varchar(255)," +

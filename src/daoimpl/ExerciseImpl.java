@@ -18,7 +18,7 @@ public class ExerciseImpl implements ExerciseDao{
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS Exercise (" +
+            statement.execute("CREATE TABLE IF NOT EXISTS exercise (" +
                     "id int primary key unique auto_increment," +
                     "name varchar(55)," +
                     "description varchar(255))");
