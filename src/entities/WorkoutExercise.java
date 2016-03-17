@@ -1,10 +1,8 @@
 package entities;
 
-/**
- * Created by hans on 16.03.16.
- */
-public class WorkoutExercise {
-    private int id;
+// WorkoutExercise means a specific occurence of an exercise. The name is awful, we all know that.
+public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExercise
+    private int weId;  // Auto-incremented
     private String workout;
     private int load;
     private int repetitions;
@@ -13,12 +11,10 @@ public class WorkoutExercise {
     private int preformance;
     private int group;
 
-    public WorkoutExercise () {
+    public WorkoutExercise(){}
 
-    }
-
-    public WorkoutExercise(int id, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
-        this.id = id;
+    public WorkoutExercise(int weId, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
+        this.weId = weId;
         this.workout = workout;
         this.load = load;
         this.repetitions = repetitions;
@@ -28,8 +24,8 @@ public class WorkoutExercise {
         this.group = group;
     }
 
-    public int getId() {
-        return id;
+    public int getWeId() {
+        return weId;
     }
 
     public String getWorkout() {
@@ -58,10 +54,6 @@ public class WorkoutExercise {
 
     public int getGroup() {
         return group;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setWorkout(String workout) {

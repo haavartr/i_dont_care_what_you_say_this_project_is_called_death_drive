@@ -1,30 +1,24 @@
 package entities;
 
 public class Exercise {
-    private int id;
+    private int exerciseId;
     private String name;
     private String description;
 
-    public Exercise() {
-
-    }
-    public Exercise(String name, String description) {
+    public Exercise(int exerciseId, String name, String description) {
+        this.exerciseId = exerciseId;
         this.name = name;
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
+    public Exercise(){}
 
-    //public void setId(int id) { this.id = id; } //this should be illegal?
+    public int getExerciseId() {
+        return exerciseId;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -33,5 +27,9 @@ public class Exercise {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

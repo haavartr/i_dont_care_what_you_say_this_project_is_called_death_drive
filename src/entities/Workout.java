@@ -3,51 +3,55 @@ package entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Created by Magnus on 16.03.2016.
- */
-public class Workout {
+public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout and OutdoorWorkout
+    private int workoutId;  // Auto-incremented
     private LocalDate date;
-    private LocalTime time;
-    private Integer hours;
-    private Integer minutes;
-    private Integer seconds;
+    private int length;
     private String note;
-    private Float temperature;
-    private String weather;
-    private String airQuality;
-    private Integer spectators;
 
-    public Workout(LocalDate date, LocalTime time, Integer hours, Integer minutes, Integer seconds, String note, Float temperature, String weather, String airQuality, Integer spectators) {
+    public Workout(String name, int workoutId, LocalDate date, int length, String note) {
+        super(name);
+        this.workoutId = workoutId;
         this.date = date;
-        this.time = time;
-        this.hours = hours;
-        this.minutes = minutes;
-        this.seconds = seconds;
+        this.length = length;
         this.note = note;
-        this.temperature = temperature;
-        this.weather = weather;
-        this.airQuality = airQuality;
-        this.spectators = spectators;
     }
 
-    public Workout(LocalDate date, LocalTime time, Integer hours, Integer minutes, Integer seconds, String note) {
-        this(date, time, hours, minutes, seconds, note, null, null, null, null);
+    public Workout(){}
+
+    public int getWorkoutId() {
+        return workoutId;
     }
 
     public String getName() {
-        return date.toString() + " - " + time.getHour() + ":" + time.getMinute();
+        return name;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public String getDuration() {
-        return hours + ":" + minutes + ":" + seconds;
+    public int getLength() {
+        return length;
     }
 
     public String getNote() {
         return note;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

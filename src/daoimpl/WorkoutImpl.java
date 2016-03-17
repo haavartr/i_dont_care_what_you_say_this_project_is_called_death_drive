@@ -1,13 +1,40 @@
 package daoimpl;
 
 import dao.WorkoutDao;
+import entities.Workout;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class WorkoutImpl implements WorkoutDao{
+    @Override
+    public void insert(Workout workout) {
+
+    }
+
+    @Override
+    public Workout selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Workout> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
     @Override
     public void createWorkoutTable() {
         Connection connection = null;
@@ -39,5 +66,7 @@ public class WorkoutImpl implements WorkoutDao{
                 }
             }
         }
+
+
     }
 }
