@@ -1,8 +1,8 @@
 package entities;
 
 public class GroupGroup {  // Recursive many-to-many thing for Group
-    private int groupId1;
-    private int groupId2;
+    private int containerGroupId;  // This one contains the other one
+    private int containedGroupId;
 
     public GroupGroup(int groupId1, int groupId2) {
         this.groupId1 = groupId1;
