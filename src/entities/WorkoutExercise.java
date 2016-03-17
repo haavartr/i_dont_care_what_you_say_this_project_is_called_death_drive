@@ -1,39 +1,35 @@
 package entities;
 
-/**
- * Created by hans on 16.03.16.
- */
-public class WorkoutExercise {
-    private int id;
-    private String exercise;
+// WorkoutExercise means a specific occurence of an exercise. The name is awful, we all know that.
+public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExercise
+    private int weId;  // Auto-incremented
+    private String workout;
     private int load;
     private int repetitions;
     private int sets;
     private Integer form;
-    private Integer preformance;
+    private Integer performance;
     private int group;
 
-    public WorkoutExercise () {
+    public WorkoutExercise(){}
 
-    }
-
-    public WorkoutExercise(int id, String exercise, int load, int repetitions, int sets, Integer form, Integer preformance, int group) {
-        this.id = id;
-        this.exercise = exercise;
+    public WorkoutExercise(int weId, String workout, int load, int repetitions, int sets, int form, int performance, int group) {
+        this.weId = weId;
+        this.workout = workout;
         this.load = load;
         this.repetitions = repetitions;
         this.sets = sets;
         this.form = form;
-        this.preformance = preformance;
+        this.performance = performance;
         this.group = group;
     }
 
-    public int getId() {
-        return id;
+    public int getWeId() {
+        return weId;
     }
 
-    public String getExercise() {
-        return exercise;
+    public String getWorkout() {
+        return workout;
     }
 
     public int getLoad() {
@@ -52,20 +48,16 @@ public class WorkoutExercise {
         return form;
     }
 
-    public int getPreformance() {
-        return preformance;
+    public int getPerformance() {
+        return performance;
     }
 
     public int getGroup() {
         return group;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
+    public void setWorkout(String workout) {
+        this.workout = workout;
     }
 
     public void setLoad(int load) {
@@ -84,8 +76,8 @@ public class WorkoutExercise {
         this.form = form;
     }
 
-    public void setPreformance(int preformance) {
-        this.preformance = preformance;
+    public void setPerformance(int performance) {
+        this.performance = performance;
     }
 
     public void setGroup(int group) {
@@ -93,6 +85,6 @@ public class WorkoutExercise {
     }
 
     public String toString() {
-        return this.getSets() + "x" + this.getRepetitions() + " - " + this.getExercise() + " (" + this.getLoad() + " kg)";
+        return this.getSets() + "x" + this.getRepetitions() + " - " + this.getWorkout() + " (" + this.getLoad() + " kg)";
     }
 }
