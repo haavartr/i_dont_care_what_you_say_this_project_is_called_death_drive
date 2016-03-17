@@ -15,4 +15,6 @@ public class CardioExercise {
         this.DISTANCE = DISTANCE;
         this.TIME = TIME;
     }
+
+
 }
