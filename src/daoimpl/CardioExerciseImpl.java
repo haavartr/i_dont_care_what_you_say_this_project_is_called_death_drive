@@ -1,11 +1,13 @@
 package daoimpl;
 
 import dao.CardioExerciseDao;
+import entities.CardioExercise;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class CardioExerciseImpl implements CardioExerciseDao {
     @Override
@@ -39,6 +41,31 @@ public class CardioExerciseImpl implements CardioExerciseDao {
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(CardioExercise cardioExercise) {
+        
+    }
+
+    @Override
+    public CardioExercise selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<CardioExercise> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 
 }

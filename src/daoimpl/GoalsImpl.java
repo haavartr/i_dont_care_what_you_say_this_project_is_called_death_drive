@@ -1,11 +1,13 @@
 package daoimpl;
 
 import dao.GoalsDao;
+import entities.Goals;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class GoalsImpl implements GoalsDao {
     @Override
@@ -39,5 +41,30 @@ public class GoalsImpl implements GoalsDao {
                 }
             }
         }
+    }
+
+    @Override
+    public void insert(Goals goals) {
+
+    }
+
+    @Override
+    public Goals selectById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Goals> selectAll() {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void update() {
+
     }
 }
