@@ -1,7 +1,9 @@
 package entities;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout and OutdoorWorkout
     private int workoutId;  // Auto-incremented
@@ -23,10 +25,6 @@ public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout
         return workoutId;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public LocalDate getDate() {
         return date;
     }
@@ -37,10 +35,6 @@ public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout
 
     public String getNote() {
         return note;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setDate(LocalDate date) {

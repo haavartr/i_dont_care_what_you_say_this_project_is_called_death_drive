@@ -2,6 +2,7 @@ package controller;
 
 import entities.Exercise;
 import entities.Workout;
+import entities.WorkoutExercise;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -27,13 +28,13 @@ import java.util.ResourceBundle;
 public class WorkoutsViewController implements Initializable {
 
     // Root pane
-    @FXML private ListView workoutList;
+    @FXML private ListView<Workout> workoutList;
     @FXML private Label timeLabel;
     @FXML private Label durationLabel;
     @FXML private TextArea descriptionText;
-    @FXML private ListView exerciseList;
     @FXML private Button createTemplateButton;
     @FXML private Button createNewWorkoutButton;
+    @FXML private ListView<WorkoutExercise> workoutExercisesList;
 
     // New workout pane
     @FXML private AnchorPane newWorkoutPane;
@@ -51,6 +52,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private Label tempSpectatorsLabel;
     @FXML private TextField tempSpectatorsField;
     @FXML private ComboBox weatherAirField;
+    @FXML private ComboBox<WorkoutExercise> workoutExercisesForNewWorkoutList;
 
     // New workout exercise pane
     @FXML private AnchorPane newWorkoutExercisePane;
@@ -60,10 +62,12 @@ public class WorkoutsViewController implements Initializable {
     @FXML private TextField weightField;
     @FXML private TextField repsField;
     @FXML private TextField setsField;
+    @FXML private ComboBox<Integer> performanceList;
+    @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
     private ArrayList<Exercise> exercises = new ArrayList<>();
-    private ArrayList<Exercise> workoutExercises = new ArrayList<>();
+    private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
     private ObservableList<String> airQualityList = FXCollections.observableArrayList("Bra", "Middels", "Dårlig");
@@ -85,14 +89,20 @@ public class WorkoutsViewController implements Initializable {
         workoutList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                String title = (String)workoutList.getSelectionModel().getSelectedItem();
-                Workout workout = workouts.stream().filter(w -> w.getName().equals(title)).findAny().get();
+                Workout workout = workoutList.getSelectionModel().getSelectedItem();
 
                 timeLabel.setText(workout.getName());
                 descriptionText.setText(workout.getNote());
                 durationLabel.setText(workout.getDuration());
 
                 showAllControls();
+
+                ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
+                for (WorkoutExercise workoutExercise : workout.getWorkoutExercises()) {
+                    list.add(workoutExercise);
+                }
+
+                workoutExercisesList.setItems(list);
             }
         });
 
@@ -118,6 +128,10 @@ public class WorkoutsViewController implements Initializable {
                 for (Exercise exercise : exercises) {
                     list.add(exercise.getName());
                 }
+
+                ObservableList<Integer> oneToTen = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                formList.setItems(oneToTen);
+                performanceList.setItems(oneToTen);
 
                 allExercisesList.setItems(list);
             }
@@ -214,7 +228,7 @@ public class WorkoutsViewController implements Initializable {
                 if (inne) { airQuality = (String)weatherAirField.getValue(); }
                 else { weather = (String)weatherAirField.getValue(); }
 
-                workouts.add(new Workout(date, time, hours, minutes, seconds, newWorkoutDescription.getText(), temperature, weather, airQuality, spectators));
+                workouts.add(new Workout(date, time, hours, minutes, seconds, newWorkoutDescription.getText(), temperature, weather, airQuality, spectators, workoutExercises));
                 loadAllWorkoutsToList();
                 clearAllNewWorkoutFields();
 
@@ -246,7 +260,18 @@ public class WorkoutsViewController implements Initializable {
                     return;
                 }
 
-                newWorkoutExercisePane.setVisible(false);
+                //public WorkoutExercise(int id, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
+
+                if (allExercisesList.getValue() != null) {
+                    System.out.println(formList.getValue());
+                    workoutExercises.add(new WorkoutExercise(0, (String)allExercisesList.getValue(), weight, reps, sets, formList.getValue(), performanceList.getValue(), 0));
+                    reloadWorkoutExercisesForNewWorkout();
+                    newWorkoutExercisePane.setVisible(false);
+
+                } else {
+                    System.out.println("Velg en øvelse.");
+                    return;
+                }
             }
         });
 
@@ -256,6 +281,15 @@ public class WorkoutsViewController implements Initializable {
                 //System.out.println(newWorkoutTime.getText().len);
             }
         });
+    }
+
+    private void reloadWorkoutExercisesForNewWorkout() {
+        ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
+        for (WorkoutExercise workoutExercise : workoutExercises) {
+            list.add(workoutExercise);
+        }
+
+        workoutExercisesForNewWorkoutList.setItems(list);
     }
 
     private void clearAllNewWorkoutFields() {
@@ -272,7 +306,7 @@ public class WorkoutsViewController implements Initializable {
         durationLabel.setVisible(false);
         descriptionText.setVisible(false);
         createTemplateButton.setVisible(false);
-        exerciseList.setVisible(false);
+        workoutExercisesList.setVisible(false);
     }
 
     private void showAllControls() {
@@ -280,13 +314,13 @@ public class WorkoutsViewController implements Initializable {
         durationLabel.setVisible(true);
         descriptionText.setVisible(true);
         createTemplateButton.setVisible(true);
-        exerciseList.setVisible(true);
+        workoutExercisesList.setVisible(true);
     }
 
     private void loadAllWorkoutsToList() {
-        ObservableList<String> list = FXCollections.observableArrayList();
+        ObservableList<Workout> list = FXCollections.observableArrayList();
         for (Workout workout : workouts) {
-            list.add(workout.getName());
+            list.add(workout);
         }
 
         workoutList.setItems(list);

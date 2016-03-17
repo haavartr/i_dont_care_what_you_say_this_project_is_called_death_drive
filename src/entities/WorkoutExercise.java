@@ -7,20 +7,20 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
     private int load;
     private int repetitions;
     private int sets;
-    private int form;
-    private int preformance;
+    private Integer form;
+    private Integer performance;
     private int group;
 
     public WorkoutExercise(){}
 
-    public WorkoutExercise(int weId, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
+    public WorkoutExercise(int weId, String workout, int load, int repetitions, int sets, int form, int performance, int group) {
         this.weId = weId;
         this.workout = workout;
         this.load = load;
         this.repetitions = repetitions;
         this.sets = sets;
         this.form = form;
-        this.preformance = preformance;
+        this.performance = performance;
         this.group = group;
     }
 
@@ -48,8 +48,8 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
         return form;
     }
 
-    public int getPreformance() {
-        return preformance;
+    public int getPerformance() {
+        return performance;
     }
 
     public int getGroup() {
@@ -76,11 +76,15 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
         this.form = form;
     }
 
-    public void setPreformance(int preformance) {
-        this.preformance = preformance;
+    public void setPerformance(int performance) {
+        this.performance = performance;
     }
 
     public void setGroup(int group) {
         this.group = group;
+    }
+
+    public String toString() {
+        return this.getSets() + "x" + this.getRepetitions() + " - " + this.getWorkout() + " (" + this.getLoad() + " kg)";
     }
 }

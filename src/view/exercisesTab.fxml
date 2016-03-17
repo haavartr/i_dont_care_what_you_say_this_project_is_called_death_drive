@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.2" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ExercisesViewController">
+    <items>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <ListView fx:id="exerciseList" layoutY="70.0" prefHeight="429.0" prefWidth="139.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <Button fx:id="createNewExerciseButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Ny øvelse" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane>
+         <children>
+            <Text fx:id="exerciseNameLabel" layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Øvelsesnavn" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fx:id="exerciseDescriptionLabel" layoutX="10.0" layoutY="45.0" text="Øvelsesbeskrivelse." />
+            <Button layoutX="286.0" layoutY="105.0" mnemonicParsing="false" text="Vis alle øvelser i gruppe" />
+            <Label layoutX="286.0" layoutY="85.0" text="Gruppe: Arm" />
+            <ListView layoutX="10.0" layoutY="277.0" prefHeight="350.0" prefWidth="243.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <Label layoutX="10.0" layoutY="85.0" text="Kan erstattes av:" />
+            <AnchorPane fx:id="newExercisePane" layoutX="65.0" layoutY="149.0" prefHeight="200.0" prefWidth="424.0" style="-fx-border-radius: 20; -fx-background-color: #FFF; -fx-border-color: #CCC;">
+               <children>
+                  <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ny øvelse">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="24.0" layoutY="55.0" text="Navn:" />
+                  <Label layoutX="24.0" layoutY="92.0" text="Beskrivelse:" />
+                  <Button fx:id="cancelNewExercise" layoutX="151.0" layoutY="159.0" mnemonicParsing="false" text="Avbryt" />
+                  <Button fx:id="saveNewExercise" layoutX="221.0" layoutY="159.0" mnemonicParsing="false" text="Lagre" />
+                  <TextField fx:id="newExerciseName" layoutX="127.0" layoutY="50.0" prefHeight="27.0" prefWidth="243.0" />
+                  <TextArea fx:id="newExerciseDescription" layoutX="127.0" layoutY="86.0" prefHeight="59.0" prefWidth="243.0" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+    </items>
+</SplitPane>
