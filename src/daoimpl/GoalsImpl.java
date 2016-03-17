@@ -9,38 +9,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static daoimpl.RunQuery.runQuery;
+
 public class GoalsImpl implements GoalsDao {
     @Override
     public void createGoalsTable() {
-        Connection connection = null;
-        Statement statement = null;
-
-        try {
-            connection = ConnectionConfiguration.getConnection();
-            statement = connection.createStatement();
-            statement.execute("CREATE TABLE IF NOT EXISTS goals (" +
+        String q = "CREATE TABLE IF NOT EXISTS goals (" +
                     "id int primary key unique auto_increment," +
                     "name varchar(55)," +
-                    "description varchar(255))");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+                    "description varchar(255))";
 
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-        }
+        runQuery(q);
     }
 
     @Override
