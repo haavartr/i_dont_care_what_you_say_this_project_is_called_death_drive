@@ -5,7 +5,7 @@ import entities.CardioExercise;
 import java.util.List;
 
 public interface CardioExerciseDao {
-    void createPersonTable();
+    void createExerciseTable();
 
     void insert(CardioExercise person);
 
