@@ -6,14 +6,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout and OutdoorWorkout
-    private int workoutId;  // Auto-incremented
     private LocalDate date;
-    private int length;
+    private Integer length;
     private String note;
 
-    public Workout(String name, int workoutId, LocalDate date, int length, String note) {
-        super(name);
-        this.workoutId = workoutId;
+    public Workout(Integer id, String name, LocalDate date, Integer length, String note) {
+        super(id, name);
         this.date = date;
         this.length = length;
         this.note = note;
@@ -21,15 +19,11 @@ public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout
 
     public Workout(){}
 
-    public int getWorkoutId() {
-        return workoutId;
-    }
-
     public LocalDate getDate() {
         return date;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
@@ -41,7 +35,7 @@ public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout
         this.date = date;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 

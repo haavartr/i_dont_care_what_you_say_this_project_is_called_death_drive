@@ -1,29 +1,29 @@
 package entities;
 
 public class GroupExercise {  // Many-to-many thing for Group and Exercise
-    private int groupId;
-    private int exerciseId;
+    private Integer groupId;
+    private Integer exerciseId;
 
-    public GroupExercise(int groupId, int exerciseId) {
+    public GroupExercise(Integer groupId, Integer exerciseId) {
         this.groupId = groupId;
         this.exerciseId = exerciseId;
     }
 
     public GroupExercise(){}
 
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public int getExerciseId() {
+    public Integer getExerciseId() {
         return exerciseId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 
-    public void setExerciseId(int exerciseId) {
+    public void setExerciseId(Integer exerciseId) {
         this.exerciseId = exerciseId;
     }
 }

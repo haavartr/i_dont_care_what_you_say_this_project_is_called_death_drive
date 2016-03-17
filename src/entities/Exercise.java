@@ -1,20 +1,20 @@
 package entities;
 
 public class Exercise {
-    private int exerciseId;
+    private Integer id;
     private String name;
     private String description;
 
-    public Exercise(int exerciseId, String name, String description) {
-        this.exerciseId = exerciseId;
+    public Exercise(Integer id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
     }
 
     public Exercise(){}
 
-    public int getExerciseId() {
-        return exerciseId;
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {
