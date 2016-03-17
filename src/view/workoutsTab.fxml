@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.ComboBox?>
-<SplitPane dividerPositions="0.2" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkoutsViewController">
+<SplitPane prefHeight="500" prefWidth="700" dividerPositions="0.2" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkoutsViewController">
     <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>

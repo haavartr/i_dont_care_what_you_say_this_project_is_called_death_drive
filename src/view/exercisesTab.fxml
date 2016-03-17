@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.2" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ExercisesViewController">
+    <items>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <ListView fx:id="exerciseList" layoutY="70.0" prefHeight="429.0" prefWidth="139.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <Button fx:id="createNewExerciseButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Ny øvelse" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane>
+         <children>
+            <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Øvelsesnavn" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Label layoutX="10.0" layoutY="35.0" text="Øvelsesbeskrivelse." />
+            <Button layoutX="286.0" layoutY="105.0" mnemonicParsing="false" text="Vis alle øvelser i gruppe" />
+            <Label layoutX="286.0" layoutY="85.0" text="Gruppe: Arm" />
+            <ListView layoutX="10.0" layoutY="277.0" prefHeight="350.0" prefWidth="243.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <Label layoutX="10.0" layoutY="85.0" text="Kan erstattes av:" />
+         </children></AnchorPane>
+    </items>
+</SplitPane>
