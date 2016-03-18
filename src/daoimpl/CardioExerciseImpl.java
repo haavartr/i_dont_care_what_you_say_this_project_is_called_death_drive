@@ -90,7 +90,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
         return null;
     }
 
-    @Override
+    @Override  // Delete the entry in the highest parent and let the deletion cascade
     public void delete(int id) {
         runQuery("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }

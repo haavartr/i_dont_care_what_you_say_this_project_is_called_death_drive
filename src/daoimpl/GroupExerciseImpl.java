@@ -27,13 +27,13 @@ public class GroupExerciseImpl implements GroupExerciseDao {
     }
 
     @Override
-    public List<GroupExercise> selectAll() {  // TODO fiks
+    public List<GroupExercise> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM group_exercise");
         List<GroupExercise> l = new ArrayList<>();
         try {
             while (rs.next()) {
                 try {
-                    l.add(new GroupExercise(rs.getInt("groupID"), rs.getInt("exerciseID")));
+                    l.add(new GroupExercise(rs.getInt("group_id"), rs.getInt("exercise_id")));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

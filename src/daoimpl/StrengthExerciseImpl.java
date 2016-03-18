@@ -87,7 +87,7 @@ public class StrengthExerciseImpl implements StrengthExerciseDao{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runQuery("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }
 

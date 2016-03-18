@@ -16,7 +16,6 @@ public class WorkoutImpl implements WorkoutDao{
     public void createWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout (" +
                     "id int primary key unique auto_increment," +
-                    "name varchar(55)," +
                     "date datetime NOT NULL DEFAULT GETDATE()," +
                     "length int," +
                     "note varchar (255))";
