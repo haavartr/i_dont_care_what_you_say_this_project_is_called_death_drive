@@ -1,12 +1,15 @@
 package daoimpl;
 
 import dao.ExerciseDao;
+import entities.CardioExercise;
 import entities.Exercise;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
@@ -29,18 +32,36 @@ public class ExerciseImpl implements ExerciseDao{
 
     @Override
     public Exercise selectById(int id) {
-
+        ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id);
+        try {
+            return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public List<Exercise> selectAll() {
+        ResultSet rs = runQuery("SELECT * FROM exercise");
+        List<CardioExercise> l = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                try {
+                    l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void delete(int id) {
-
+        runQuery("DELETE FROM TABLE exercis WHERE id = " + id);
     }
 
     @Override
