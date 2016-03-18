@@ -4,16 +4,12 @@ import entities.ExerciseReplacements;
 
 import java.util.List;
 
-public interface ExerciseReplacementsDao {
+public interface ExerciseReplacementsDao {  // Many-to-many thing
     void createExerciseReplacementsTable();
 
     void insert(ExerciseReplacements exerciseReplacements);
 
-    ExerciseReplacements selectById(int id);
-
     List<ExerciseReplacements> selectAll();
 
-    void delete(int id);
-
-    void update(ExerciseReplacements exerciseReplacements);
+    void delete(int exerciseId1, int exerciseId2);
 }

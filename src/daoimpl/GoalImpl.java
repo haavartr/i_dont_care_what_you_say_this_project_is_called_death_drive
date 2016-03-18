@@ -20,8 +20,8 @@ public class GoalImpl implements GoalDao {
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
                 "date datetime NOT NULL DEFAULT GETDATE()," +
-                "load INT" +
-                "repetitions INT" +
+                "load INT," +
+                "repetitions INT," +
                 "sets INT" +
                 ")";
         runQuery(q);
@@ -69,7 +69,16 @@ public class GoalImpl implements GoalDao {
     }
 
     @Override
-    public void update() {
+    public void update(Goal goal) {
+        String exercise = goal.getExercise().toString();
+        String date = goal.getDate().toString();
+        String load = goal.getLoad().toString();
+        String repetitions = goal.getRepetitions().toString();
+        String sets = goal.getSets().toString();
+        String id = goal.getId().toString();
 
+        String q = String.format("UPDATE workout_exercise SET exercise = %s, date = %s, load = %s, repetitions = %s, sets = %s " +
+                "WHERE id = %s", exercise, date, load, repetitions, sets, id);
+        runQuery(q);
     }
 }
