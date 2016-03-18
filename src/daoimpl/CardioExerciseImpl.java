@@ -24,17 +24,17 @@ public class CardioExerciseImpl implements CardioExerciseDao {
 
     @Override
     public void insert(CardioExercise cardioExercise) {
-        insertInto("cardio_exercise", Integer.toString(cardioExercise.getWeId), Integer.toString(cardioExercise.getDistance), Integer.toString(cardioExercise.getTime));
+        insertInto("cardio_exercise", Integer.toString(cardioExercise.getId()), Integer.toString(cardioExercise.getDistance()), Integer.toString(cardioExercise.getTime()));
     }
 
     @Override
     public CardioExercise selectById(int id) {
         ResultSet rs = runQuery("SELECT * FROM cardio_exercise WHERE WEID = " + id);
-        try {
+        /*try {
             return new CardioExercise(rs.getInt("id"), rs.getInt("distance"), rs.getInt("time"));
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         return null;
     }
 
@@ -44,11 +44,11 @@ public class CardioExerciseImpl implements CardioExerciseDao {
         List<CardioExercise> l = new ArrayList<>();
         try {
             while (rs.next()) {
-                try {
+               /*try {
                     l.add(new CardioExercise(rs.getInt("WEID"), rs.getInt("distance"), rs.getInt("time")));
                 } catch (SQLException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
