@@ -90,9 +90,9 @@ public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
         return null;
     }
 
-    @Override
+    @Override  // Delete the entry in the highest parent and let the deletion cascade
     public void delete(int id) {
-        runQuery("DELETE FROM TABLE outdoor_workout WHERE id = " + id);
+        runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
     @Override
@@ -105,10 +105,11 @@ public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
         String temp = Float.toString(outdoorWorkout.getTemperature());
         String weather = outdoorWorkout.getWeather();
 
-        String q1 = String.format("UPDATE workout SET id = %s, name = %s, date = %s," +
-                        "length = %s, note = %s", id, name, date, length, note);
-        String q2 = String.format("UPDATE outdoor_workout SET temperature = %s, weather = %s WHERE id = %s", temp, weather, id);
+        String q1 = String.format("UPDATE workout_collection SET name = %s WHERE id = %s", name, id);
+        String q2 = String.format("UPDATE workout SET date = %s, length = %s, note = %s WHERE id = %s", name, date, length, note, id);
+        String q3 = String.format("UPDATE outdoor_workout SET temperature = %s, weather = %s WHERE id = %s", temp, weather, id);
         runQuery(q1);
         runQuery(q2);
+        runQuery(q3);
     }
 }
