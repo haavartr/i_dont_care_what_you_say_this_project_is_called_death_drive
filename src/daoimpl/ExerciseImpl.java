@@ -44,15 +44,16 @@ public class ExerciseImpl implements ExerciseDao{
     @Override
     public List<Exercise> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM exercise");
-        List<CardioExercise> l = new ArrayList<>();
+        List<Exercise> l = new ArrayList<>();
         try {
             while (rs.next()) {
                 try {
-                    l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+                    l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+            return l;
         } catch (SQLException e) {
             e.printStackTrace();
         }

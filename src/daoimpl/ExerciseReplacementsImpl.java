@@ -44,15 +44,16 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     @Override
     public List<ExerciseReplacements> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM exercise_replacements");
-        List<CardioExercise> l = new ArrayList<>();
+        List<ExerciseReplacements> l = new ArrayList<>();
         try {
             while (rs.next()) {
                 try {
-                    l.add(new ExerciseReplacements(rs.getInt("id_1"), rs.getInt("id_2"));
+                    l.add(new ExerciseReplacements(rs.getInt("id_1"), rs.getInt("id_2")));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+            return l;
         } catch (SQLException e) {
             e.printStackTrace();
         }
