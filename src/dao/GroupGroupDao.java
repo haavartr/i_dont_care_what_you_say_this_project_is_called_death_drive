@@ -5,16 +5,12 @@ import entities.GroupGroup;
 
 import java.util.List;
 
-public interface GroupGroupDao {
+public interface GroupGroupDao {  // Many-to-many thing
     void createGroupGroupTable();
 
     void insert(GroupGroup groupGroup);
 
-    GroupGroup selectById(int id);
-
     List<GroupGroup> selectAll();
 
-    void delete(int id);
-
-    void update(GroupGroup groupGroup);
+    void delete(int containerGroupId, int containedGroupId);
 }

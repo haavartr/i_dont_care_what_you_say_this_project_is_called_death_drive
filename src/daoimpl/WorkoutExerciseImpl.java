@@ -16,14 +16,13 @@ public class WorkoutExerciseImpl implements WorkoutExerciseDao {
     public void createWorkoutExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout_exercise (" +
                     "id int primary key unique auto_increment," +
-                    "workout int NOT NULL," +
-                    "exercise varchar(255)," +
+                    "workout_collection_id int NOT NULL," +
+                    "exercise_id varchar(255)," +
                     "load int ," +
                     "repetitions int," +
                     "sets int," +
                     "form int," +
-                    "performance int," +
-                    "group int )";
+                    "performance int)";
         runQuery(q);
     }
 }
