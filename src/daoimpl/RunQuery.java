@@ -11,11 +11,18 @@ public class RunQuery {
     public static ResultSet runQuery(String query) {
         Connection connection = null;
         Statement statement = null;
+        String arr[] = query.split(" ", 2);
+        arr[0] = arr[0].toUpperCase();
 
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            return statement.executeQuery(query);
+            if (arr[0].equals("INSERT") || arr[0].equals("UPDATE") || arr[0].equals("DELETE") || arr[0].equals("CREATE")){
+                statement.executeUpdate(query);
+            }
+            else {
+                return statement.executeQuery(query);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
