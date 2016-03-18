@@ -2,47 +2,108 @@ package daoimpl;
 
 import dao.IndoorWorkoutDao;
 import entities.IndoorWorkout;
-import util.ConnectionConfiguration;
 
-import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
 public class IndoorWorkoutImpl implements IndoorWorkoutDao {
-    @Override
     public void createIndoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS indoor_workout (" +
-                    "id int primary key unique auto_increment," +
-                    "name varchar(55)," +
-                    "description varchar(255))";
-        runQuery(q);
+                "id int NOT NULL UNIQUE," +
+                "air_quality float," +
+                "spectators varchar(55))," +
+                "PRIMARY KEY(id)," +
+                "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE)";
+        RunQuery.runQuery(q);
     }
 
     @Override
     public void insert(IndoorWorkout indoorWorkout) {
+        String workoutID = Integer.toString(indoorWorkout.getId());
+        String name = indoorWorkout.getName();
+        String date = indoorWorkout.getDate().toString();
+        String length = Integer.toString(indoorWorkout.getLength());
+        String note = indoorWorkout.getNote();
+        String temp = Integer.toString(indoorWorkout.getAirQuality());
+        String spectators = Integer.toString(indoorWorkout.getSpectators());
 
+        insertInto("workout", workoutID, name, date, length, note);
+        try {
+            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()").getInt(0));
+            insertInto("indoor_workout", id, temp, spectators);
+        } catch (SQLException|NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public IndoorWorkout selectById(int id) {
+        String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
+                "AND workout.id = %d", id, id);
+        ResultSet rs = runQuery(q);
+        try {
+            return new IndoorWorkout(rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getDate("date").toLocalDate(),
+                    rs.getInt("length"),
+                    rs.getString("note"),
+                    rs.getInt("air_quality"),
+                    rs.getInt("spectators"));
+        } catch (SQLException|NullPointerException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public List<IndoorWorkout> selectAll() {
+        ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout");
+        ArrayList<IndoorWorkout> l = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                try {
+                    l.add(new IndoorWorkout(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getDate("date").toLocalDate(),
+                            rs.getInt("length"),
+                            rs.getString("note"),
+                            rs.getInt("air_quality"),
+                            rs.getInt("spectators")));
+                } catch (SQLException|NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+            return l;
+        } catch (SQLException|NullPointerException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void delete(int id) {
-
+        runQuery("DELETE FROM TABLE indoor_workout WHERE id = " + id);
     }
 
     @Override
-    public void update() {
+    public void update(IndoorWorkout indoorWorkout) {
+        String id = Integer.toString(indoorWorkout.getId());
+        String name = indoorWorkout.getName();
+        String date = indoorWorkout.getDate().toString();
+        String length = Integer.toString(indoorWorkout.getLength());
+        String note = indoorWorkout.getNote();
+        String temp = Float.toString(indoorWorkout.getAirQuality());
+        String spectators = Integer.toString(indoorWorkout.getSpectators());
 
+        String q1 = String.format("UPDATE workout SET id = %s, name = %s, date = %s," +
+                "length = %s, note = %s", id, name, date, length, note);
+        String q2 = String.format("UPDATE indoor_workout SET air_quality = %s, spectators = %s WHERE id = %s", temp, spectators, id);
+        runQuery(q1);
+        runQuery(q2);
     }
 }
