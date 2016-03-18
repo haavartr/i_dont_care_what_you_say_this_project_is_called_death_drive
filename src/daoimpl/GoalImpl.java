@@ -11,12 +11,18 @@ public class GoalImpl implements GoalDao {
     @Override
     public void createGoalsTable() {
         String q = "CREATE TABLE IF NOT EXISTS goals (" +
-                    "id int primary key unique auto_increment," +
-                    "name varchar(55)," +
-                    "description varchar(255))";
-
+                "id INT NOT NULL auto_increment primary key," +
+                "exercise INT NOT NULL," +
+                "date datetime NOT NULL DEFAULT GETDATE()," +
+                "load INT" +
+                "repetitions INT" +
+                "sets INT" +
+                ")";
         runQuery(q);
     }
+
+   Integer load, Integer repetitions, Integer sets
+
 
     @Override
     public void insert(Goal goal) {

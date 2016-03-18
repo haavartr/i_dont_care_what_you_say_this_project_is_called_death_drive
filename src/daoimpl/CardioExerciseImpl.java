@@ -15,7 +15,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
     @Override
     public void createCardioExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS cardio_exercise (" +
-                "WEID int primary key unique," +
+                "id int primary key unique," +
                 "distance int," +
                 "time int" +
                 "FOREIGN KEY (WeId) REFERENCES workout_exercise(WeId)))";
@@ -31,7 +31,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
     public CardioExercise selectById(int id) {
         ResultSet rs = runQuery("SELECT * FROM cardio_exercise WHERE WEID = " + id);
         try {
-            return new CardioExercise(rs.getInt("WEID"), rs.getInt("distance"), rs.getInt("time"));
+            return new CardioExercise(rs.getInt("id"), rs.getInt("distance"), rs.getInt("time"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
