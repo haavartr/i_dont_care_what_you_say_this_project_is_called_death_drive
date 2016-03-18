@@ -1,5 +1,6 @@
 package controller;
 
+import daoimpl.ExerciseImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        ExerciseImpl.createExerciseTable();
+
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 700, 500));

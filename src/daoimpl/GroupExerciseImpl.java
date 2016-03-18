@@ -6,6 +6,7 @@ import entities.GroupGroup;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
@@ -26,7 +27,21 @@ public class GroupExerciseImpl implements GroupExerciseDao {
     }
 
     @Override
-    public List<GroupExercise> selectAll() {
+    public List<GroupExercise> selectAll() {  // TODO fiks
+        ResultSet rs = runQuery("SELECT * FROM group_exercise");
+        List<GroupExercise> l = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                try {
+                    l.add(new GroupExercise(rs.getInt("groupID"), rs.getInt("exerciseID")));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return l;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

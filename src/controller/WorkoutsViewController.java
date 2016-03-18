@@ -1,5 +1,6 @@
 package controller;
 
+import daoimpl.WorkoutExerciseImpl;
 import entities.Exercise;
 import entities.Workout;
 import entities.WorkoutExercise;
@@ -76,10 +77,10 @@ public class WorkoutsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        exercises.add(new Exercise("Markløft", "Olsen"));
+        /*exercises.add(new Exercise("Markløft", "Olsen"));
         exercises.add(new Exercise("Knebøy", "Pedersen"));
         exercises.add(new Exercise("Pushups", "Johnsen"));
-        exercises.add(new Exercise("Benkpress", "Knutsen"));
+        exercises.add(new Exercise("Benkpress", "Knutsen"));*/
 
         hideAllControls();
         loadAllWorkoutsToList();
@@ -93,14 +94,15 @@ public class WorkoutsViewController implements Initializable {
 
                 timeLabel.setText(workout.getName());
                 descriptionText.setText(workout.getNote());
-                durationLabel.setText(workout.getDuration());
+                durationLabel.setText(String.valueOf(workout.getLength()));
 
                 showAllControls();
 
                 ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
-                for (WorkoutExercise workoutExercise : workout.getWorkoutExercises()) {
+
+                /*for (WorkoutExercise workoutExercise : workout.getWorkoutExercises()) {
                     list.add(workoutExercise);
-                }
+                }*/
 
                 workoutExercisesList.setItems(list);
             }
@@ -228,7 +230,7 @@ public class WorkoutsViewController implements Initializable {
                 if (inne) { airQuality = (String)weatherAirField.getValue(); }
                 else { weather = (String)weatherAirField.getValue(); }
 
-                workouts.add(new Workout(date, time, hours, minutes, seconds, newWorkoutDescription.getText(), temperature, weather, airQuality, spectators, workoutExercises));
+                //workouts.add(new Workout(date, time, hours, minutes, seconds, newWorkoutDescription.getText(), temperature, weather, airQuality, spectators, workoutExercises));
                 loadAllWorkoutsToList();
                 clearAllNewWorkoutFields();
 
@@ -264,7 +266,7 @@ public class WorkoutsViewController implements Initializable {
 
                 if (allExercisesList.getValue() != null) {
                     System.out.println(formList.getValue());
-                    workoutExercises.add(new WorkoutExercise(0, (String)allExercisesList.getValue(), weight, reps, sets, formList.getValue(), performanceList.getValue(), 0));
+                    //workoutExercises.add(new WorkoutExercise(0, (String)allExercisesList.getValue(), weight, reps, sets, formList.getValue(), performanceList.getValue(), 0));
                     reloadWorkoutExercisesForNewWorkout();
                     newWorkoutExercisePane.setVisible(false);
 

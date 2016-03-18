@@ -11,32 +11,6 @@ import java.util.List;
 import static daoimpl.RunQuery.runQuery;
 
 public class WorkoutImpl implements WorkoutDao{
-    @Override
-    public void insert(Workout workout) {
-
-    }
-
-    @Override
-    public Workout selectById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Workout> selectAll() {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
     public void createWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout (" +
                     "id int primary key unique auto_increment," +
