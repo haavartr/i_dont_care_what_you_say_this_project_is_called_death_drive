@@ -18,28 +18,4 @@ public class WorkoutImpl implements WorkoutDao{
                     "description varchar(255))";
         runQuery(q);
     }
-
-    @Override
-    public void insert(Workout workout) {
-
-    }
-
-    @Override
-    public Workout selectById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Workout> selectAll() {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public void update() {
-    }
 }

@@ -42,7 +42,6 @@ public class CardioExerciseImpl implements CardioExerciseDao {
 
     @Override
     public CardioExercise selectById(int id) {
-        ResultSet rs = runQuery("SELECT * FROM cardio_exercise WHERE WEID = " + id);
         String q = String.format("SELECT * FROM cardio_exercise JOIN workout_exercise ON cardio_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         ResultSet rs = runQuery(q);
