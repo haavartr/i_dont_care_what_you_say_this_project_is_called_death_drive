@@ -15,5 +15,5 @@ public interface OutdoorWorkoutDao {
 
     void delete(int id);
 
-    void update();
+    void update(OutdoorWorkout outdoorWorkout);
 }

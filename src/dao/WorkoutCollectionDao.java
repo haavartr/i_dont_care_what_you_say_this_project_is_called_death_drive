@@ -4,16 +4,6 @@ import entities.WorkoutCollection;
 
 import java.util.List;
 
-public interface WorkoutCollectionDao {
+public interface WorkoutCollectionDao {  // Selecting, deleting and updating is done through the children
     void createWorkoutCollectionTable();
-
-    void insert(WorkoutCollection workoutCollection);
-
-    WorkoutCollection selectById(int id);
-
-    List<WorkoutCollection> selectAll();
-
-    void delete(int id);
-
-    void update();
 }

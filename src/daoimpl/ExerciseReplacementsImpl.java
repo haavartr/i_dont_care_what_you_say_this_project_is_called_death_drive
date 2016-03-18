@@ -66,7 +66,7 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     }
 
     @Override
-    public void update() {
+    public void update(ExerciseReplacements exerciseReplacements) {
 
     }
 }

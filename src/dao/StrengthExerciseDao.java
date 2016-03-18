@@ -15,5 +15,5 @@ public interface StrengthExerciseDao {
 
     void delete(int id);
 
-    void update();
+    void update(StrengthExercise strengthExercise);
 }

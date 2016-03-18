@@ -15,5 +15,5 @@ public interface GoalDao {
 
     void delete(int id);
 
-    void update();
+    void update(Goal goal);
 }
