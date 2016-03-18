@@ -13,6 +13,4 @@ public interface GroupDao {
     List<Group> selectAll();
 
     void delete(int id);
-
-    void update(Group group);
 }

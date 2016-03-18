@@ -1,15 +1,9 @@
 package daoimpl;
 
 import dao.ExerciseReplacementsDao;
-import entities.CardioExercise;
-import entities.Exercise;
 import entities.ExerciseReplacements;
-import util.ConnectionConfiguration;
-
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +14,8 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     @Override
     public void createExerciseReplacementsTable() {
         String q = "CREATE TABLE IF NOT EXISTS exercise_replacements (" +
-                    "id_1 int primary key unique auto_increment," +
-                    "id_2 int)";
+                    "exercise_id_1 INT NOT NULL," +
+                    "exercise_id_2 INT NOT NULL)";
         runQuery(q);
     }
 
@@ -31,24 +25,13 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     }
 
     @Override
-    public ExerciseReplacements selectById(int id) {
-        ResultSet rs = runQuery("SELECT * FROM exercise_replacements WHERE id = " + id);
-        try {
-            return new ExerciseReplacements(rs.getInt("id1"), rs.getInt("id_2"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public List<ExerciseReplacements> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM exercise_replacements");
         List<ExerciseReplacements> l = new ArrayList<>();
         try {
             while (rs.next()) {
                 try {
-                    l.add(new ExerciseReplacements(rs.getInt("id_1"), rs.getInt("id_2")));
+                    l.add(new ExerciseReplacements(rs.getInt("exercise_id_1"), rs.getInt("exercise_id_2")));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -61,12 +44,9 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     }
 
     @Override
-    public void delete(int id) {
-        runQuery("DELETE FROM TABLE exercise_replacements WHERE id_1 = " + id);
-    }
-
-    @Override
-    public void update(ExerciseReplacements exerciseReplacements) {
-
+    public void delete(int exerciseId1, int exerciseId2) {
+        String q = String.format("DELETE FROM TABLE exercise_replacements WHERE exercise_id_1 = %d AND exercise_id_2 = %d",
+                exerciseId1, exerciseId2);
+        runQuery(q);
     }
 }
