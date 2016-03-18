@@ -15,5 +15,5 @@ public interface TemplateDao {
 
     void delete(int id);
 
-    void update();
+    void update(Template template);
 }

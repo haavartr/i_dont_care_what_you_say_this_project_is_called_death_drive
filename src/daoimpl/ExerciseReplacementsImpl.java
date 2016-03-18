@@ -24,7 +24,7 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
 
     @Override
     public void insert(ExerciseReplacements exerciseReplacements) {
-        insertInto("exercise_replacements", );
+        insertInto("exercise_replacements");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     }
 
     @Override
-    public void update() {
+    public void update(ExerciseReplacements exerciseReplacements) {
 
     }
 }
