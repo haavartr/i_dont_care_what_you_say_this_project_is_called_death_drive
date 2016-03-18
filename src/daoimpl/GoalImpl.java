@@ -21,9 +21,6 @@ public class GoalImpl implements GoalDao {
         runQuery(q);
     }
 
-   Integer load, Integer repetitions, Integer sets
-
-
     @Override
     public void insert(Goal goal) {
 
