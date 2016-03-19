@@ -18,15 +18,15 @@ public class CardioExerciseDao {
 
     public static void insert(CardioExercise cardioExercise) {
         Statement statement = null;
-        String workoutCollectionId = cardioExercise.getWorkoutCollectionId().toString();
-        String exerciseId = cardioExercise.getExerciseId().toString();
-        String load = cardioExercise.getLoad().toString();
-        String repetitions = cardioExercise.getRepetitions().toString();
-        String sets = cardioExercise.getSets().toString();
-        String form = cardioExercise.getForm().toString();
-        String performance = cardioExercise.getPerformance().toString();
-        String distance = cardioExercise.getDistance().toString();
-        String time = cardioExercise.getTime().toString();
+        String workoutCollectionId = "workout_collection_id " + cardioExercise.getWorkoutCollectionId().toString();
+        String exerciseId = "exercise_id " + cardioExercise.getExerciseId().toString();
+        String load = "load " + cardioExercise.getLoad().toString();
+        String repetitions = "repetitions " + cardioExercise.getRepetitions().toString();
+        String sets = "sets " + cardioExercise.getSets().toString();
+        String form = "form " + cardioExercise.getForm().toString();
+        String performance = "performance " + cardioExercise.getPerformance().toString();
+        String distance = "distance " + cardioExercise.getDistance().toString();
+        String time = "time " + cardioExercise.getTime().toString();
 
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         try {

@@ -19,7 +19,9 @@ public class ExerciseReplacementsDao {  // Many-to-many
     }
 
     public static void insert(ExerciseReplacements exerciseReplacements) {
-        insertInto("exercise_replacements", Integer.toString(exerciseReplacements.getExerciseId1()), Integer.toString(exerciseReplacements.getExerciseId2()));
+        String exerciseId1 = "exercise_id_1 " + exerciseReplacements.getExerciseId1().toString();
+        String exerciseId2 = "exercise_id_2 " + exerciseReplacements.getExerciseId2().toString();
+        insertInto("exercise_replacements", exerciseId1, exerciseId2);
     }
 
     public static ArrayList<ExerciseReplacements> selectAll() {  // Returns an empty ArrayList if the table is empty

@@ -21,8 +21,13 @@ public class GoalDao {
     }
 
     public static void insert(Goal goal) {
-        insertInto("goal", Integer.toString(goal.getId()), Integer.toString(goal.getExercise()), goal.getDate().toString(),
-                Integer.toString(goal.getLoad()), Integer.toString(goal.getRepetitions()), Integer.toString(goal.getSets()));
+        String exercise = "exercise " + goal.getExercise().toString();
+        String date = "date " + goal.getDate().toString();
+        String load = "load " + goal.getLoad().toString();
+        String repetitions = "repetitions " + goal.getRepetitions().toString();
+        String sets = "sets " + goal.getSets().toString();
+
+        insertInto("goal", exercise, date, load, repetitions, sets);
     }
 
     public static Goal selectById(int id) {
