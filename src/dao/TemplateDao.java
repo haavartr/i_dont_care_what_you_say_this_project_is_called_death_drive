@@ -25,17 +25,21 @@ public class TemplateDao {
     }
 
     public static void insert(Template template) {
+        String name = "name " + template.getName();
+        insertInto("workout_collection", name);
+
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String name = "name " + template.getName();
-        String q = "SELECT * FROM grouping_exercise";
-        insertInto("workout_collection", name);
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(q);
-            String id = Integer.toString(rs.getInt(0));
+            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_exercise");
+            String id = "id ";
+            if (rs.next()) {
+                id += rs.getString("last_id");
+                System.out.println(id);
+            }
             insertInto("template", id);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();

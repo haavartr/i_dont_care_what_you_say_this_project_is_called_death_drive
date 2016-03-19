@@ -26,9 +26,6 @@ public class IndoorWorkoutDao {
     }
 
     public static void insert(IndoorWorkout indoorWorkout) {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
         String workoutID = "workout_id " + Integer.toString(indoorWorkout.getId());
         String name = "name " + indoorWorkout.getName();
         String date = "date " + indoorWorkout.getDate().toString();
@@ -36,13 +33,20 @@ public class IndoorWorkoutDao {
         String note = "note " + indoorWorkout.getNote();
         String airQuality = "air_quality " + Integer.toString(indoorWorkout.getAirQuality());
         String spectators = "spectators " + Integer.toString(indoorWorkout.getSpectators());
-        String q = "SELECT * FROM grouping_exercise";
         insertInto("workout", workoutID, name, date, length, note);
+
+        Connection connection = null;
+        ResultSet rs;
+        Statement statement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(q);
-            String id = Integer.toString(rs.getInt(0));
+            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_collection");
+            String id = "id ";
+            if (rs.next()) {
+                id += rs.getString("last_id");
+                System.out.println(id);
+            }
             insertInto("indoor_workout", id, airQuality, spectators);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
