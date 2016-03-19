@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
@@ -23,8 +25,11 @@ public class GroupDao {
 
     public static Group selectById(int id) {
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM group WHERE id = " + id, statement);
+        String q = "SELECT * FROM group WHERE id = " + id;
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs != null) {
                 return new Group(rs.getInt("id"));
             } else {
@@ -46,9 +51,12 @@ public class GroupDao {
 
     public static ArrayList<Group> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM group", statement);
+        String q = "SELECT * FROM group";
         ArrayList<Group> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

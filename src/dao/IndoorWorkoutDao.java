@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
@@ -32,7 +34,10 @@ public class IndoorWorkoutDao {
 
         insertInto("workout", workoutID, name, date, length, note);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
+            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
+            String id = Integer.toString(rs.getInt(0));
             insertInto("indoor_workout", id, airQuality, spectators);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
@@ -43,8 +48,10 @@ public class IndoorWorkoutDao {
         Statement statement = null;
         String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
                 "AND workout.id = %d", id, id);
-        ResultSet rs = runQuery(q, statement);
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs != null) {
                 return new IndoorWorkout(rs.getInt("id"),
                         rs.getString("name"),
@@ -72,9 +79,12 @@ public class IndoorWorkoutDao {
 
     public static ArrayList<IndoorWorkout> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout", statement);
+        String q = "SELECT * FROM indoor_workout JOIN workout";
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {
