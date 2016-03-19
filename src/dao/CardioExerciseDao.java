@@ -3,6 +3,8 @@ package dao;
 import entities.CardioExercise;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
 import static dao.RunQuery.*;
 
 public class CardioExerciseDao {
@@ -30,7 +32,10 @@ public class CardioExerciseDao {
 
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
+            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
+            String id = Integer.toString(rs.getInt(0));
             insertInto("cardio_exercise", id, distance, time);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
@@ -50,8 +55,10 @@ public class CardioExerciseDao {
         Statement statement = null;
         String q = String.format("SELECT * FROM cardio_exercise JOIN workout_exercise ON cardio_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
-        ResultSet rs = runQuery(q, statement);
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs != null) {
                 return new CardioExercise(rs.getInt("id"),
                         rs.getInt("workout_collection_id"),
@@ -83,9 +90,12 @@ public class CardioExerciseDao {
 
     public static ArrayList<CardioExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM cardio_exercise JOIN workout_exercise", statement);
+        String q = "SELECT * FROM cardio_exercise JOIN workout_exercise";
         ArrayList<CardioExercise> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

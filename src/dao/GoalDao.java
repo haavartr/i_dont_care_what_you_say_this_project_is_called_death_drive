@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import static dao.RunQuery.*;
 
 public class GoalDao {
@@ -32,8 +34,11 @@ public class GoalDao {
 
     public static Goal selectById(int id) {
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM goal WHERE id = " + id, statement);
+        String q = "SELECT * FROM goal WHERE id = " + id;
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets"));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,9 +56,12 @@ public class GoalDao {
 
     public static ArrayList<Goal> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM goal", statement);
+        String q = "SELECT * FROM goal";
         ArrayList<Goal> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
@@ -28,8 +29,11 @@ public class ExerciseDao {
 
     public static Exercise selectById(int id) {
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id, statement);
+        String q = "SELECT * FROM exercise WHERE id = " + id;
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs != null) {
                 return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
             } else {
@@ -51,9 +55,12 @@ public class ExerciseDao {
 
     public static ArrayList<Exercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM exercise", statement);
+        String q = "SELECT * FROM exercise";
         ArrayList<Exercise> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

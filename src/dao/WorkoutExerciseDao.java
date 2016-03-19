@@ -13,7 +13,6 @@ public class WorkoutExerciseDao {  // Parent
                     "sets int, " +
                     "form int, " +
                     "performance int);";
-        System.out.println(q);
         runUpdate(q);
     }
 }

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
 import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
@@ -25,7 +27,10 @@ public class TemplateDao {
 
         insertInto("workout_collection", name);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
+            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
+            String id = Integer.toString(rs.getInt(0));
             insertInto("template", id);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
@@ -44,8 +49,10 @@ public class TemplateDao {
         Statement statement = null;
         String q = String.format("SELECT * FROM template JOIN workout_collection ON template.id = %d " +
                 "AND workout_collection.id = %d", id, id);
-        ResultSet rs = runQuery(q, statement);
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs != null) {
                 return new Template(rs.getInt("id"), rs.getString("name"));
             } else {
@@ -67,9 +74,12 @@ public class TemplateDao {
 
     public static ArrayList<Template> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
-        ResultSet rs = runQuery("SELECT * FROM template JOIN workout_collection", statement);
+        String q = "SELECT * FROM template JOIN workout_collection";
         ArrayList<Template> l = new ArrayList<>();
         try {
+            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
+            ResultSet rs = result.firstEntry().getKey();
+            statement = result.firstEntry().getValue();
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {
