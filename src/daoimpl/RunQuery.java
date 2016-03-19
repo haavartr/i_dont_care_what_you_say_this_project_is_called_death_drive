@@ -26,7 +26,7 @@ public class RunQuery {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (statement != null) {
+            /*if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
@@ -40,18 +40,19 @@ public class RunQuery {
                 } catch (SQLException e){
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
         return null;
     }
 
     public static void insertInto (String name, String... args) {
-        String q = "INSERT INTO " + name + "VALUES (";
+        String q = "INSERT INTO " + name + " VALUES (";
         for (String arg : args){
-            q += " " + arg + ",";
+            q += "'" + arg + "'" + ",";
         }
         q = q.substring(0, q.length()-1);
         q += ")";
+        System.out.println(q);
         runQuery(q);
     }
 

@@ -25,7 +25,7 @@ public class ExerciseImpl {
     }
 
     public static void insert(Exercise exercise) {
-        insertInto("exercise", exercise.getName(), exercise.getDescription());
+        insertInto("exercise (name, description)", exercise.getName(), exercise.getDescription());
     }
 
     public static Exercise selectById(int id) {
@@ -42,6 +42,7 @@ public class ExerciseImpl {
         ResultSet rs = runQuery("SELECT * FROM exercise");
         List<Exercise> l = new ArrayList<>();
         try {
+            assert rs != null;
             while (rs.next()) {
                 try {
                     l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
