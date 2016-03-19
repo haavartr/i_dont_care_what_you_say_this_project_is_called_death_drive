@@ -22,18 +22,18 @@ public class IndoorWorkoutDao {
 
     public static void insert(IndoorWorkout indoorWorkout) {
         Statement statement = null;
-        String workoutID = Integer.toString(indoorWorkout.getId());
-        String name = indoorWorkout.getName();
-        String date = indoorWorkout.getDate().toString();
-        String length = Integer.toString(indoorWorkout.getLength());
-        String note = indoorWorkout.getNote();
-        String temp = Integer.toString(indoorWorkout.getAirQuality());
-        String spectators = Integer.toString(indoorWorkout.getSpectators());
+        String workoutID = "workout_id " + Integer.toString(indoorWorkout.getId());
+        String name = "name " + indoorWorkout.getName();
+        String date = "date " + indoorWorkout.getDate().toString();
+        String length = "length " + Integer.toString(indoorWorkout.getLength());
+        String note = "note " + indoorWorkout.getNote();
+        String airQuality = "air_quality " + Integer.toString(indoorWorkout.getAirQuality());
+        String spectators = "spectators " + Integer.toString(indoorWorkout.getSpectators());
 
         insertInto("workout", workoutID, name, date, length, note);
         try {
             String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
-            insertInto("indoor_workout", id, temp, spectators);
+            insertInto("indoor_workout", id, airQuality, spectators);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }
