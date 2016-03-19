@@ -1,6 +1,8 @@
 package controller;
 
 import dao.*;
+import entities.GroupExercise;
+import entities.GroupGroup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,8 +23,12 @@ public class Main extends Application {
         primaryStage.show();
 
         final Connection connection = ConnectionConfiguration.getConnection();
-        //ExerciseDao.createExerciseTable();
+        ExerciseDao.createExerciseTable();
         GoalDao.createGoalsTable();
+        GroupExerciseDao.createGroupExerciseTable();
+        GroupGroupDao.createGroupGroupTable();
+        TemplateDao.createTemplateTable();
+        WorkoutCollectionDao.createWorkoutCollectionTable();
         ExerciseReplacementsDao.createExerciseReplacementsTable();
         WorkoutExerciseDao.createWorkoutExerciseTable();
         StrengthExerciseDao.createStrengthExerciseTable();

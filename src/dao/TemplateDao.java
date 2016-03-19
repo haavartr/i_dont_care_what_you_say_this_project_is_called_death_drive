@@ -20,7 +20,7 @@ public class TemplateDao {
         String q ="CREATE TABLE IF NOT EXISTS template (" +
                 "id INT NOT NULL," +
                 "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout_collection(id)";
+                "FOREIGN KEY(id) REFERENCES workout_collection(id))";
         runUpdate(q);
     }
 
