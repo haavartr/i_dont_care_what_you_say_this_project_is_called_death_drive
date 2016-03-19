@@ -1,6 +1,9 @@
 package dao;
 
 import entities.Goal;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,12 +36,14 @@ public class GoalDao {
     }
 
     public static Goal selectById(int id) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM goal WHERE id = " + id;
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets"));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,13 +60,15 @@ public class GoalDao {
     }
 
     public static ArrayList<Goal> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM goal";
         ArrayList<Goal> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {
