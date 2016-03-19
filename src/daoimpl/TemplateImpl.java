@@ -2,9 +2,7 @@ package daoimpl;
 
 import dao.TemplateDao;
 import entities.Template;
-import util.ConnectionConfiguration;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +10,7 @@ import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class TemplateImpl implements TemplateDao{
     @Override
@@ -20,27 +19,37 @@ public class TemplateImpl implements TemplateDao{
                 "id INT NOT NULL," +
                 "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id) REFERENCES workout_collection(id)";
-        runQuery(q);
+        runUpdate(q);
     }
 
     @Override
     public void insert(Template template) {
+        Statement statement = null;
         String name = template.getName();
 
         insertInto("workout_collection", name);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()").getInt(0));
+            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
             insertInto("template", id);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     @Override
     public Template selectById(int id) {  // Returns null if the id doesn't exist
+        Statement statement = null;
         String q = String.format("SELECT * FROM template JOIN workout_collection ON template.id = %d " +
                 "AND workout_collection.id = %d", id, id);
-        ResultSet rs = runQuery(q);
+        ResultSet rs = runQuery(q, statement);
         try {
             if (rs != null) {
                 return new Template(rs.getInt("id"), rs.getString("name"));
@@ -49,6 +58,14 @@ public class TemplateImpl implements TemplateDao{
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
@@ -60,7 +77,7 @@ public class TemplateImpl implements TemplateDao{
 
     @Override  // Delete the entry in the highest parent and let the deletion cascade
     public void delete(int id) {
-        runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
     @Override
@@ -68,6 +85,6 @@ public class TemplateImpl implements TemplateDao{
         String id = template.getId().toString();
         String name = template.getName();
         String q = String.format("UPDATE workout_collection SET name = %s WHERE id = %s", name, id);
-        runQuery(q);
+        runUpdate(q);
     }
 }

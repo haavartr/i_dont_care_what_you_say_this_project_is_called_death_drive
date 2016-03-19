@@ -1,25 +1,25 @@
 package daoimpl;
 
-import dao.StrengthExerciseDao;
 import entities.StrengthExercise;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static daoimpl.RunQuery.insertInto;
-import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.*;
 
 public class StrengthExerciseImpl {
     public static void createStrengthExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS strength_exercise (" +
                 "id int primary key unique auto_increment," +
                 "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
-        runQuery(q);
+        runUpdate(q);
     }
 
     public static void insert(StrengthExercise strengthExercise) {
+        Statement statement = null;
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
         String load = strengthExercise.getLoad().toString();
@@ -30,18 +30,26 @@ public class StrengthExerciseImpl {
 
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()").getInt(0));
+            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
             insertInto("strength_exercise", id);
         } catch (SQLException |NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    @Override
     public static StrengthExercise selectById(int id) {  // Returns null if the id doesn't exist
+        Statement statement = null;
         String q = String.format("SELECT * FROM strength_exercise JOIN workout_exercise ON strength_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
-        ResultSet rs = runQuery(q);
+        ResultSet rs = runQuery(q, statement);
         try {
             if (rs != null) {
                 return new StrengthExercise(rs.getInt("id"),
@@ -57,12 +65,21 @@ public class StrengthExerciseImpl {
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     public static List<StrengthExercise> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM strength_exercise JOIN workout_exercise");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM strength_exercise JOIN workout_exercise", statement);
         List<StrengthExercise> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -82,12 +99,20 @@ public class StrengthExerciseImpl {
             return l;
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
-        runQuery("DELETE FROM TABLE workout_exercise WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }
 
     public static void update(StrengthExercise strengthExercise) {
@@ -103,6 +128,6 @@ public class StrengthExerciseImpl {
         String q = String.format("UPDATE workout_exercise SET workout_collection_id = %s, exercise_id = %s, load = %s," +
                         "repetitions = %s, sets = %s, form = %s, performance = %s WHERE id = %s", workoutCollectionId,
                 exerciseId, load, repetitions, sets, form, performance, id);
-        runQuery(q);
+        runUpdate(q);
     }
 }

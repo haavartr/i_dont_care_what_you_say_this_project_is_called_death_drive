@@ -1,19 +1,16 @@
 package daoimpl;
 
-import dao.OutdoorWorkoutDao;
 import entities.OutdoorWorkout;
-import util.ConnectionConfiguration;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class OutdoorWorkoutImpl {
     public static void createOutdoorWorkoutTable() {
@@ -22,10 +19,11 @@ public class OutdoorWorkoutImpl {
                 "temperature float," +
                 "weather varchar(55))," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
-        RunQuery.runQuery(q);
+        RunQuery.runUpdate(q);
     }
 
     public static void insert(OutdoorWorkout outdoorWorkout) {
+        Statement statement = null;
         String workoutID = Integer.toString(outdoorWorkout.getId());
         String name = outdoorWorkout.getName();
         String date = outdoorWorkout.getDate().toString();
@@ -36,18 +34,26 @@ public class OutdoorWorkoutImpl {
 
         insertInto("workout", workoutID, name, date, length, note);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()").getInt(0));
+            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
             insertInto("outdoor_workout", id, temp, weather);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    @Override
     public static OutdoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
+        Statement statement = null;
         String q = String.format("SELECT * FROM outdoor_workout JOIN outdoor_workout ON exercise.id = %d " +
                 "AND workout.id = %d", id, id);
-        ResultSet rs = runQuery(q);
+        ResultSet rs = runQuery(q, statement);
         try {
             if (rs != null) {
                 return new OutdoorWorkout(rs.getInt("id"),
@@ -62,12 +68,21 @@ public class OutdoorWorkoutImpl {
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     public static List<OutdoorWorkout> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM outdoor_workout JOIN workout");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM outdoor_workout JOIN workout", statement);
         ArrayList<OutdoorWorkout> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -86,13 +101,21 @@ public class OutdoorWorkoutImpl {
             return l;
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     // Delete the entry in the highest parent and let the deletion cascade
     public static void delete(int id) {
-        runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
     public static void update(OutdoorWorkout outdoorWorkout) {
@@ -107,8 +130,8 @@ public class OutdoorWorkoutImpl {
         String q1 = String.format("UPDATE workout_collection SET name = %s WHERE id = %s", name, id);
         String q2 = String.format("UPDATE workout SET date = %s, length = %s, note = %s WHERE id = %s", name, date, length, note, id);
         String q3 = String.format("UPDATE outdoor_workout SET temperature = %s, weather = %s WHERE id = %s", temp, weather, id);
-        runQuery(q1);
-        runQuery(q2);
-        runQuery(q3);
+        runUpdate(q1);
+        runUpdate(q2);
+        runUpdate(q3);
     }
 }
