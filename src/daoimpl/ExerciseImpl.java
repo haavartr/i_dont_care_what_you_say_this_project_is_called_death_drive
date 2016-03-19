@@ -14,6 +14,7 @@ import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class ExerciseImpl {
     public static void createExerciseTable() {
@@ -21,15 +22,16 @@ public class ExerciseImpl {
                 "id int primary key unique auto_increment," +
                 "name varchar(55)," +
                 "description varchar(255))");
-        runQuery(q);
+        runUpdate(q);
     }
 
     public static void insert(Exercise exercise) {
         insertInto("exercise (name, description)", exercise.getName(), exercise.getDescription());
     }
 
-    public static Exercise selectById(int id) {  // Returns null if the id doesn't exist
-        ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id);
+    public static Exercise selectById(int id) {
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id, statement);
         try {
             if (rs != null) {
                 return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
@@ -38,12 +40,21 @@ public class ExerciseImpl {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     public static List<Exercise> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM exercise");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM exercise", statement);
         List<Exercise> l = new ArrayList<>();
         try {
             if (rs != null) {
@@ -58,12 +69,20 @@ public class ExerciseImpl {
             return l;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return l;
     }
 
     public static void delete(int id) {
-        runQuery("DELETE FROM TABLE exercise WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE exercise WHERE id = " + id);
     }
 
     public static void update(Exercise exercise) {
@@ -71,6 +90,6 @@ public class ExerciseImpl {
         String description = exercise.getDescription();
         String id = Integer.toString(exercise.getId());
         String q = String.format("UPDATE workout_exercise SET name = %s, description = %s WHERE id = %s", name, description, id);
-        runQuery(q);
+        runUpdate(q);
     }
 }

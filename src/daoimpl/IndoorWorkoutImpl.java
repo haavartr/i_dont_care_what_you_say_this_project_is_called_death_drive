@@ -5,11 +5,13 @@ import entities.IndoorWorkout;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class IndoorWorkoutImpl {
     public static void createIndoorWorkoutTable() {
@@ -18,10 +20,11 @@ public class IndoorWorkoutImpl {
                 "air_quality float," +
                 "spectators varchar(55))," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
-        RunQuery.runQuery(q);
+        RunQuery.runUpdate(q);
     }
 
     public static void insert(IndoorWorkout indoorWorkout) {
+        Statement statement = null;
         String workoutID = Integer.toString(indoorWorkout.getId());
         String name = indoorWorkout.getName();
         String date = indoorWorkout.getDate().toString();
@@ -32,18 +35,18 @@ public class IndoorWorkoutImpl {
 
         insertInto("workout", workoutID, name, date, length, note);
         try {
-            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()").getInt(0));
+            String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
             insertInto("indoor_workout", id, temp, spectators);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public static IndoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
+    public static IndoorWorkout selectById(int id) {
+        Statement statement = null;
         String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
                 "AND workout.id = %d", id, id);
-        ResultSet rs = runQuery(q);
+        ResultSet rs = runQuery(q, statement);
         try {
             if (rs != null) {
                 return new IndoorWorkout(rs.getInt("id"),
@@ -58,12 +61,21 @@ public class IndoorWorkoutImpl {
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     public static List<IndoorWorkout> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout", statement);
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -82,13 +94,21 @@ public class IndoorWorkoutImpl {
             return l;
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     // Delete the entry in the highest parent and let the deletion cascade
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
-        runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
     public static void update(IndoorWorkout indoorWorkout) {
@@ -103,8 +123,8 @@ public class IndoorWorkoutImpl {
         String q1 = String.format("UPDATE workout_collection SET name = %s WHERE id = %s", name, id);
         String q2 = String.format("UPDATE workout SET date = %s, length = %s, note = %s WHERE id = %s", date, length, note, id);
         String q3 = String.format("UPDATE indoor_workout SET air_quality = %s, spectators = %s WHERE id = %s", airQuality, spectators, id);
-        runQuery(q1);
-        runQuery(q2);
-        runQuery(q3);
+        runUpdate(q1);
+        runUpdate(q2);
+        runUpdate(q3);
     }
 }
