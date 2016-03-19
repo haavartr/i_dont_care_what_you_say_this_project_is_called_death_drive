@@ -53,7 +53,7 @@ public class GoalsViewController implements Initializable {
 
                 goalExerciseNameLabel.setText(selectedGoal.getExercise().toString());
                 goalSetDateLabel.setText(selectedGoal.getDate().toString());
-                goalWeightLabel.setText(selectedGoal.getLoad().toString());
+                goalWeightLabel.setText(selectedGoal.getWeight().toString());
                 goalRepetitionsLabel.setText(selectedGoal.getRepetitions().toString());
                 goalSetsLabel.setText(selectedGoal.getSets().toString());
 
@@ -83,14 +83,14 @@ public class GoalsViewController implements Initializable {
                 goal.setExercise(selectedExercise.getId());
 
                 try {
-                    goal.setLoad(Integer.parseInt(goalLoadField.getText()));
+                    goal.setWeight(Integer.parseInt(goalLoadField.getText()));
                     goal.setRepetitions(Integer.parseInt(goalRepetitionsField.getText()));
                     goal.setSets(Integer.parseInt(goalSetsField.getText()));
                 } catch (Exception e) {
                     System.out.println("Feil");
                 }
 
-                if (goal.getLoad() == null && goal.getRepetitions() == null && goal.getSets() == null) {
+                if (goal.getWeight() == null && goal.getRepetitions() == null && goal.getSets() == null) {
                     System.out.println("Må ha ei målsetning");
                     return;
                 }
