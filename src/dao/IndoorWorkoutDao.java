@@ -20,7 +20,7 @@ public class IndoorWorkoutDao {
         String q = "CREATE TABLE IF NOT EXISTS indoor_workout (" +
                 "id int primary key unique auto_increment," +
                 "air_quality float," +
-                "spectators varchar(55))," +
+                "spectators varchar(55)," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runUpdate(q);
     }
