@@ -83,7 +83,7 @@ public class GoalsViewController implements Initializable {
                 goal.setExercise(selectedExercise.getId());
 
                 try {
-                    goal.setWeight(Integer.parseInt(goalLoadField.getText()));
+                    goal.setWeight(Integer.parseInt(goalWeightField.getText()));
                     goal.setRepetitions(Integer.parseInt(goalRepetitionsField.getText()));
                     goal.setSets(Integer.parseInt(goalSetsField.getText()));
                 } catch (Exception e) {

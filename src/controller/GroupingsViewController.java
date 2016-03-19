@@ -3,11 +3,11 @@ package controller;
 import dao.ExerciseDao;
 import dao.GoalDao;
 import dao.GroupingDao;
-import dao.GroupExerciseDao;
+import dao.GroupingExerciseDao;
 import entities.Exercise;
 import entities.Goal;
 import entities.Grouping;
-import entities.GroupExercise;
+import entities.GroupingExercise;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -57,7 +57,7 @@ public class GroupingsViewController implements Initializable {
                 Grouping selectedGrouping = groupingsList.getSelectionModel().getSelectedItem();
 
                 groupingNameLabel.setText(selectedGrouping.getId().toString());
-                loadAllGroupingExercisesForGroup(selectedGrouping);
+                loadAllGroupingExercisesForGrouping(selectedGrouping);
             }
         });
 
@@ -87,8 +87,8 @@ public class GroupingsViewController implements Initializable {
             public void handle(MouseEvent event) {
                 Exercise exerciseToAdd = notGroupingExercisesList.getSelectionModel().getSelectedItem();
                 if (exerciseToAdd != null) {
-                    GroupExerciseDao.insert(new GroupExercise(groupingsList.getSelectionModel().getSelectedItem().getId(), exerciseToAdd.getId()));
-                    loadAllGroupingExercisesForGroup(groupingsList.getSelectionModel().getSelectedItem());
+                    GroupingExerciseDao.insert(new GroupingExercise(groupingsList.getSelectionModel().getSelectedItem().getId(), exerciseToAdd.getId()));
+                    loadAllGroupingExercisesForGrouping(groupingsList.getSelectionModel().getSelectedItem());
                 }
             }
         });
@@ -96,18 +96,18 @@ public class GroupingsViewController implements Initializable {
 
     private void loadAllGroupingsToList() {
         ObservableList<Grouping> list = FXCollections.observableArrayList();
-        /*for (Group group : GroupDao.selectAll()) {
-            list.add(group);
+        /*for (Grouping grouping : GroupingDao.selectAll()) {
+            list.add(grouping);
         }*/
 
         groupingsList.setItems(list);
     }
 
-    private void loadAllGroupingExercisesForGroup(Grouping grouping) {
+    private void loadAllGroupingExercisesForGrouping(Grouping grouping) {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
 
-        /*for(GroupExercise ge : GroupExerciseDao.selectAll()) {
-            if (ge.getGroupId() == group.getId()) {
+        /*for(GroupingExercise ge : GroupingExerciseDao.selectAll()) {
+            if (ge.getGroupingId() == grouping.getId()) {
                 list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
         }*/
