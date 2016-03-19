@@ -1,22 +1,15 @@
 package daoimpl;
 
-import dao.GoalDao;
-import entities.CardioExercise;
-import entities.ExerciseReplacements;
 import entities.Goal;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import static daoimpl.RunQuery.*;
 
-public class GoalImpl implements GoalDao {
-    @Override
-    public void createGoalsTable() {
+public class GoalImpl {
+    public static void createGoalsTable() {
         String q = "CREATE TABLE IF NOT EXISTS goal (" +
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
@@ -27,14 +20,12 @@ public class GoalImpl implements GoalDao {
         runUpdate(q);
     }
 
-    @Override
-    public void insert(Goal goal) {
+    public static void insert(Goal goal) {
         insertInto("goal", Integer.toString(goal.getId()), Integer.toString(goal.getExercise()), goal.getDate().toString(),
                 Integer.toString(goal.getLoad()), Integer.toString(goal.getRepetitions()), Integer.toString(goal.getSets()));
     }
 
-    @Override
-    public Goal selectById(int id) {
+    public static Goal selectById(int id) {
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM goal WHERE id = " + id, statement);
         try {
@@ -53,8 +44,7 @@ public class GoalImpl implements GoalDao {
         return null;
     }
 
-    @Override
-    public List<Goal> selectAll() {
+    public static List<Goal> selectAll() {
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM goal", statement);
         List<Goal> l = new ArrayList<>();
@@ -81,13 +71,11 @@ public class GoalImpl implements GoalDao {
         return null;
     }
 
-    @Override
-    public void delete(int id) {
+    public static void delete(int id) {
         runUpdate("DELETE FROM TABLE goal WHERE id = " + id);
     }
 
-    @Override
-    public void update(Goal goal) {
+    public static void update(Goal goal) {
         String exercise = goal.getExercise().toString();
         String date = goal.getDate().toString();
         String load = goal.getLoad().toString();

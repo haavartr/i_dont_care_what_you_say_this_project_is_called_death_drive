@@ -1,6 +1,5 @@
 package daoimpl;
 
-import dao.CardioExerciseDao;
 import entities.CardioExercise;
 import java.sql.*;
 import java.util.ArrayList;
