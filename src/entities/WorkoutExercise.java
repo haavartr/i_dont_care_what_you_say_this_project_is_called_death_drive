@@ -5,7 +5,7 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
     private Integer id;  // Auto-incremented
     private Integer workoutCollectionId;
     private Integer exerciseId;
-    private Integer load;
+    private Integer weight;
     private Integer repetitions;
     private Integer sets;
     private Integer form;
@@ -13,12 +13,12 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
 
     public WorkoutExercise(){}
 
-    public WorkoutExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer load,
+    public WorkoutExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer weight,
                            Integer repetitions, Integer sets, Integer form, Integer performance) {
         this.id = id;
         this.workoutCollectionId = workoutCollectionId;
         this.exerciseId = exerciseId;
-        this.load = load;
+        this.weight = weight;
         this.repetitions = repetitions;
         this.sets = sets;
         this.form = form;
@@ -37,8 +37,8 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
         return exerciseId;
     }
 
-    public Integer getLoad() {
-        return load;
+    public Integer getWeight() {
+        return weight;
     }
 
     public Integer getRepetitions() {
@@ -65,8 +65,8 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
         this.exerciseId = exerciseId;
     }
 
-    public void setLoad(Integer load) {
-        this.load = load;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public void setRepetitions(Integer repetitions) {
@@ -86,6 +86,6 @@ public class WorkoutExercise {  // Superclass of CardioExercise and StrengthExer
     }
 
     public String toString() {
-        return this.getSets() + "x" + this.getRepetitions() + " - " + " (" + this.getLoad() + " kg)";
+        return this.getSets() + "x" + this.getRepetitions() + " - " + " (" + this.getWeight() + " kg)";
     }
 }

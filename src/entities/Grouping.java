@@ -1,13 +1,13 @@
 package entities;
 
-public class Group {
+public class Grouping {
     Integer id;  // Auto-incremented
 
-    public Group(Integer id) {
+    public Grouping(Integer id) {
         this.id = id;
     }
 
-    public Group(){}
+    public Grouping(){}
 
     public Integer getId() {
         return id;

@@ -19,7 +19,7 @@ public class GoalDao {
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
                 "date datetime NOT NULL DEFAULT GETDATE()," +
-                "load INT," +
+                "weight INT," +
                 "repetitions INT," +
                 "sets INT )";
         runUpdate(q);
@@ -28,11 +28,11 @@ public class GoalDao {
     public static void insert(Goal goal) {
         String exercise = "exercise " + goal.getExercise().toString();
         String date = "date " + goal.getDate().toString();
-        String load = "load " + goal.getLoad().toString();
+        String weight = "weight " + goal.getWeight().toString();
         String repetitions = "repetitions " + goal.getRepetitions().toString();
         String sets = "sets " + goal.getSets().toString();
 
-        insertInto("goal", exercise, date, load, repetitions, sets);
+        insertInto("goal", exercise, date, weight, repetitions, sets);
     }
 
     public static Goal selectById(int id) {
@@ -44,7 +44,7 @@ public class GoalDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets"));
+            return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("weight"), rs.getInt("repetitions"), rs.getInt("sets"));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -73,7 +73,7 @@ public class GoalDao {
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {
-                        l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets")));
+                        l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("weight"), rs.getInt("repetitions"), rs.getInt("sets")));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -101,13 +101,13 @@ public class GoalDao {
     public static void update(Goal goal) {
         String exercise = goal.getExercise().toString();
         String date = goal.getDate().toString();
-        String load = goal.getLoad().toString();
+        String weight = goal.getWeight().toString();
         String repetitions = goal.getRepetitions().toString();
         String sets = goal.getSets().toString();
         String id = goal.getId().toString();
 
-        String q = String.format("UPDATE workout_exercise SET exercise = %s, date = %s, load = %s, repetitions = %s, sets = %s " +
-                "WHERE id = %s", exercise, date, load, repetitions, sets, id);
+        String q = String.format("UPDATE workout_exercise SET exercise = %s, date = %s, weight = %s, repetitions = %s, sets = %s " +
+                "WHERE id = %s", exercise, date, weight, repetitions, sets, id);
         runUpdate(q);
     }
 }

@@ -8,7 +8,7 @@ public class WorkoutExerciseDao {  // Parent
                     "id int primary key unique auto_increment," +
                     "workout_collection_id int NOT NULL," +
                     "exercise_id varchar(255)," +
-                    "load int, " +
+                    "weight int, " +
                     "repetitions int, " +
                     "sets int, " +
                     "form int, " +
