@@ -20,13 +20,13 @@ public class StrengthExerciseDao {
 
     public static void insert(StrengthExercise strengthExercise) {
         Statement statement = null;
-        String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
-        String exerciseId = strengthExercise.getExerciseId().toString();
-        String load = strengthExercise.getLoad().toString();
-        String repetitions = strengthExercise.getRepetitions().toString();
-        String sets = strengthExercise.getSets().toString();
-        String form = strengthExercise.getForm().toString();
-        String performance = strengthExercise.getPerformance().toString();
+        String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
+        String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
+        String load = "load " + strengthExercise.getLoad().toString();
+        String repetitions = "repetitions " + strengthExercise.getRepetitions().toString();
+        String sets = "sets " + strengthExercise.getSets().toString();
+        String form = "form " + strengthExercise.getForm().toString();
+        String performance = "performance " + strengthExercise.getPerformance().toString();
 
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         try {

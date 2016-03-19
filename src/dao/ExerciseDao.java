@@ -21,7 +21,9 @@ public class ExerciseDao {
     }
 
     public static void insert(Exercise exercise) {
-        insertInto("exercise (name, description)", exercise.getName(), exercise.getDescription());
+        String name = "name " + exercise.getName();
+        String description = "description " + exercise.getDescription();
+        insertInto("exercise", name, description);
     }
 
     public static Exercise selectById(int id) {

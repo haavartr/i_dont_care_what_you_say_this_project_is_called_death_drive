@@ -19,7 +19,10 @@ public class GroupGroupDao {  // Many-to-many
     }
 
     public static void insert(GroupGroup groupGroup) {
-        insertInto("group_group", groupGroup.getContainerGroupId().toString(), groupGroup.getContainedGroupId().toString());
+        String containerGroupId = "container_group_id " + groupGroup.getContainerGroupId().toString();
+        String containedGroupId = "contained_group_id " + groupGroup.getContainedGroupId().toString();
+
+        insertInto("group_group", containerGroupId, containedGroupId);
     }
 
     public static ArrayList<GroupGroup> selectAll() {  // Returns an empty ArrayList if the table is empty

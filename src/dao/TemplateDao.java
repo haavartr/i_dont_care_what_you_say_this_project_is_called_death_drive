@@ -21,7 +21,7 @@ public class TemplateDao {
 
     public static void insert(Template template) {
         Statement statement = null;
-        String name = template.getName();
+        String name = "name " + template.getName();
 
         insertInto("workout_collection", name);
         try {

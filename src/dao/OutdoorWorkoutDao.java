@@ -24,18 +24,18 @@ public class OutdoorWorkoutDao {
 
     public static void insert(OutdoorWorkout outdoorWorkout) {
         Statement statement = null;
-        String workoutID = Integer.toString(outdoorWorkout.getId());
-        String name = outdoorWorkout.getName();
-        String date = outdoorWorkout.getDate().toString();
-        String length = Integer.toString(outdoorWorkout.getLength());
-        String note = outdoorWorkout.getNote();
-        String temp = Float.toString(outdoorWorkout.getTemperature());
-        String weather = outdoorWorkout.getWeather();
+        String workoutID = "workout_id " + Integer.toString(outdoorWorkout.getId());
+        String name = "name " + outdoorWorkout.getName();
+        String date = "date " + outdoorWorkout.getDate().toString();
+        String length = "length " + Integer.toString(outdoorWorkout.getLength());
+        String note = "note " + outdoorWorkout.getNote();
+        String temperature = "temperature " + Float.toString(outdoorWorkout.getTemperature());
+        String weather = "weather " + outdoorWorkout.getWeather();
 
         insertInto("workout", workoutID, name, date, length, note);
         try {
             String id = Integer.toString(runQuery("SELECT LAST_INSERT_ID()", statement).getInt(0));
-            insertInto("outdoor_workout", id, temp, weather);
+            insertInto("outdoor_workout", id, temperature, weather);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         } finally {
