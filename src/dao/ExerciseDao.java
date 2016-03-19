@@ -39,10 +39,8 @@ public class ExerciseDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
-            } else {
-                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();

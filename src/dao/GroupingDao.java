@@ -35,10 +35,8 @@ public class GroupingDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new Grouping(rs.getInt("id"));
-            } else {
-                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();

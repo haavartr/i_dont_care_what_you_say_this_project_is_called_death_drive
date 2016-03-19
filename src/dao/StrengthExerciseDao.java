@@ -68,7 +68,7 @@ public class StrengthExerciseDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new StrengthExercise(rs.getInt("id"),
                         rs.getInt("workout_collection_id"),
                         rs.getInt("exercise_id"),
@@ -77,8 +77,6 @@ public class StrengthExerciseDao {
                         rs.getInt("sets"),
                         rs.getInt("form"),
                         rs.getInt("performance"));
-            } else {
-                return null;
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
