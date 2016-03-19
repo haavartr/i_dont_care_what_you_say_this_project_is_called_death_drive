@@ -128,7 +128,7 @@ public class IndoorWorkoutDao {
     }
 
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
-        runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
+        runUpdate("DELETE FROM workout_collection WHERE id = " + id);
     }
 
     public static void update(IndoorWorkout indoorWorkout) {

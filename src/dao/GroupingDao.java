@@ -88,6 +88,6 @@ public class GroupingDao {
     }
 
     public static void delete(int id) {
-        runUpdate("DELETE FROM TABLE grouping WHERE id = " + id);
+        runUpdate("DELETE FROM grouping WHERE id = " + id);
     }
 }
