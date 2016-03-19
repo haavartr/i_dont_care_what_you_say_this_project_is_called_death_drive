@@ -27,14 +27,18 @@ public class StrengthExerciseDao {
         Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
+<<<<<<< HEAD
+        String weight = "weight " + strengthExercise.getWeight().toString();
+=======
         String load = "weight " + strengthExercise.getWeight().toString();
+>>>>>>> master
         String repetitions = "repetitions " + strengthExercise.getRepetitions().toString();
         String sets = "sets " + strengthExercise.getSets().toString();
         String form = "form " + strengthExercise.getForm().toString();
         String performance = "performance " + strengthExercise.getPerformance().toString();
 
-        String q = "SELECT * FROM group_exercise";
-        insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
+        String q = "SELECT * FROM grouping_exercise";
+        insertInto("workout_exercise", workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
@@ -139,7 +143,11 @@ public class StrengthExerciseDao {
     public static void update(StrengthExercise strengthExercise) {
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
+<<<<<<< HEAD
+        String weight = strengthExercise.getWeight().toString();
+=======
         String load = strengthExercise.getWeight().toString();
+>>>>>>> master
         String repetitions = strengthExercise.getRepetitions().toString();
         String sets = strengthExercise.getSets().toString();
         String form = strengthExercise.getForm().toString();
@@ -148,7 +156,7 @@ public class StrengthExerciseDao {
 
         String q = String.format("UPDATE workout_exercise SET workout_collection_id = %s, exercise_id = %s, weight = %s," +
                         "repetitions = %s, sets = %s, form = %s, performance = %s WHERE id = %s", workoutCollectionId,
-                exerciseId, load, repetitions, sets, form, performance, id);
+                exerciseId, weight, repetitions, sets, form, performance, id);
         runUpdate(q);
     }
 }
