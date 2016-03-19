@@ -25,7 +25,7 @@ public class GoalsViewController implements Initializable {
 
     @FXML private ListView<Goal> goalsList;
     @FXML private Button createNewGoalButton;
-    @FXML private TextField goalLoadField;
+    @FXML private TextField goalWeightField;
     @FXML private TextField goalRepetitionsField;
     @FXML private TextField goalSetsField;
 

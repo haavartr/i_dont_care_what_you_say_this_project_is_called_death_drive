@@ -29,7 +29,7 @@
                      </font>
                   </Label>
                   <Button fx:id="saveNewGoalButton" layoutX="149.0" layoutY="200.0" mnemonicParsing="false" text="Lagre" />
-                  <TextField fx:id="goalLoadField" layoutX="193.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
+                  <TextField fx:id="goalWeightField" layoutX="193.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
                   <Button fx:id="cancelNewGoalButton" layoutX="85.0" layoutY="200.0" mnemonicParsing="false" text="Avbryt" />
                   <TextField fx:id="goalRepetitionsField" layoutX="193.0" layoutY="126.0" prefHeight="27.0" prefWidth="72.0" />
                   <TextField fx:id="goalSetsField" layoutX="193.0" layoutY="163.0" prefHeight="27.0" prefWidth="72.0" />
