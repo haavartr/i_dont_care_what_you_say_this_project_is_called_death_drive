@@ -18,7 +18,8 @@ public class RunQuery {
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-                statement.executeUpdate(query);
+            System.out.println(query);
+            statement.executeUpdate(query);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -29,7 +30,6 @@ public class RunQuery {
                     e.printStackTrace();
                 }
             }
-
             if (connection != null) {
                 try {
                     connection.close();
@@ -62,6 +62,9 @@ public class RunQuery {
     }
 
     public static void insertInto (String name, String... args) {
+        for (String a : args){
+            System.out.println(a);
+        }
         String colums = "";
         for (String c : args) {
             colums += c.split(" ", 2)[0];

@@ -22,25 +22,28 @@ public class CardioExerciseDao {
     }
 
     public static void insert(CardioExercise cardioExercise) {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + cardioExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + cardioExercise.getExerciseId().toString();
-        String load = "load " + cardioExercise.getLoad().toString();
+        String load = "weight " + cardioExercise.getLoad().toString();
         String repetitions = "repetitions " + cardioExercise.getRepetitions().toString();
         String sets = "sets " + cardioExercise.getSets().toString();
         String form = "form " + cardioExercise.getForm().toString();
         String performance = "performance " + cardioExercise.getPerformance().toString();
         String distance = "distance " + cardioExercise.getDistance().toString();
         String time = "time " + cardioExercise.getTime().toString();
-
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
+        Connection connection;
+        ResultSet rs;
+        Statement statement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
-            String id = Integer.toString(rs.getInt(0));
+            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_exercise");
+            String id = "id ";
+            if (rs.next()) {
+                id += rs.getString("last_id");
+                System.out.println(id);
+            }
             insertInto("cardio_exercise", id, distance, time);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
