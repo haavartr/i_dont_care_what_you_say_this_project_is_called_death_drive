@@ -68,7 +68,7 @@ public class ExerciseReplacementsDao {  // Many-to-many
     }
 
     public static void delete(int exerciseId1, int exerciseId2) {
-        String q = String.format("DELETE FROM TABLE exercise_replacements WHERE exercise_id_1 = %d AND exercise_id_2 = %d",
+        String q = String.format("DELETE FROM exercise_replacements WHERE exercise_id_1 = %d AND exercise_id_2 = %d",
                 exerciseId1, exerciseId2);
         runUpdate(q);
     }

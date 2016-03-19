@@ -151,7 +151,7 @@ public class CardioExerciseDao {
     }
 
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
-        runUpdate("DELETE FROM TABLE workout_exercise WHERE id = " + id);
+        runUpdate("DELETE FROM workout_exercise WHERE id = " + id);
     }
 
     public static void update(CardioExercise cardioExercise) {
