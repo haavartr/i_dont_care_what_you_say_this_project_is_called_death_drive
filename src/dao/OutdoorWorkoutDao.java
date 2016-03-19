@@ -80,22 +80,25 @@ public class OutdoorWorkoutDao {
         return null;
     }
 
-    public static List<OutdoorWorkout> selectAll() {
+    public static ArrayList<OutdoorWorkout> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM outdoor_workout JOIN workout", statement);
         ArrayList<OutdoorWorkout> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new OutdoorWorkout(rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getDate("date").toLocalDate(),
-                            rs.getInt("length"),
-                            rs.getString("note"),
-                            rs.getFloat("temperature"),
-                            rs.getString("weather")));
-                } catch (SQLException|NullPointerException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new OutdoorWorkout(rs.getInt("id"),
+                                rs.getString("name"),
+                                rs.getDate("date").toLocalDate(),
+                                rs.getInt("length"),
+                                rs.getString("note"),
+                                rs.getFloat("temperature"),
+                                rs.getString("weather")));
+                    } catch (SQLException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
@@ -113,8 +116,7 @@ public class OutdoorWorkoutDao {
         return null;
     }
 
-    // Delete the entry in the highest parent and let the deletion cascade
-    public static void delete(int id) {
+    public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 

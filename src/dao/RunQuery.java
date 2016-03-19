@@ -45,7 +45,7 @@ public class RunQuery {
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            statement.executeQuery(query);
+            rs = statement.executeQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

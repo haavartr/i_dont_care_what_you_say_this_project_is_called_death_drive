@@ -70,22 +70,25 @@ public class IndoorWorkoutDao {
         return null;
     }
 
-    public static List<IndoorWorkout> selectAll() {
+    public static ArrayList<IndoorWorkout> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout", statement);
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new IndoorWorkout(rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getDate("date").toLocalDate(),
-                            rs.getInt("length"),
-                            rs.getString("note"),
-                            rs.getInt("air_quality"),
-                            rs.getInt("spectators")));
-                } catch (SQLException|NullPointerException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new IndoorWorkout(rs.getInt("id"),
+                                rs.getString("name"),
+                                rs.getDate("date").toLocalDate(),
+                                rs.getInt("length"),
+                                rs.getString("note"),
+                                rs.getInt("air_quality"),
+                                rs.getInt("spectators")));
+                    } catch (SQLException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
@@ -103,7 +106,6 @@ public class IndoorWorkoutDao {
         return null;
     }
 
-    // Delete the entry in the highest parent and let the deletion cascade
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }

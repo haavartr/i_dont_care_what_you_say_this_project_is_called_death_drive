@@ -81,25 +81,28 @@ public class CardioExerciseDao {
         return null;
     }
 
-    public static ArrayList<CardioExercise> selectAll() {
+    public static ArrayList<CardioExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM cardio_exercise JOIN workout_exercise", statement);
         ArrayList<CardioExercise> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new CardioExercise(rs.getInt("id"),
-                            rs.getInt("workout_collection_id"),
-                            rs.getInt("exercise_id"),
-                            rs.getInt("load"),
-                            rs.getInt("repetitions"),
-                            rs.getInt("sets"),
-                            rs.getInt("form"),
-                            rs.getInt("performance"),
-                            rs.getInt("distance"),
-                            rs.getInt("time")));
-                } catch (SQLException|NullPointerException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new CardioExercise(rs.getInt("id"),
+                                rs.getInt("workout_collection_id"),
+                                rs.getInt("exercise_id"),
+                                rs.getInt("load"),
+                                rs.getInt("repetitions"),
+                                rs.getInt("sets"),
+                                rs.getInt("form"),
+                                rs.getInt("performance"),
+                                rs.getInt("distance"),
+                                rs.getInt("time")));
+                    } catch (SQLException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
@@ -118,8 +121,7 @@ public class CardioExerciseDao {
         return null;
     }
 
-    // Delete the entry in the highest parent and let the deletion cascade
-    public static void delete(int id) {
+    public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runUpdate("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }
 

@@ -47,12 +47,13 @@ public class ExerciseDao {
         return null;
     }
 
-    public static List<Exercise> selectAll() {
+    public static ArrayList<Exercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM exercise", statement);
-        List<Exercise> l = new ArrayList<>();
+        ArrayList<Exercise> l = new ArrayList<>();
         try {
-            if (rs != null) {
+            if (rs.next()) {
+                rs.beforeFirst();
                 while (rs.next()) {
                     try {
                         l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description")));

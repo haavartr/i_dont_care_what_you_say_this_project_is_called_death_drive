@@ -10,7 +10,7 @@ import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
 
-public class GroupExerciseDao {
+public class GroupExerciseDao {  // Many-to-many
     public static void createGroupExerciseTable() {
         String q = ("CREATE TABLE IF NOT EXISTS group_exercise (" +
                 "group_id INT NOT NULL," +
@@ -22,16 +22,19 @@ public class GroupExerciseDao {
         insertInto("group_exercise", groupExercise.getGroupId().toString(), groupExercise.getExerciseId().toString());
     }
 
-    public static List<GroupExercise> selectAll() {
+    public static ArrayList<GroupExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM group_exercise", statement);
-        List<GroupExercise> l = new ArrayList<>();
+        ArrayList<GroupExercise> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new GroupExercise(rs.getInt("group_id"), rs.getInt("exercise_id")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new GroupExercise(rs.getInt("group_id"), rs.getInt("exercise_id")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
