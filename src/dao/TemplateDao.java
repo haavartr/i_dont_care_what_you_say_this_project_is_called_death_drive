@@ -1,20 +1,16 @@
-package daoimpl;
+package dao;
 
-import dao.TemplateDao;
 import entities.Template;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import static dao.RunQuery.insertInto;
+import static dao.RunQuery.runQuery;
+import static dao.RunQuery.runUpdate;
 
-import static daoimpl.RunQuery.insertInto;
-import static daoimpl.RunQuery.runQuery;
-import static daoimpl.RunQuery.runUpdate;
-
-public class TemplateImpl implements TemplateDao{
-    @Override
-    public void createTemplateTable() {
+public class TemplateDao {
+    public static void createTemplateTable() {
         String q ="CREATE TABLE IF NOT EXISTS template (" +
                 "id INT NOT NULL," +
                 "PRIMARY KEY(id)," +
@@ -22,8 +18,7 @@ public class TemplateImpl implements TemplateDao{
         runUpdate(q);
     }
 
-    @Override
-    public void insert(Template template) {
+    public static void insert(Template template) {
         Statement statement = null;
         String name = template.getName();
 
@@ -44,8 +39,7 @@ public class TemplateImpl implements TemplateDao{
         }
     }
 
-    @Override
-    public Template selectById(int id) {  // Returns null if the id doesn't exist
+    public static Template selectById(int id) {  // Returns null if the id doesn't exist
         Statement statement = null;
         String q = String.format("SELECT * FROM template JOIN workout_collection ON template.id = %d " +
                 "AND workout_collection.id = %d", id, id);
@@ -70,18 +64,15 @@ public class TemplateImpl implements TemplateDao{
         return null;
     }
 
-    @Override
-    public List<Template> selectAll() {
+    public static List<Template> selectAll() {
         return null;
     }
 
-    @Override  // Delete the entry in the highest parent and let the deletion cascade
-    public void delete(int id) {
+    public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runUpdate("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
-    @Override
-    public void update(Template template) {
+    public static void update(Template template) {
         String id = template.getId().toString();
         String name = template.getName();
         String q = String.format("UPDATE workout_collection SET name = %s WHERE id = %s", name, id);

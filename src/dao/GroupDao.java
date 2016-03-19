@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import entities.Group;
 import java.sql.ResultSet;
@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import static daoimpl.RunQuery.insertInto;
-import static daoimpl.RunQuery.runQuery;
-import static daoimpl.RunQuery.runUpdate;
+import static dao.RunQuery.insertInto;
+import static dao.RunQuery.runQuery;
+import static dao.RunQuery.runUpdate;
 
-public class GroupImpl {
+public class GroupDao {
     public static void createGroupTable() {
         String q = "CREATE TABLE IF NOT EXISTS group (" +
                     "id int primary key unique auto_increment," +

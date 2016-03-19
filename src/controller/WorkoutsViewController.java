@@ -1,7 +1,6 @@
 package controller;
 
-import daoimpl.ExerciseImpl;
-import daoimpl.WorkoutExerciseImpl;
+import dao.ExerciseDao;
 import entities.Exercise;
 import entities.Workout;
 import entities.WorkoutExercise;
@@ -67,7 +66,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private List<Exercise> exercises = ExerciseImpl.selectAll();
+    private List<Exercise> exercises = ExerciseDao.selectAll();
     private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");

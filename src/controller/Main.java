@@ -1,7 +1,6 @@
 package controller;
 
-import daoimpl.*;
-import entities.StrengthExercise;
+import dao.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,14 +21,14 @@ public class Main extends Application {
         primaryStage.show();
 
         final Connection connection = ConnectionConfiguration.getConnection();
-        ExerciseImpl.createExerciseTable();
-        WorkoutExerciseImpl.createWorkoutExerciseTable();
-        //StrengthExerciseImpl.createStrengthExerciseTable();
-        //CardioExerciseImpl.createCardioExerciseTable();
+        ExerciseDao.createExerciseTable();
+        WorkoutExerciseDao.createWorkoutExerciseTable();
+        //StrengthExerciseDao.createStrengthExerciseTable();
+        //CardioExerciseDao.createCardioExerciseTable();
 
-        WorkoutImpl.createWorkoutTable();
-        //IndoorWorkoutImpl.createIndoorWorkoutTable();
-        //OutdoorWorkoutImpl.createOutdoorWorkoutTable();
+        WorkoutDao.createWorkoutTable();
+        //IndoorWorkoutDao.createIndoorWorkoutTable();
+        //OutdoorWorkoutDao.createOutdoorWorkoutTable();
     }
 
     public static void main(String[] args) {
