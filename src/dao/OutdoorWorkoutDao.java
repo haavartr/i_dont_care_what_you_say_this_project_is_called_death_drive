@@ -20,7 +20,7 @@ public class OutdoorWorkoutDao {
         String q = "CREATE TABLE IF NOT EXISTS outdoor_workout (" +
                 "id int primary key unique not null," +
                 "temperature float," +
-                "weather varchar(55))," +
+                "weather varchar(55)," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runUpdate(q);
     }
