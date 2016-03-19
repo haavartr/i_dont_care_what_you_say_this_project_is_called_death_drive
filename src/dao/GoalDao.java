@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import entities.Goal;
 import java.sql.ResultSet;
@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import static daoimpl.RunQuery.*;
+import static dao.RunQuery.*;
 
-public class GoalImpl {
+public class GoalDao {
     public static void createGoalsTable() {
         String q = "CREATE TABLE IF NOT EXISTS goal (" +
                 "id INT NOT NULL auto_increment primary key," +

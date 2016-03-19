@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import entities.StrengthExercise;
 
@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static daoimpl.RunQuery.*;
+import static dao.RunQuery.*;
 
-public class StrengthExerciseImpl {
+public class StrengthExerciseDao {
     public static void createStrengthExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS strength_exercise (" +
                 "id int primary key unique auto_increment," +

@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import util.ConnectionConfiguration;
 

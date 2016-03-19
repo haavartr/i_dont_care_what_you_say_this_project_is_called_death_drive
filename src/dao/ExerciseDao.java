@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import entities.Exercise;
 import java.sql.ResultSet;
@@ -7,11 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static daoimpl.RunQuery.insertInto;
-import static daoimpl.RunQuery.runQuery;
-import static daoimpl.RunQuery.runUpdate;
+import static dao.RunQuery.insertInto;
+import static dao.RunQuery.runQuery;
+import static dao.RunQuery.runUpdate;
 
-public class ExerciseImpl {
+public class ExerciseDao {
     public static void createExerciseTable() {
         String q = ("CREATE TABLE IF NOT EXISTS exercise (" +
                 "id int primary key unique auto_increment," +

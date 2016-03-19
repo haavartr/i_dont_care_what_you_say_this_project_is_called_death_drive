@@ -1,8 +1,8 @@
-package daoimpl;
+package dao;
 
-import static daoimpl.RunQuery.runUpdate;
+import static dao.RunQuery.runUpdate;
 
-public class WorkoutImpl {
+public class WorkoutDao {
     public static void createWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout (" +
                     "id int primary key unique auto_increment," +

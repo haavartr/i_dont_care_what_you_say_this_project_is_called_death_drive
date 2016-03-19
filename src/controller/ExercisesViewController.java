@@ -1,9 +1,7 @@
 package controller;
 
-import daoimpl.ExerciseImpl;
+import dao.ExerciseDao;
 import entities.Exercise;
-import entities.Workout;
-import entities.WorkoutExercise;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import util.Helper;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,7 +62,7 @@ public class ExercisesViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (!newExerciseName.getText().equals("")) {
-                    ExerciseImpl.insert(new Exercise(0, newExerciseName.getText(), newExerciseDescription.getText()));
+                    ExerciseDao.insert(new Exercise(0, newExerciseName.getText(), newExerciseDescription.getText()));
                     loadAllWorkoutsToList();
 
                     loadAllWorkoutsToList();
@@ -84,7 +81,7 @@ public class ExercisesViewController implements Initializable {
     }
 
     private void loadAllWorkoutsToList() {
-        exercises = ExerciseImpl.selectAll();
+        exercises = ExerciseDao.selectAll();
         ObservableList<Exercise> list = FXCollections.observableArrayList();
         for (Exercise exercise : exercises) {
             list.add(exercise);

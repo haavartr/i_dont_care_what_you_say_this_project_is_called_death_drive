@@ -1,11 +1,11 @@
-package daoimpl;
+package dao;
 
 import entities.CardioExercise;
 import java.sql.*;
 import java.util.ArrayList;
-import static daoimpl.RunQuery.*;
+import static dao.RunQuery.*;
 
-public class CardioExerciseImpl {
+public class CardioExerciseDao {
     public static void createCardioExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS cardio_exercise (" +
                 "id INT NOT NULL UNIQUE," +

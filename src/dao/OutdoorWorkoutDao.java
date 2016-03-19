@@ -1,4 +1,4 @@
-package daoimpl;
+package dao;
 
 import entities.OutdoorWorkout;
 
@@ -8,11 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static daoimpl.RunQuery.insertInto;
-import static daoimpl.RunQuery.runQuery;
-import static daoimpl.RunQuery.runUpdate;
+import static dao.RunQuery.insertInto;
+import static dao.RunQuery.runQuery;
+import static dao.RunQuery.runUpdate;
 
-public class OutdoorWorkoutImpl {
+public class OutdoorWorkoutDao {
     public static void createOutdoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS outdoor_workout (" +
                 "id int primary key unique not null," +
