@@ -1,6 +1,9 @@
 package dao;
 
 import entities.ExerciseReplacements;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,14 +30,19 @@ public class ExerciseReplacementsDao {  // Many-to-many
     }
 
     public static ArrayList<ExerciseReplacements> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM exercise_replacements";
         ArrayList<ExerciseReplacements> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
+                connection = ConnectionConfiguration.getConnection();
+                statement = connection.createStatement();
+                rs = statement.executeQuery(q);
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {

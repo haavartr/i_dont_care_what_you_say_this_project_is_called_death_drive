@@ -1,6 +1,9 @@
 package dao;
 
 import entities.Exercise;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,12 +31,14 @@ public class ExerciseDao {
     }
 
     public static Exercise selectById(int id) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM exercise WHERE id = " + id;
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs != null) {
                 return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
             } else {
@@ -54,13 +59,15 @@ public class ExerciseDao {
     }
 
     public static ArrayList<Exercise> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM exercise";
         ArrayList<Exercise> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

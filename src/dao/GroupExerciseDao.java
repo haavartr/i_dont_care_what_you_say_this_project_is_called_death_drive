@@ -1,6 +1,9 @@
 package dao;
 
 import entities.GroupExercise;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,13 +31,15 @@ public class GroupExerciseDao {  // Many-to-many
     }
 
     public static ArrayList<GroupExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM group_exercise";
         ArrayList<GroupExercise> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

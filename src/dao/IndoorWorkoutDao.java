@@ -1,6 +1,9 @@
 package dao;
 
 import entities.IndoorWorkout;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,6 +26,8 @@ public class IndoorWorkoutDao {
     }
 
     public static void insert(IndoorWorkout indoorWorkout) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String workoutID = "workout_id " + Integer.toString(indoorWorkout.getId());
         String name = "name " + indoorWorkout.getName();
@@ -31,12 +36,12 @@ public class IndoorWorkoutDao {
         String note = "note " + indoorWorkout.getNote();
         String airQuality = "air_quality " + Integer.toString(indoorWorkout.getAirQuality());
         String spectators = "spectators " + Integer.toString(indoorWorkout.getSpectators());
-
+        String q = "SELECT * FROM group_exercise";
         insertInto("workout", workoutID, name, date, length, note);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             String id = Integer.toString(rs.getInt(0));
             insertInto("indoor_workout", id, airQuality, spectators);
         } catch (SQLException|NullPointerException e) {
@@ -45,13 +50,15 @@ public class IndoorWorkoutDao {
     }
 
     public static IndoorWorkout selectById(int id) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
                 "AND workout.id = %d", id, id);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs != null) {
                 return new IndoorWorkout(rs.getInt("id"),
                         rs.getString("name"),
@@ -78,13 +85,15 @@ public class IndoorWorkoutDao {
     }
 
     public static ArrayList<IndoorWorkout> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM indoor_workout JOIN workout";
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

@@ -1,6 +1,9 @@
 package dao;
 
 import entities.Group;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,12 +27,14 @@ public class GroupDao {
     }
 
     public static Group selectById(int id) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM group WHERE id = " + id;
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs != null) {
                 return new Group(rs.getInt("id"));
             } else {
@@ -50,13 +55,15 @@ public class GroupDao {
     }
 
     public static ArrayList<Group> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM group";
         ArrayList<Group> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

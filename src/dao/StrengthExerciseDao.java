@@ -1,7 +1,9 @@
 package dao;
 
 import entities.StrengthExercise;
+import util.ConnectionConfiguration;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +22,8 @@ public class StrengthExerciseDao {
     }
 
     public static void insert(StrengthExercise strengthExercise) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
@@ -29,11 +33,12 @@ public class StrengthExerciseDao {
         String form = "form " + strengthExercise.getForm().toString();
         String performance = "performance " + strengthExercise.getPerformance().toString();
 
+        String q = "SELECT * FROM group_exercise";
         insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             String id = Integer.toString(rs.getInt(0));
             insertInto("strength_exercise", id);
         } catch (SQLException |NullPointerException e) {
@@ -50,13 +55,15 @@ public class StrengthExerciseDao {
     }
 
     public static StrengthExercise selectById(int id) {  // Returns null if the id doesn't exist
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = String.format("SELECT * FROM strength_exercise JOIN workout_exercise ON strength_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs != null) {
                 return new StrengthExercise(rs.getInt("id"),
                         rs.getInt("workout_collection_id"),
@@ -84,13 +91,15 @@ public class StrengthExerciseDao {
     }
 
     public static ArrayList<StrengthExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM strength_exercise JOIN workout_exercise";
         ArrayList<StrengthExercise> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {

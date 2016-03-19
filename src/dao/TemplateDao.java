@@ -1,6 +1,9 @@
 package dao;
 
 import entities.Template;
+import util.ConnectionConfiguration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,14 +25,16 @@ public class TemplateDao {
     }
 
     public static void insert(Template template) {
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String name = "name " + template.getName();
-
+        String q = "SELECT * FROM group_exercise";
         insertInto("workout_collection", name);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery("SELECT LAST_INSERT_ID()", statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             String id = Integer.toString(rs.getInt(0));
             insertInto("template", id);
         } catch (SQLException|NullPointerException e) {
@@ -46,13 +51,15 @@ public class TemplateDao {
     }
 
     public static Template selectById(int id) {  // Returns null if the id doesn't exist
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = String.format("SELECT * FROM template JOIN workout_collection ON template.id = %d " +
                 "AND workout_collection.id = %d", id, id);
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs != null) {
                 return new Template(rs.getInt("id"), rs.getString("name"));
             } else {
@@ -73,13 +80,15 @@ public class TemplateDao {
     }
 
     public static ArrayList<Template> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Connection connection = null;
+        ResultSet rs;
         Statement statement = null;
         String q = "SELECT * FROM template JOIN workout_collection";
         ArrayList<Template> l = new ArrayList<>();
         try {
-            TreeMap<ResultSet, Statement> result = runQuery(q, statement);
-            ResultSet rs = result.firstEntry().getKey();
-            statement = result.firstEntry().getValue();
+            connection = ConnectionConfiguration.getConnection();
+            statement = connection.createStatement();
+            rs = statement.executeQuery(q);
             if (rs.next()) {
                 rs.beforeFirst();
                 while (rs.next()) {
