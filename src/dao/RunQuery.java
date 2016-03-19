@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.TreeMap;
 
 public class RunQuery {
     //used for INSERT, UBPDATE, CREATE and DELETE
@@ -38,14 +39,16 @@ public class RunQuery {
         }
     }
 
-    public static ResultSet runQuery (String query, Statement statement) {
+    public static TreeMap<ResultSet, Statement> runQuery (String query, Statement statement) {
         Connection connection = null;
         ResultSet rs = null;
+        TreeMap<ResultSet, Statement> m = new TreeMap<>();
 
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
+            m.put(rs, statement);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -57,7 +60,7 @@ public class RunQuery {
                     }
                 }
         }
-        return rs;
+        return m;
     }
 
     public static void insertInto (String name, String... args) {
