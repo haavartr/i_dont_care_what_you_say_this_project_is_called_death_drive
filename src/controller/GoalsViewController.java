@@ -1,6 +1,5 @@
 package controller;
 
-import dao.ExerciseDao;
 import dao.GoalDao;
 import entities.Exercise;
 import entities.Goal;
@@ -15,13 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import sun.plugin.javascript.navig.Anchor;
 import util.Helper;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**

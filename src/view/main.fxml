@@ -22,11 +22,18 @@
       </Tab>
 
 
-
-    <Tab text="Mål">
+        <Tab text="Mål">
         <content>
             <fx:include fx:id="goalsTab" source="goalsTab.fxml" />
         </content>
-    </Tab>
+        </Tab>
+
+
+      <Tab text="Grupper">
+          <content>
+              <fx:include fx:id="groupsTab" source="groupsTab.fxml" />
+          </content>
+      </Tab>
+
   </tabs>
 </TabPane>
