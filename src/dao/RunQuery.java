@@ -70,7 +70,12 @@ public class RunQuery {
         colums = colums.substring(0, colums.length()-1);
         String q = "INSERT INTO " + name +" (" + colums + ") VALUES (";
         for (String arg : args){
-            q += "'" + arg.split(" ", 2)[1] + "'" + ",";
+            try {
+                Integer.parseInt(arg.split(" ", 2)[1]);
+                q += "" + arg.split(" ", 2)[1] + "" + ",";
+            } catch (Exception e) {
+                q += "'" + arg.split(" ", 2)[1] + "'" + ",";
+            }
         }
         q = q.substring(0, q.length()-1);
         q += ")";
