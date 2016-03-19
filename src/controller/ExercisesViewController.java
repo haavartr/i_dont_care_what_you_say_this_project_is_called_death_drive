@@ -1,7 +1,9 @@
 package controller;
 
 import dao.ExerciseDao;
+import dao.ExerciseReplacementsDao;
 import entities.Exercise;
+import entities.ExerciseReplacements;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -28,6 +30,10 @@ public class ExercisesViewController implements Initializable {
     @FXML private Text exerciseNameLabel;
     @FXML private Text exerciseDescriptionLabel;
 
+    @FXML private Button addNewExerciseReplacement;
+    @FXML private ListView<Exercise> exerciseReplacementsList;
+    @FXML private ComboBox<Exercise> notExerciseReplacementsList;
+
     @FXML private AnchorPane newExercisePane;
     @FXML private Button cancelNewExercise;
     @FXML private Button saveNewExercise;
@@ -49,6 +55,7 @@ public class ExercisesViewController implements Initializable {
 
                 exerciseNameLabel.setText(exercise.getName());
                 exerciseDescriptionLabel.setText(exercise.getDescription());
+                setExerciseReplacements();
             }
         });
 
@@ -78,5 +85,35 @@ public class ExercisesViewController implements Initializable {
                 newExercisePane.setVisible(false);
             }
         });
+
+        addNewExerciseReplacement.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Exercise selectedExerciseReplacement = notExerciseReplacementsList.getSelectionModel().getSelectedItem();
+
+                if (selectedExerciseReplacement != null) {
+                    Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
+
+                    ExerciseReplacementsDao.insert(new ExerciseReplacements(selectedExercise.getId(), selectedExerciseReplacement.getId()));
+                    setExerciseReplacements();
+                }
+            }
+        });
+    }
+
+    private void setExerciseReplacements() {
+        ObservableList<Exercise> replacements = FXCollections.observableArrayList();
+        ObservableList<Exercise> notReplacements = FXCollections.observableArrayList();
+
+        Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
+
+        for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
+            if(er.getExerciseId1().equals(selectedExercise.getId())) {
+                replacements.add(ExerciseDao.selectById(er.getExerciseId2()));
+            } else if(er.getExerciseId2().equals(selectedExercise.getId())){
+                replacements.add(ExerciseDao.selectById(er.getExerciseId1()));
+            }
+        }
+        exerciseReplacementsList.setItems(replacements);
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
@@ -28,7 +29,7 @@
             <Text fx:id="exerciseDescriptionLabel" layoutX="10.0" layoutY="45.0" text="Øvelsesbeskrivelse." />
             <Button layoutX="286.0" layoutY="105.0" mnemonicParsing="false" text="Vis alle øvelser i gruppe" />
             <Label layoutX="286.0" layoutY="85.0" text="Gruppe: Arm" />
-            <ListView layoutX="10.0" layoutY="277.0" prefHeight="350.0" prefWidth="243.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <ListView fx:id="exerciseReplacementsList" layoutX="10.0" layoutY="277.0" prefHeight="315.0" prefWidth="243.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" />
             <Label layoutX="10.0" layoutY="85.0" text="Kan erstattes av:" />
             <AnchorPane fx:id="newExercisePane" layoutX="65.0" layoutY="149.0" prefHeight="200.0" prefWidth="424.0" style="-fx-border-radius: 20; -fx-background-color: #FFF; -fx-border-color: #CCC;">
                <children>
@@ -45,6 +46,8 @@
                   <TextArea fx:id="newExerciseDescription" layoutX="127.0" layoutY="86.0" prefHeight="59.0" prefWidth="243.0" />
                </children>
             </AnchorPane>
+            <Button fx:id="addNewExerciseReplacement" layoutX="189.0" layoutY="461.0" mnemonicParsing="false" text="Legg til" />
+            <ComboBox fx:id="notExerciseReplacementsList" layoutX="10.0" layoutY="461.0" prefHeight="27.0" prefWidth="173.0" />
          </children></AnchorPane>
     </items>
 </SplitPane>
