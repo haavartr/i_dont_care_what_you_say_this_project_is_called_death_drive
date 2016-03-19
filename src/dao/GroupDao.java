@@ -13,9 +13,7 @@ import static dao.RunQuery.runUpdate;
 public class GroupDao {
     public static void createGroupTable() {
         String q = "CREATE TABLE IF NOT EXISTS group (" +
-                    "id int primary key unique auto_increment," +
-                    "name varchar(55)," +
-                    "description varchar(255))";
+                    "id int primary key unique auto_increment)";
         runUpdate(q);
     }
 
