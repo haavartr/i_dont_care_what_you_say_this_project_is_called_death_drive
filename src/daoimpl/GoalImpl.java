@@ -7,6 +7,7 @@ import entities.Goal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class GoalImpl implements GoalDao {
                 "load INT," +
                 "repetitions INT," +
                 "sets INT )";
-        runQuery(q);
+        runUpdate(q);
     }
 
     @Override
@@ -34,18 +35,28 @@ public class GoalImpl implements GoalDao {
 
     @Override
     public Goal selectById(int id) {
-        ResultSet rs = runQuery("SELECT * FROM goal WHERE id = " + id);
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM goal WHERE id = " + id, statement);
         try {
             return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets"));
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     @Override
     public List<Goal> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM goal");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM goal", statement);
         List<Goal> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -58,13 +69,21 @@ public class GoalImpl implements GoalDao {
             return l;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     @Override
     public void delete(int id) {
-        runQuery("DELETE FROM TABLE goal WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE goal WHERE id = " + id);
     }
 
     @Override
@@ -78,6 +97,6 @@ public class GoalImpl implements GoalDao {
 
         String q = String.format("UPDATE workout_exercise SET exercise = %s, date = %s, load = %s, repetitions = %s, sets = %s " +
                 "WHERE id = %s", exercise, date, load, repetitions, sets, id);
-        runQuery(q);
+        runUpdate(q);
     }
 }

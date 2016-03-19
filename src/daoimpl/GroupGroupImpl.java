@@ -5,11 +5,13 @@ import entities.GroupGroup;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class GroupGroupImpl implements GroupGroupDao {
     @Override
@@ -17,7 +19,7 @@ public class GroupGroupImpl implements GroupGroupDao {
         String q = ("CREATE TABLE IF NOT EXISTS group_group (" +
                 "container_group_id INT NOT NULL," +
                 "contained_group_id INT NOT NULL)");
-        runQuery(q);
+        runUpdate(q);
     }
 
     @Override
@@ -27,7 +29,8 @@ public class GroupGroupImpl implements GroupGroupDao {
 
     @Override
     public List<GroupGroup> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM group_group");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM group_group", statement);
         List<GroupGroup> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -40,6 +43,14 @@ public class GroupGroupImpl implements GroupGroupDao {
             return l;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
@@ -48,6 +59,6 @@ public class GroupGroupImpl implements GroupGroupDao {
     public void delete(int containerGroupId, int containedGroupId) {
         String q = String.format("DELETE FROM TABLE group_group WHERE container_group_id = %d AND contained_group_id = %d",
                 containerGroupId, containedGroupId);
-        runQuery(q);
+        runUpdate(q);
     }
 }

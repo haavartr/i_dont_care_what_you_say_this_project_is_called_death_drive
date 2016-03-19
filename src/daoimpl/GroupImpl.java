@@ -14,6 +14,7 @@ import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class GroupImpl implements GroupDao {
     @Override
@@ -22,7 +23,7 @@ public class GroupImpl implements GroupDao {
                     "id int primary key unique auto_increment," +
                     "name varchar(55)," +
                     "description varchar(255))";
-        runQuery(q);
+        runUpdate(q);
     }
 
     @Override
@@ -32,18 +33,28 @@ public class GroupImpl implements GroupDao {
 
     @Override
     public Group selectById(int id) {
-        ResultSet rs = runQuery("SELECT * FROM group WHERE id = " + id);
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM group WHERE id = " + id, statement);
         try {
             return new Group(rs.getInt("id"));
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     @Override
     public List<Group> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM group");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM group", statement);
         List<Group> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -56,12 +67,20 @@ public class GroupImpl implements GroupDao {
             return l;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
     @Override
     public void delete(int id) {
-        runQuery("DELETE FROM TABLE group WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE group WHERE id = " + id);
     }
 }

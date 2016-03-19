@@ -4,11 +4,13 @@ import dao.ExerciseReplacementsDao;
 import entities.ExerciseReplacements;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     @Override
@@ -16,7 +18,7 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
         String q = "CREATE TABLE IF NOT EXISTS exercise_replacements (" +
                     "exercise_id_1 INT NOT NULL," +
                     "exercise_id_2 INT NOT NULL)";
-        runQuery(q);
+        runUpdate(q);
     }
 
     @Override
@@ -26,7 +28,8 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
 
     @Override
     public List<ExerciseReplacements> selectAll() {
-        ResultSet rs = runQuery("SELECT * FROM exercise_replacements");
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM exercise_replacements", statement);
         List<ExerciseReplacements> l = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -39,6 +42,14 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
             return l;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
@@ -47,6 +58,6 @@ public class ExerciseReplacementsImpl implements ExerciseReplacementsDao {
     public void delete(int exerciseId1, int exerciseId2) {
         String q = String.format("DELETE FROM TABLE exercise_replacements WHERE exercise_id_1 = %d AND exercise_id_2 = %d",
                 exerciseId1, exerciseId2);
-        runQuery(q);
+        runUpdate(q);
     }
 }
