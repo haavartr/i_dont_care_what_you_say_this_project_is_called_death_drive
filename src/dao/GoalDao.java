@@ -18,7 +18,7 @@ public class GoalDao {
         String q = "CREATE TABLE IF NOT EXISTS goal (" +
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
-                "date datetime NOT NULL DEFAULT GETDATE()," +
+                "date datetime NOT NULL DEFAULT current_timestamp," +
                 "weight INT," +
                 "repetitions INT," +
                 "sets INT )";

@@ -27,7 +27,11 @@ public class StrengthExerciseDao {
         Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
+<<<<<<< HEAD
         String weight = "weight " + strengthExercise.getWeight().toString();
+=======
+        String load = "weight " + strengthExercise.getWeight().toString();
+>>>>>>> master
         String repetitions = "repetitions " + strengthExercise.getRepetitions().toString();
         String sets = "sets " + strengthExercise.getSets().toString();
         String form = "form " + strengthExercise.getForm().toString();
@@ -139,7 +143,11 @@ public class StrengthExerciseDao {
     public static void update(StrengthExercise strengthExercise) {
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
+<<<<<<< HEAD
         String weight = strengthExercise.getWeight().toString();
+=======
+        String load = strengthExercise.getWeight().toString();
+>>>>>>> master
         String repetitions = strengthExercise.getRepetitions().toString();
         String sets = strengthExercise.getSets().toString();
         String form = strengthExercise.getForm().toString();

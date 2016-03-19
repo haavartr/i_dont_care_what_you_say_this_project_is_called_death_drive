@@ -107,13 +107,20 @@ public class ExercisesViewController implements Initializable {
 
         Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
 
-        for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
-            if(er.getExerciseId1().equals(selectedExercise.getId())) {
-                replacements.add(ExerciseDao.selectById(er.getExerciseId2()));
-            } else if(er.getExerciseId2().equals(selectedExercise.getId())){
-                replacements.add(ExerciseDao.selectById(er.getExerciseId1()));
+        for(Exercise e : ExerciseDao.selectAll()) {
+            notReplacements.add(e);
+        }
+
+        if (ExerciseReplacementsDao.selectAll() != null) {
+            for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
+                if(er.getExerciseId1().equals(selectedExercise.getId())) {
+                    replacements.add(ExerciseDao.selectById(er.getExerciseId2()));
+                } else if(er.getExerciseId2().equals(selectedExercise.getId())){
+                    replacements.add(ExerciseDao.selectById(er.getExerciseId1()));
+                }
             }
         }
         exerciseReplacementsList.setItems(replacements);
+        notExerciseReplacementsList.setItems(notReplacements);
     }
 }

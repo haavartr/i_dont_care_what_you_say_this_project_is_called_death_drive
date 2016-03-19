@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ExerciseDao;
 import dao.GoalDao;
 import entities.Exercise;
 import entities.Goal;
@@ -8,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import util.Helper;
@@ -31,6 +29,12 @@ public class GoalsViewController implements Initializable {
     @FXML private TextField goalRepetitionsField;
     @FXML private TextField goalSetsField;
 
+    @FXML private Label goalExerciseNameLabel;
+    @FXML private Label goalSetDateLabel;
+    @FXML private Label goalWeightLabel;
+    @FXML private Label goalRepetitionsLabel;
+    @FXML private Label goalSetsLabel;
+
     // NEW GOAL PANE
     @FXML private ComboBox<Exercise> allExercisesList;
     @FXML private AnchorPane newGoalPane;
@@ -41,6 +45,20 @@ public class GoalsViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadAllGoalsToList();
         newGoalPane.setVisible(false);
+
+        goalsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Goal selectedGoal = goalsList.getSelectionModel().getSelectedItem();
+
+                goalExerciseNameLabel.setText(selectedGoal.getExercise().toString());
+                goalSetDateLabel.setText(selectedGoal.getDate().toString());
+                goalWeightLabel.setText(selectedGoal.getWeight().toString());
+                goalRepetitionsLabel.setText(selectedGoal.getRepetitions().toString());
+                goalSetsLabel.setText(selectedGoal.getSets().toString());
+
+            }
+        });
 
         createNewGoalButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -65,14 +83,14 @@ public class GoalsViewController implements Initializable {
                 goal.setExercise(selectedExercise.getId());
 
                 try {
-                    goal.setLoad(Integer.parseInt(goalLoadField.getText()));
+                    goal.setWeight(Integer.parseInt(goalLoadField.getText()));
                     goal.setRepetitions(Integer.parseInt(goalRepetitionsField.getText()));
                     goal.setSets(Integer.parseInt(goalSetsField.getText()));
                 } catch (Exception e) {
                     System.out.println("Feil");
                 }
 
-                if (goal.getLoad() == null && goal.getRepetitions() == null && goal.getSets() == null) {
+                if (goal.getWeight() == null && goal.getRepetitions() == null && goal.getSets() == null) {
                     System.out.println("Må ha ei målsetning");
                     return;
                 }
