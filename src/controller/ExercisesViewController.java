@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import util.Helper;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ExercisesViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         newExercisePane.setVisible(false);
 
-        loadAllWorkoutsToList();
+        exerciseList.setItems(Helper.getAllExercises());
 
         exerciseList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -63,9 +64,8 @@ public class ExercisesViewController implements Initializable {
             public void handle(MouseEvent event) {
                 if (!newExerciseName.getText().equals("")) {
                     ExerciseDao.insert(new Exercise(0, newExerciseName.getText(), newExerciseDescription.getText()));
-                    loadAllWorkoutsToList();
+                    exerciseList.setItems(Helper.getAllExercises());
 
-                    loadAllWorkoutsToList();
                     newExercisePane.setVisible(false);
 
                 }
@@ -78,15 +78,5 @@ public class ExercisesViewController implements Initializable {
                 newExercisePane.setVisible(false);
             }
         });
-    }
-
-    private void loadAllWorkoutsToList() {
-        exercises = ExerciseDao.selectAll();
-        ObservableList<Exercise> list = FXCollections.observableArrayList();
-        for (Exercise exercise : exercises) {
-            list.add(exercise);
-        }
-
-        exerciseList.setItems(list);
     }
 }

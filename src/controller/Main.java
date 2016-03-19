@@ -21,12 +21,13 @@ public class Main extends Application {
         primaryStage.show();
 
         final Connection connection = ConnectionConfiguration.getConnection();
-        ExerciseDao.createExerciseTable();
-        WorkoutExerciseDao.createWorkoutExerciseTable();
+        //ExerciseDao.createExerciseTable();
+        //GoalDao.createGoalsTable();
+        //WorkoutExerciseDao.createWorkoutExerciseTable();
         //StrengthExerciseDao.createStrengthExerciseTable();
         //CardioExerciseDao.createCardioExerciseTable();
 
-        WorkoutDao.createWorkoutTable();
+        //WorkoutDao.createWorkoutTable();
         //IndoorWorkoutDao.createIndoorWorkoutTable();
         //OutdoorWorkoutDao.createOutdoorWorkoutTable();
     }
