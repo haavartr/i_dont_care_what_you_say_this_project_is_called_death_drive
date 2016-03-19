@@ -31,7 +31,7 @@
 
       <Tab text="Grupper">
           <content>
-              <fx:include fx:id="groupsTab" source="groupingsTab.fxml" />
+              <fx:include fx:id="groupingsTab" source="groupingsTab.fxml" />
           </content>
       </Tab>
 
