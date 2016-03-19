@@ -14,8 +14,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ExerciseImpl.createExerciseTable();
-
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 700, 500));
@@ -23,6 +21,7 @@ public class Main extends Application {
         primaryStage.show();
 
         final Connection connection = ConnectionConfiguration.getConnection();
+        ExerciseImpl.createExerciseTable();
     }
 
     public static void main(String[] args) {

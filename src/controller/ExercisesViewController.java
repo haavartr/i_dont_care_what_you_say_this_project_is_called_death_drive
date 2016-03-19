@@ -35,11 +35,12 @@ public class ExercisesViewController implements Initializable {
     @FXML private TextField newExerciseName;
     @FXML private TextArea newExerciseDescription;
 
-    private List<Exercise> exercises = ExerciseImpl.selectAll();
+    private List<Exercise> exercises = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         newExercisePane.setVisible(false);
+        exercises = ExerciseImpl.selectAll();
 
         loadAllWorkoutsToList();
 

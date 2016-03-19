@@ -15,9 +15,8 @@ import java.util.List;
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
-public class ExerciseImpl implements ExerciseDao{
-    @Override
-    public void createExerciseTable() {
+public class ExerciseImpl {
+    public static void createExerciseTable() {
         String q = ("CREATE TABLE IF NOT EXISTS exercise (" +
                 "id int primary key unique auto_increment," +
                 "name varchar(55)," +
@@ -25,13 +24,11 @@ public class ExerciseImpl implements ExerciseDao{
         runQuery(q);
     }
 
-    @Override
-    public void insert(Exercise exercise) {
+    public static void insert(Exercise exercise) {
         insertInto("exercise", exercise.getName(), exercise.getDescription());
     }
 
-    @Override
-    public Exercise selectById(int id) {
+    public static Exercise selectById(int id) {
         ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id);
         try {
             return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
@@ -41,8 +38,7 @@ public class ExerciseImpl implements ExerciseDao{
         return null;
     }
 
-    @Override
-    public List<Exercise> selectAll() {
+    public static List<Exercise> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM exercise");
         List<Exercise> l = new ArrayList<>();
         try {
@@ -57,16 +53,14 @@ public class ExerciseImpl implements ExerciseDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return l;
     }
 
-    @Override
-    public void delete(int id) {
+    public static void delete(int id) {
         runQuery("DELETE FROM TABLE exercise WHERE id = " + id);
     }
 
-    @Override
-    public void update(Exercise exercise) {
+    public static void update(Exercise exercise) {
         String name = exercise.getName();
         String description = exercise.getDescription();
         String id = Integer.toString(exercise.getId());
