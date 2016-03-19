@@ -48,13 +48,17 @@ public class IndoorWorkoutImpl {
                 "AND workout.id = %d", id, id);
         ResultSet rs = runQuery(q, statement);
         try {
-            return new IndoorWorkout(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getDate("date").toLocalDate(),
-                    rs.getInt("length"),
-                    rs.getString("note"),
-                    rs.getInt("air_quality"),
-                    rs.getInt("spectators"));
+            if (rs != null) {
+                return new IndoorWorkout(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDate("date").toLocalDate(),
+                        rs.getInt("length"),
+                        rs.getString("note"),
+                        rs.getInt("air_quality"),
+                        rs.getInt("spectators"));
+            } else {
+                return null;
+            }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         } finally {

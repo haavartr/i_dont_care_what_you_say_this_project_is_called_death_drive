@@ -43,18 +43,23 @@ public class OutdoorWorkoutImpl {
         }
     }
 
-    public static OutdoorWorkout selectById(int id) {
+    @Override
+    public static OutdoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM outdoor_workout JOIN outdoor_workout ON exercise.id = %d " +
                 "AND workout.id = %d", id, id);
         ResultSet rs = runQuery(q);
         try {
-            return new OutdoorWorkout(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getDate("date").toLocalDate(),
-                    rs.getInt("length"),
-                    rs.getString("note"),
-                    rs.getFloat("temperature"),
-                    rs.getString("weather"));
+            if (rs != null) {
+                return new OutdoorWorkout(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDate("date").toLocalDate(),
+                        rs.getInt("length"),
+                        rs.getString("note"),
+                        rs.getFloat("temperature"),
+                        rs.getString("weather"));
+            } else {
+                return null;
+            }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }

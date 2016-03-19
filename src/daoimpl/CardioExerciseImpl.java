@@ -47,22 +47,26 @@ public class CardioExerciseImpl {
         }
     }
 
-    public static CardioExercise selectById(int id) {
+    public static CardioExercise selectById(int id) {  // Returns null if the id doesn't exist
         Statement statement = null;
         String q = String.format("SELECT * FROM cardio_exercise JOIN workout_exercise ON cardio_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         ResultSet rs = runQuery(q, statement);
         try {
-            return new CardioExercise(rs.getInt("id"),
-                    rs.getInt("workout_collection_id"),
-                    rs.getInt("exercise_id"),
-                    rs.getInt("load"),
-                    rs.getInt("repetitions"),
-                    rs.getInt("sets"),
-                    rs.getInt("form"),
-                    rs.getInt("performance"),
-                    rs.getInt("distance"),
-                    rs.getInt("time"));
+            if (rs != null) {
+                return new CardioExercise(rs.getInt("id"),
+                        rs.getInt("workout_collection_id"),
+                        rs.getInt("exercise_id"),
+                        rs.getInt("load"),
+                        rs.getInt("repetitions"),
+                        rs.getInt("sets"),
+                        rs.getInt("form"),
+                        rs.getInt("performance"),
+                        rs.getInt("distance"),
+                        rs.getInt("time"));
+            } else {
+                return null;
+            }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }

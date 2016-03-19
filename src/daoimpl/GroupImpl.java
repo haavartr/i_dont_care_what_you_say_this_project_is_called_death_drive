@@ -31,12 +31,15 @@ public class GroupImpl implements GroupDao {
         insertInto("group");
     }
 
-    @Override
     public Group selectById(int id) {
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM group WHERE id = " + id, statement);
         try {
-            return new Group(rs.getInt("id"));
+            if (rs != null) {
+                return new Group(rs.getInt("id"));
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
