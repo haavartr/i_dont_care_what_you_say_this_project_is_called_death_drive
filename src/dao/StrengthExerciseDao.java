@@ -22,24 +22,28 @@ public class StrengthExerciseDao {
     }
 
     public static void insert(StrengthExercise strengthExercise) {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
         String weight = "weight " + strengthExercise.getWeight().toString();
+
         String repetitions = "repetitions " + strengthExercise.getRepetitions().toString();
         String sets = "sets " + strengthExercise.getSets().toString();
         String form = "form " + strengthExercise.getForm().toString();
         String performance = "performance " + strengthExercise.getPerformance().toString();
 
-        String q = "SELECT * FROM grouping_exercise";
         insertInto("workout_exercise", workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
+        Connection connection = null;
+        ResultSet rs;
+        Statement statement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(q);
-            String id = Integer.toString(rs.getInt(0));
+            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_exercise");
+            String id = "id ";
+            if (rs.next()) {
+                id += rs.getString("last_id");
+                System.out.println(id);
+            }
             insertInto("strength_exercise", id);
         } catch (SQLException |NullPointerException e) {
             e.printStackTrace();
