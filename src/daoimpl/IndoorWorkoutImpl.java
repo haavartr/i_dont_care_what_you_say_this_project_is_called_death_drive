@@ -39,18 +39,23 @@ public class IndoorWorkoutImpl {
         }
     }
 
-    public static IndoorWorkout selectById(int id) {
+    @Override
+    public static IndoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
                 "AND workout.id = %d", id, id);
         ResultSet rs = runQuery(q);
         try {
-            return new IndoorWorkout(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getDate("date").toLocalDate(),
-                    rs.getInt("length"),
-                    rs.getString("note"),
-                    rs.getInt("air_quality"),
-                    rs.getInt("spectators"));
+            if (rs != null) {
+                return new IndoorWorkout(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDate("date").toLocalDate(),
+                        rs.getInt("length"),
+                        rs.getString("note"),
+                        rs.getInt("air_quality"),
+                        rs.getInt("spectators"));
+            } else {
+                return null;
+            }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }

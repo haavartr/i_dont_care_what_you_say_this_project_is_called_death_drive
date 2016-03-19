@@ -31,10 +31,14 @@ public class GroupImpl implements GroupDao {
     }
 
     @Override
-    public Group selectById(int id) {
+    public Group selectById(int id) {  // Returns an null if the id doesn't exist
         ResultSet rs = runQuery("SELECT * FROM group WHERE id = " + id);
         try {
-            return new Group(rs.getInt("id"));
+            if (rs != null) {
+                return new Group(rs.getInt("id"));
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
