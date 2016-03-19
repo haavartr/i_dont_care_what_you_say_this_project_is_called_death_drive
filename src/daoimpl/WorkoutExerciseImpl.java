@@ -1,15 +1,6 @@
 package daoimpl;
 
-import dao.WorkoutExerciseDao;
-import entities.WorkoutExercise;
-import util.ConnectionConfiguration;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
-import static daoimpl.RunQuery.runQuery;
+import static daoimpl.RunQuery.runUpdate;
 
 public class WorkoutExerciseImpl {
     public static void createWorkoutExerciseTable() {
@@ -23,6 +14,6 @@ public class WorkoutExerciseImpl {
                     "form int, " +
                     "performance int);";
         System.out.println(q);
-        runQuery(q);
+        runUpdate(q);
     }
 }
