@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Group;
+import entities.Grouping;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
@@ -15,28 +15,28 @@ import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
 
-public class GroupDao {
-    public static void createGroupTable() {
-        String q = "CREATE TABLE IF NOT EXISTS group (" +
+public class GroupingDao {
+    public static void createGroupingTable() {
+        String q = "CREATE TABLE IF NOT EXISTS grouping (" +
                     "id int primary key unique auto_increment)";
         runUpdate(q);
     }
 
-    public static void insert(Group group) {
-        insertInto("group");
+    public static void insert(Grouping grouping) {
+        insertInto("grouping");
     }
 
-    public static Group selectById(int id) {
+    public static Grouping selectById(int id) {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM group WHERE id = " + id;
+        String q = "SELECT * FROM grouping WHERE id = " + id;
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
             if (rs != null) {
-                return new Group(rs.getInt("id"));
+                return new Grouping(rs.getInt("id"));
             } else {
                 return null;
             }
@@ -54,12 +54,12 @@ public class GroupDao {
         return null;
     }
 
-    public static ArrayList<Group> selectAll() {  // Returns an empty ArrayList if the table is empty
+    public static ArrayList<Grouping> selectAll() {  // Returns an empty ArrayList if the table is empty
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM group";
-        ArrayList<Group> l = new ArrayList<>();
+        String q = "SELECT * FROM grouping";
+        ArrayList<Grouping> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
@@ -68,7 +68,7 @@ public class GroupDao {
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {
-                        l.add(new Group(rs.getInt("id")));
+                        l.add(new Grouping(rs.getInt("id")));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -90,6 +90,6 @@ public class GroupDao {
     }
 
     public static void delete(int id) {
-        runUpdate("DELETE FROM TABLE group WHERE id = " + id);
+        runUpdate("DELETE FROM TABLE grouping WHERE id = " + id);
     }
 }

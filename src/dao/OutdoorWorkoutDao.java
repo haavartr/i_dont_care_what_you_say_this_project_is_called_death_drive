@@ -26,11 +26,6 @@ public class OutdoorWorkoutDao {
     }
 
     public static void insert(OutdoorWorkout outdoorWorkout) {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
-        String q = "SELECT * FROM group_exercise";
-
         String workoutID = "workout_id " + Integer.toString(outdoorWorkout.getId());
         String name = "name " + outdoorWorkout.getName();
         String date = "date " + outdoorWorkout.getDate().toString();
@@ -40,11 +35,19 @@ public class OutdoorWorkoutDao {
         String weather = "weather " + outdoorWorkout.getWeather();
 
         insertInto("workout", workoutID, name, date, length, note);
+
+        Connection connection = null;
+        ResultSet rs;
+        Statement statement = null;
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(q);
-            String id = Integer.toString(rs.getInt(0));
+            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_collection");
+            String id = "id ";
+            if (rs.next()) {
+                id += rs.getString("last_id");
+                System.out.println(id);
+            }
             insertInto("outdoor_workout", id, temperature, weather);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();

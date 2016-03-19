@@ -29,7 +29,7 @@
                      </font>
                   </Label>
                   <Button fx:id="saveNewGoalButton" layoutX="149.0" layoutY="200.0" mnemonicParsing="false" text="Lagre" />
-                  <TextField fx:id="goalLoadField" layoutX="193.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
+                  <TextField fx:id="goalWeightField" layoutX="193.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
                   <Button fx:id="cancelNewGoalButton" layoutX="85.0" layoutY="200.0" mnemonicParsing="false" text="Avbryt" />
                   <TextField fx:id="goalRepetitionsField" layoutX="193.0" layoutY="126.0" prefHeight="27.0" prefWidth="72.0" />
                   <TextField fx:id="goalSetsField" layoutX="193.0" layoutY="163.0" prefHeight="27.0" prefWidth="72.0" />
@@ -38,6 +38,18 @@
                   <Label layoutX="29.0" layoutY="131.0" text="Sett:" />
                </children>
             </AnchorPane>
+            <Label layoutX="14.0" layoutY="76.0" text="Vekt:" />
+            <Label layoutX="14.0" layoutY="103.0" text="Repetisjoner:" />
+            <Label fx:id="goalExerciseNameLabel" layoutX="14.0" layoutY="14.0" text="Exercise name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="130.0" text="Sett:" />
+            <Label fx:id="goalWeightLabel" layoutX="112.0" layoutY="76.0" text="100" />
+            <Label fx:id="goalRepetitionsLabel" layoutX="112.0" layoutY="103.0" text="100" />
+            <Label fx:id="goalSetsLabel" layoutX="112.0" layoutY="130.0" text="100" />
+            <Label fx:id="goalSetDateLabel" layoutX="14.0" layoutY="41.0" text="Dato" />
          </children>
         </AnchorPane>
     </items>

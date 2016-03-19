@@ -1,20 +1,22 @@
 package entities;
 
+import dao.ExerciseDao;
+
 import java.time.LocalDate;
 
 public class Goal {
     private Integer id;  // Auto increment
     private Integer exercise;
     private LocalDate date;
-    private Integer load;
+    private Integer weight;
     private Integer repetitions;
     private Integer sets;
 
-    public Goal(Integer id, Integer exercise, LocalDate date, Integer load, Integer repetitions, Integer sets) {
+    public Goal(Integer id, Integer exercise, LocalDate date, Integer weight, Integer repetitions, Integer sets) {
         this.id = id;
         this.exercise = exercise;
         this.date = date;
-        this.load = load;
+        this.weight = weight;
         this.repetitions = repetitions;
         this.sets = sets;
     }
@@ -33,8 +35,8 @@ public class Goal {
         return date;
     }
 
-    public Integer getLoad() {
-        return load;
+    public Integer getWeight() {
+        return weight;
     }
 
     public Integer getRepetitions() {
@@ -49,8 +51,8 @@ public class Goal {
         this.date = date;
     }
 
-    public void setLoad(Integer load) {
-        this.load = load;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public void setRepetitions(Integer repetitions) {
