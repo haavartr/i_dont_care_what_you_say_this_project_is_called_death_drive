@@ -92,7 +92,7 @@ public class ExerciseDao {
     }
 
     public static void delete(int id) {
-        runUpdate("DELETE FROM TABLE exercise WHERE id = " + id);
+        runUpdate("DELETE FROM exercise WHERE id = " + id);
     }
 
     public static void update(Exercise exercise) {

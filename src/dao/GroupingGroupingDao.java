@@ -66,7 +66,7 @@ public class GroupingGroupingDao {  // Many-to-many
     }
 
     public static void delete(int containerGroupingId, int containedGroupingId) {
-        String q = String.format("DELETE FROM TABLE grouping_grouping WHERE container_grouping_id = %d AND contained_grouping_id = %d",
+        String q = String.format("DELETE FROM grouping_grouping WHERE container_grouping_id = %d AND contained_grouping_id = %d",
                 containerGroupingId, containedGroupingId);
         runUpdate(q);
     }

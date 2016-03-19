@@ -97,7 +97,7 @@ public class GoalDao {
     }
 
     public static void delete(int id) {
-        runUpdate("DELETE FROM TABLE goal WHERE id = " + id);
+        runUpdate("DELETE FROM goal WHERE id = " + id);
     }
 
     public static void update(Goal goal) {
