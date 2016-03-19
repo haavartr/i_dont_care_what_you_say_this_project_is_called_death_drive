@@ -61,15 +61,19 @@ public class RunQuery {
     }
 
     public static void insertInto (String name, String... args) {
-        String q = "INSERT INTO " + name + " VALUES (";
+        String colums = "";
+        for (String c : args) {
+            colums += c.split(" ", 2)[0];
+            colums += ",";
+        }
+        colums = colums.substring(0, colums.length()-1);
+        String q = "INSERT INTO " + name +" (" + colums + ") VALUES (";
         for (String arg : args){
-            q += "'" + arg + "'" + ",";
+            q += "'" + arg.split(" ", 2)[1] + "'" + ",";
         }
         q = q.substring(0, q.length()-1);
         q += ")";
-        System.out.println(q);
         runUpdate(q);
     }
-
 
 }
