@@ -29,7 +29,7 @@ public class OutdoorWorkoutDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM group_exercise";
+        String q = "SELECT * FROM grouping_exercise";
 
         String workoutID = "workout_id " + Integer.toString(outdoorWorkout.getId());
         String name = "name " + outdoorWorkout.getName();

@@ -27,14 +27,14 @@ public class StrengthExerciseDao {
         Statement statement = null;
         String workoutCollectionId = "workout_collection_id " + strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + strengthExercise.getExerciseId().toString();
-        String load = "load " + strengthExercise.getLoad().toString();
+        String weight = "weight " + strengthExercise.getWeight().toString();
         String repetitions = "repetitions " + strengthExercise.getRepetitions().toString();
         String sets = "sets " + strengthExercise.getSets().toString();
         String form = "form " + strengthExercise.getForm().toString();
         String performance = "performance " + strengthExercise.getPerformance().toString();
 
-        String q = "SELECT * FROM group_exercise";
-        insertInto("workout_exercise", workoutCollectionId, exerciseId, load, repetitions, sets, form, performance);
+        String q = "SELECT * FROM grouping_exercise";
+        insertInto("workout_exercise", workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
@@ -68,7 +68,7 @@ public class StrengthExerciseDao {
                 return new StrengthExercise(rs.getInt("id"),
                         rs.getInt("workout_collection_id"),
                         rs.getInt("exercise_id"),
-                        rs.getInt("load"),
+                        rs.getInt("weight"),
                         rs.getInt("repetitions"),
                         rs.getInt("sets"),
                         rs.getInt("form"),
@@ -107,7 +107,7 @@ public class StrengthExerciseDao {
                         l.add(new StrengthExercise(rs.getInt("id"),
                                 rs.getInt("workout_collection_id"),
                                 rs.getInt("exercise_id"),
-                                rs.getInt("load"),
+                                rs.getInt("weight"),
                                 rs.getInt("repetitions"),
                                 rs.getInt("sets"),
                                 rs.getInt("form"),
@@ -139,16 +139,16 @@ public class StrengthExerciseDao {
     public static void update(StrengthExercise strengthExercise) {
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
-        String load = strengthExercise.getLoad().toString();
+        String weight = strengthExercise.getWeight().toString();
         String repetitions = strengthExercise.getRepetitions().toString();
         String sets = strengthExercise.getSets().toString();
         String form = strengthExercise.getForm().toString();
         String performance = strengthExercise.getPerformance().toString();
         String id = strengthExercise.getId().toString();
 
-        String q = String.format("UPDATE workout_exercise SET workout_collection_id = %s, exercise_id = %s, load = %s," +
+        String q = String.format("UPDATE workout_exercise SET workout_collection_id = %s, exercise_id = %s, weight = %s," +
                         "repetitions = %s, sets = %s, form = %s, performance = %s WHERE id = %s", workoutCollectionId,
-                exerciseId, load, repetitions, sets, form, performance, id);
+                exerciseId, weight, repetitions, sets, form, performance, id);
         runUpdate(q);
     }
 }

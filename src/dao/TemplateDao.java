@@ -29,7 +29,7 @@ public class TemplateDao {
         ResultSet rs;
         Statement statement = null;
         String name = "name " + template.getName();
-        String q = "SELECT * FROM group_exercise";
+        String q = "SELECT * FROM grouping_exercise";
         insertInto("workout_collection", name);
         try {
             connection = ConnectionConfiguration.getConnection();

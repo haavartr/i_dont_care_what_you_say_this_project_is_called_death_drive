@@ -1,6 +1,6 @@
 package dao;
 
-import entities.GroupGroup;
+import entities.GroupingExercise;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
@@ -15,27 +15,27 @@ import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
 
-public class GroupGroupDao {  // Many-to-many
-    public static void createGroupGroupTable() {
-        String q = ("CREATE TABLE IF NOT EXISTS group_group (" +
-                "container_group_id INT NOT NULL," +
-                "contained_group_id INT NOT NULL)");
+public class GroupingExerciseDao {  // Many-to-many
+    public static void createGroupingExerciseTable() {
+        String q = ("CREATE TABLE IF NOT EXISTS grouping_exercise (" +
+                "grouping_id INT NOT NULL," +
+                "exercise_id INT NOT NULL)");
         runUpdate(q);
     }
 
-    public static void insert(GroupGroup groupGroup) {
-        String containerGroupId = "container_group_id " + groupGroup.getContainerGroupId().toString();
-        String containedGroupId = "contained_group_id " + groupGroup.getContainedGroupId().toString();
+    public static void insert(GroupingExercise groupingExercise) {
+        String groupingId = "grouping_id " + groupingExercise.getGroupingId().toString();
+        String exerciseId = "exercise_id " + groupingExercise.getExerciseId().toString();
 
-        insertInto("group_group", containerGroupId, containedGroupId);
+        insertInto("grouping_exercise", groupingId, exerciseId);
     }
 
-    public static ArrayList<GroupGroup> selectAll() {  // Returns an empty ArrayList if the table is empty
+    public static ArrayList<GroupingExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM group_group";
-        ArrayList<GroupGroup> l = new ArrayList<>();
+        String q = "SELECT * FROM grouping_exercise";
+        ArrayList<GroupingExercise> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
@@ -44,7 +44,7 @@ public class GroupGroupDao {  // Many-to-many
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {
-                        l.add(new GroupGroup(rs.getInt("container_group_id"), rs.getInt("contained_group_id")));
+                        l.add(new GroupingExercise(rs.getInt("grouping_id"), rs.getInt("exercise_id")));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -65,9 +65,8 @@ public class GroupGroupDao {  // Many-to-many
         return null;
     }
 
-    public static void delete(int containerGroupId, int containedGroupId) {
-        String q = String.format("DELETE FROM TABLE group_group WHERE container_group_id = %d AND contained_group_id = %d",
-                containerGroupId, containedGroupId);
+    public static void delete(int groupingId, int exerciseId) {
+        String q = String.format("DELETE FROM TABLE grouping_exercise WHERE grouping_id = %d AND exercise_id = %d", groupingId, exerciseId);
         runUpdate(q);
     }
 }

@@ -36,7 +36,7 @@ public class IndoorWorkoutDao {
         String note = "note " + indoorWorkout.getNote();
         String airQuality = "air_quality " + Integer.toString(indoorWorkout.getAirQuality());
         String spectators = "spectators " + Integer.toString(indoorWorkout.getSpectators());
-        String q = "SELECT * FROM group_exercise";
+        String q = "SELECT * FROM grouping_exercise";
         insertInto("workout", workoutID, name, date, length, note);
         try {
             connection = ConnectionConfiguration.getConnection();
