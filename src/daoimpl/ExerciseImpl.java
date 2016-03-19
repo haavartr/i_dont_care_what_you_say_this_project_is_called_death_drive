@@ -1,11 +1,6 @@
 package daoimpl;
 
-import dao.ExerciseDao;
-import entities.CardioExercise;
 import entities.Exercise;
-import util.ConnectionConfiguration;
-
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

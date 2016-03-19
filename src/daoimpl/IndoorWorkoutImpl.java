@@ -1,14 +1,11 @@
 package daoimpl;
 
-import dao.IndoorWorkoutDao;
 import entities.IndoorWorkout;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 import static daoimpl.RunQuery.runUpdate;
