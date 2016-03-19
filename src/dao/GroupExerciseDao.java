@@ -19,7 +19,10 @@ public class GroupExerciseDao {  // Many-to-many
     }
 
     public static void insert(GroupExercise groupExercise) {
-        insertInto("group_exercise", groupExercise.getGroupId().toString(), groupExercise.getExerciseId().toString());
+        String groupId = "group_id " + groupExercise.getGroupId().toString();
+        String exerciseId = "exercise_id " + groupExercise.getExerciseId().toString();
+
+        insertInto("group_exercise", groupId, exerciseId);
     }
 
     public static ArrayList<GroupExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
