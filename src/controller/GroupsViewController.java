@@ -96,9 +96,9 @@ public class GroupsViewController implements Initializable {
 
     private void loadAllGroupsToList() {
         ObservableList<Group> list = FXCollections.observableArrayList();
-        for (Group group : GroupDao.selectAll()) {
+        /*for (Group group : GroupDao.selectAll()) {
             list.add(group);
-        }
+        }*/
 
         groupsList.setItems(list);
     }
@@ -106,11 +106,11 @@ public class GroupsViewController implements Initializable {
     private void loadAllGroupExercisesForGroup(Group group) {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
 
-        for(GroupExercise ge : GroupExerciseDao.selectAll()) {
+        /*for(GroupExercise ge : GroupExerciseDao.selectAll()) {
             if (ge.getGroupId() == group.getId()) {
                 list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
-        }
+        }*/
 
         groupExercisesList.setItems(list);
     }

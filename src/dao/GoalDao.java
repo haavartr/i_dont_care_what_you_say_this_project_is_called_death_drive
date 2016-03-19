@@ -18,8 +18,8 @@ public class GoalDao {
         String q = "CREATE TABLE IF NOT EXISTS goal (" +
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
-                "date datetime NOT NULL DEFAULT GETDATE()," +
-                "load INT," +
+                "date datetime NOT NULL DEFAULT current_timestamp," +
+                "weight INT," +
                 "repetitions INT," +
                 "sets INT )";
         runUpdate(q);
@@ -28,7 +28,7 @@ public class GoalDao {
     public static void insert(Goal goal) {
         String exercise = "exercise " + goal.getExercise().toString();
         String date = "date " + goal.getDate().toString();
-        String load = "load " + goal.getLoad().toString();
+        String load = "weight " + goal.getLoad().toString();
         String repetitions = "repetitions " + goal.getRepetitions().toString();
         String sets = "sets " + goal.getSets().toString();
 
@@ -73,7 +73,7 @@ public class GoalDao {
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {
-                        l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets")));
+                        l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("weight"), rs.getInt("repetitions"), rs.getInt("sets")));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

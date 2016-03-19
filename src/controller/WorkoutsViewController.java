@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import util.Helper;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -58,7 +59,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private AnchorPane newWorkoutExercisePane;
     @FXML private Button saveWorkoutExerciseButton;
     @FXML private Button cancelWorkoutExerciseButton;
-    @FXML private ComboBox allExercisesList;
+    @FXML private ComboBox<Exercise> allExercisesList;
     @FXML private TextField weightField;
     @FXML private TextField repsField;
     @FXML private TextField setsField;
@@ -94,10 +95,6 @@ public class WorkoutsViewController implements Initializable {
 
                 ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
 
-                /*for (WorkoutExercise workoutExercise : workout.getWorkoutExercises()) {
-                    list.add(workoutExercise);
-                }*/
-
                 workoutExercisesList.setItems(list);
             }
         });
@@ -121,15 +118,12 @@ public class WorkoutsViewController implements Initializable {
                 newWorkoutExercisePane.setVisible(true);
 
                 ObservableList<String> list = FXCollections.observableArrayList();
-                for (Exercise exercise : exercises) {
-                    list.add(exercise.getName());
-                }
 
                 ObservableList<Integer> oneToTen = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 formList.setItems(oneToTen);
                 performanceList.setItems(oneToTen);
 
-                allExercisesList.setItems(list);
+                allExercisesList.setItems(Helper.getAllExercises());
             }
         });
 

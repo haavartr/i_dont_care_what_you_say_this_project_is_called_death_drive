@@ -1,5 +1,7 @@
 package entities;
 
+import dao.ExerciseDao;
+
 import java.time.LocalDate;
 
 public class Goal {

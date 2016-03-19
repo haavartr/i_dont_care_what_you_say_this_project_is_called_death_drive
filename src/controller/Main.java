@@ -22,14 +22,15 @@ public class Main extends Application {
 
         final Connection connection = ConnectionConfiguration.getConnection();
         //ExerciseDao.createExerciseTable();
-        //GoalDao.createGoalsTable();
-        //WorkoutExerciseDao.createWorkoutExerciseTable();
-        //StrengthExerciseDao.createStrengthExerciseTable();
-        //CardioExerciseDao.createCardioExerciseTable();
+        GoalDao.createGoalsTable();
+        ExerciseReplacementsDao.createExerciseReplacementsTable();
+        WorkoutExerciseDao.createWorkoutExerciseTable();
+        StrengthExerciseDao.createStrengthExerciseTable();
+        CardioExerciseDao.createCardioExerciseTable();
 
-        //WorkoutDao.createWorkoutTable();
-        //IndoorWorkoutDao.createIndoorWorkoutTable();
-        //OutdoorWorkoutDao.createOutdoorWorkoutTable();
+        WorkoutDao.createWorkoutTable();
+        IndoorWorkoutDao.createIndoorWorkoutTable();
+        OutdoorWorkoutDao.createOutdoorWorkoutTable();
     }
 
     public static void main(String[] args) {
