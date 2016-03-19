@@ -11,19 +11,17 @@ import java.util.List;
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
-public class IndoorWorkoutImpl implements IndoorWorkoutDao {
-    public void createIndoorWorkoutTable() {
+public class IndoorWorkoutImpl {
+    public static void createIndoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS indoor_workout (" +
-                "id int NOT NULL UNIQUE," +
+                "id int primary key unique auto_increment," +
                 "air_quality float," +
                 "spectators varchar(55))," +
-                "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE)";
+                "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runQuery(q);
     }
 
-    @Override
-    public void insert(IndoorWorkout indoorWorkout) {
+    public static void insert(IndoorWorkout indoorWorkout) {
         String workoutID = Integer.toString(indoorWorkout.getId());
         String name = indoorWorkout.getName();
         String date = indoorWorkout.getDate().toString();
@@ -42,7 +40,7 @@ public class IndoorWorkoutImpl implements IndoorWorkoutDao {
     }
 
     @Override
-    public IndoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
+    public static IndoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
                 "AND workout.id = %d", id, id);
         ResultSet rs = runQuery(q);
@@ -64,8 +62,7 @@ public class IndoorWorkoutImpl implements IndoorWorkoutDao {
         return null;
     }
 
-    @Override
-    public List<IndoorWorkout> selectAll() {
+    public static List<IndoorWorkout> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM indoor_workout JOIN workout");
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
@@ -89,13 +86,12 @@ public class IndoorWorkoutImpl implements IndoorWorkoutDao {
         return null;
     }
 
-    @Override  // Delete the entry in the highest parent and let the deletion cascade
-    public void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
+    // Delete the entry in the highest parent and let the deletion cascade
+    public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
-    @Override
-    public void update(IndoorWorkout indoorWorkout) {
+    public static void update(IndoorWorkout indoorWorkout) {
         String id = Integer.toString(indoorWorkout.getId());
         String name = indoorWorkout.getName();
         String date = indoorWorkout.getDate().toString();

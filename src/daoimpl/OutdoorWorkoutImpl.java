@@ -15,20 +15,17 @@ import java.util.List;
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
-public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
-    @Override
-    public void createOutdoorWorkoutTable() {
+public class OutdoorWorkoutImpl {
+    public static void createOutdoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS outdoor_workout (" +
-                "id int NOT NULL UNIQUE," +
+                "id int primary key unique not null," +
                 "temperature float," +
                 "weather varchar(55))," +
-                "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE)";
+                "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runQuery(q);
     }
 
-    @Override
-    public void insert(OutdoorWorkout outdoorWorkout) {
+    public static void insert(OutdoorWorkout outdoorWorkout) {
         String workoutID = Integer.toString(outdoorWorkout.getId());
         String name = outdoorWorkout.getName();
         String date = outdoorWorkout.getDate().toString();
@@ -47,7 +44,7 @@ public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
     }
 
     @Override
-    public OutdoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
+    public static OutdoorWorkout selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM outdoor_workout JOIN outdoor_workout ON exercise.id = %d " +
                 "AND workout.id = %d", id, id);
         ResultSet rs = runQuery(q);
@@ -69,8 +66,7 @@ public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
         return null;
     }
 
-    @Override
-    public List<OutdoorWorkout> selectAll() {
+    public static List<OutdoorWorkout> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM outdoor_workout JOIN workout");
         ArrayList<OutdoorWorkout> l = new ArrayList<>();
         try {
@@ -94,13 +90,12 @@ public class OutdoorWorkoutImpl implements OutdoorWorkoutDao{
         return null;
     }
 
-    @Override  // Delete the entry in the highest parent and let the deletion cascade
-    public void delete(int id) {
+    // Delete the entry in the highest parent and let the deletion cascade
+    public static void delete(int id) {
         runQuery("DELETE FROM TABLE workout_collection WHERE id = " + id);
     }
 
-    @Override
-    public void update(OutdoorWorkout outdoorWorkout) {
+    public static void update(OutdoorWorkout outdoorWorkout) {
         String id = Integer.toString(outdoorWorkout.getId());
         String name = outdoorWorkout.getName();
         String date = outdoorWorkout.getDate().toString();

@@ -22,8 +22,7 @@ public class GoalImpl implements GoalDao {
                 "date datetime NOT NULL DEFAULT GETDATE()," +
                 "load INT," +
                 "repetitions INT," +
-                "sets INT" +
-                ")";
+                "sets INT )";
         runQuery(q);
     }
 

@@ -11,18 +11,15 @@ import java.util.List;
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
-public class StrengthExerciseImpl implements StrengthExerciseDao{
-    @Override
-    public void createStrengthExerciseTable() {
+public class StrengthExerciseImpl {
+    public static void createStrengthExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS strength_exercise (" +
-                "id INT NOT NULL UNIQUE," +
-                "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE))";
+                "id int primary key unique auto_increment," +
+                "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
         runQuery(q);
     }
 
-    @Override
-    public void insert(StrengthExercise strengthExercise) {
+    public static void insert(StrengthExercise strengthExercise) {
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
         String load = strengthExercise.getLoad().toString();
@@ -41,7 +38,7 @@ public class StrengthExerciseImpl implements StrengthExerciseDao{
     }
 
     @Override
-    public StrengthExercise selectById(int id) {  // Returns null if the id doesn't exist
+    public static StrengthExercise selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM strength_exercise JOIN workout_exercise ON strength_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         ResultSet rs = runQuery(q);
@@ -64,8 +61,7 @@ public class StrengthExerciseImpl implements StrengthExerciseDao{
         return null;
     }
 
-    @Override
-    public List<StrengthExercise> selectAll() {
+    public static List<StrengthExercise> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM strength_exercise JOIN workout_exercise");
         List<StrengthExercise> l = new ArrayList<>();
         try {
@@ -90,13 +86,11 @@ public class StrengthExerciseImpl implements StrengthExerciseDao{
         return null;
     }
 
-    @Override
-    public void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
+    public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
         runQuery("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }
 
-    @Override
-    public void update(StrengthExercise strengthExercise) {
+    public static void update(StrengthExercise strengthExercise) {
         String workoutCollectionId = strengthExercise.getWorkoutCollectionId().toString();
         String exerciseId = strengthExercise.getExerciseId().toString();
         String load = strengthExercise.getLoad().toString();
