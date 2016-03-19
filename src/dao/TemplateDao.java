@@ -64,10 +64,8 @@ public class TemplateDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new Template(rs.getInt("id"), rs.getString("name"));
-            } else {
-                return null;
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();

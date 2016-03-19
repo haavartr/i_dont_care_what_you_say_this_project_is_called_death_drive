@@ -63,7 +63,7 @@ public class IndoorWorkoutDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new IndoorWorkout(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDate("date").toLocalDate(),
@@ -71,8 +71,6 @@ public class IndoorWorkoutDao {
                         rs.getString("note"),
                         rs.getInt("air_quality"),
                         rs.getInt("spectators"));
-            } else {
-                return null;
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();

@@ -72,7 +72,7 @@ public class OutdoorWorkoutDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            if (rs != null) {
+            if (rs.next()) {
                 return new OutdoorWorkout(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDate("date").toLocalDate(),
@@ -80,8 +80,6 @@ public class OutdoorWorkoutDao {
                         rs.getString("note"),
                         rs.getFloat("temperature"),
                         rs.getString("weather"));
-            } else {
-                return null;
             }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();

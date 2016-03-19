@@ -44,7 +44,9 @@ public class GoalDao {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
-            return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("weight"), rs.getInt("repetitions"), rs.getInt("sets"));
+            if (rs.next()) {
+                return new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("weight"), rs.getInt("repetitions"), rs.getInt("sets"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
