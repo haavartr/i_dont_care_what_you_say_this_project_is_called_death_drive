@@ -250,7 +250,7 @@ public class WorkoutsViewController implements Initializable {
                     return;
                 }
 
-                //public WorkoutExercise(int id, String workout, int load, int repetitions, int sets, int form, int preformance, int group) {
+                //public WorkoutExercise(int id, String workout, int weight, int repetitions, int sets, int form, int preformance, int group) {
 
                 if (allExercisesList.getValue() != null) {
                     System.out.println(formList.getValue());
