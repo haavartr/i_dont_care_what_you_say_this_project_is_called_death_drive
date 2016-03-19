@@ -44,16 +44,19 @@ public class GoalDao {
         return null;
     }
 
-    public static List<Goal> selectAll() {
+    public static ArrayList<Goal> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM goal", statement);
-        List<Goal> l = new ArrayList<>();
+        ArrayList<Goal> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new Goal(rs.getInt("id"), rs.getInt("exercise"), rs.getDate("date").toLocalDate(), rs.getInt("load"), rs.getInt("repetitions"), rs.getInt("sets")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;

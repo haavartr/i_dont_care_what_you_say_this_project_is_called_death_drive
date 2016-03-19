@@ -46,16 +46,19 @@ public class GroupDao {
         return null;
     }
 
-    public static List<Group> selectAll() {
+    public static ArrayList<Group> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM group", statement);
-        List<Group> l = new ArrayList<>();
+        ArrayList<Group> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new Group(rs.getInt("id")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new Group(rs.getInt("id")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;

@@ -2,7 +2,7 @@ package dao;
 
 import static dao.RunQuery.runUpdate;
 
-public class WorkoutExerciseDao {
+public class WorkoutExerciseDao {  // Parent
     public static void createWorkoutExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout_exercise (" +
                     "id int primary key unique auto_increment," +

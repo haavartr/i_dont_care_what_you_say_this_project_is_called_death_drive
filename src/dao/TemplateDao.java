@@ -4,6 +4,7 @@ import entities.Template;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
@@ -64,7 +65,34 @@ public class TemplateDao {
         return null;
     }
 
-    public static List<Template> selectAll() {
+    public static ArrayList<Template> selectAll() {  // Returns an empty ArrayList if the table is empty
+        Statement statement = null;
+        ResultSet rs = runQuery("SELECT * FROM template JOIN workout_collection", statement);
+        ArrayList<Template> l = new ArrayList<>();
+        try {
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new Template(rs.getInt("id"), rs.getString("name")));
+                    } catch (SQLException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return l;
+        } catch (SQLException|NullPointerException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
     }
 

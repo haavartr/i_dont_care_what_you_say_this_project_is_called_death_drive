@@ -10,7 +10,7 @@ import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
 
-public class ExerciseReplacementsDao {
+public class ExerciseReplacementsDao {  // Many-to-many
     public static void createExerciseReplacementsTable() {
         String q = "CREATE TABLE IF NOT EXISTS exercise_replacements (" +
                     "exercise_id_1 INT NOT NULL," +
@@ -22,16 +22,19 @@ public class ExerciseReplacementsDao {
         insertInto("exercise_replacements", Integer.toString(exerciseReplacements.getExerciseId1()), Integer.toString(exerciseReplacements.getExerciseId2()));
     }
 
-    public static List<ExerciseReplacements> selectAll() {
+    public static ArrayList<ExerciseReplacements> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM exercise_replacements", statement);
-        List<ExerciseReplacements> l = new ArrayList<>();
+        ArrayList<ExerciseReplacements> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new ExerciseReplacements(rs.getInt("exercise_id_1"), rs.getInt("exercise_id_2")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new ExerciseReplacements(rs.getInt("exercise_id_1"), rs.getInt("exercise_id_2")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;

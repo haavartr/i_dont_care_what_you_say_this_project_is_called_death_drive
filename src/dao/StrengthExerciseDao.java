@@ -77,23 +77,26 @@ public class StrengthExerciseDao {
         return null;
     }
 
-    public static List<StrengthExercise> selectAll() {
+    public static ArrayList<StrengthExercise> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM strength_exercise JOIN workout_exercise", statement);
-        List<StrengthExercise> l = new ArrayList<>();
+        ArrayList<StrengthExercise> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new StrengthExercise(rs.getInt("id"),
-                            rs.getInt("workout_collection_id"),
-                            rs.getInt("exercise_id"),
-                            rs.getInt("load"),
-                            rs.getInt("repetitions"),
-                            rs.getInt("sets"),
-                            rs.getInt("form"),
-                            rs.getInt("performance")));
-                } catch (SQLException|NullPointerException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new StrengthExercise(rs.getInt("id"),
+                                rs.getInt("workout_collection_id"),
+                                rs.getInt("exercise_id"),
+                                rs.getInt("load"),
+                                rs.getInt("repetitions"),
+                                rs.getInt("sets"),
+                                rs.getInt("form"),
+                                rs.getInt("performance")));
+                    } catch (SQLException|NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;

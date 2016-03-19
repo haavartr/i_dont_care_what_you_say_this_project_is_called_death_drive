@@ -10,7 +10,7 @@ import static dao.RunQuery.insertInto;
 import static dao.RunQuery.runQuery;
 import static dao.RunQuery.runUpdate;
 
-public class GroupGroupDao {
+public class GroupGroupDao {  // Many-to-many
     public static void createGroupGroupTable() {
         String q = ("CREATE TABLE IF NOT EXISTS group_group (" +
                 "container_group_id INT NOT NULL," +
@@ -22,16 +22,19 @@ public class GroupGroupDao {
         insertInto("group_group", groupGroup.getContainerGroupId().toString(), groupGroup.getContainedGroupId().toString());
     }
 
-    public static List<GroupGroup> selectAll() {
+    public static ArrayList<GroupGroup> selectAll() {  // Returns an empty ArrayList if the table is empty
         Statement statement = null;
         ResultSet rs = runQuery("SELECT * FROM group_group", statement);
-        List<GroupGroup> l = new ArrayList<>();
+        ArrayList<GroupGroup> l = new ArrayList<>();
         try {
-            while (rs.next()) {
-                try {
-                    l.add(new GroupGroup(rs.getInt("container_group_id"), rs.getInt("contained_group_id")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs.next()) {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    try {
+                        l.add(new GroupGroup(rs.getInt("container_group_id"), rs.getInt("contained_group_id")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
