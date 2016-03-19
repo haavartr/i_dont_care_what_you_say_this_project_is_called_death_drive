@@ -5,6 +5,7 @@ import entities.Template;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -36,7 +37,19 @@ public class TemplateImpl implements TemplateDao{
     }
 
     @Override
-    public Template selectById(int id) {
+    public Template selectById(int id) {  // Returns null if the id doesn't exist
+        String q = String.format("SELECT * FROM template JOIN workout_collection ON template.id = %d " +
+                "AND workout_collection.id = %d", id, id);
+        ResultSet rs = runQuery(q);
+        try {
+            if (rs != null) {
+                return new Template(rs.getInt("id"), rs.getString("name"));
+            } else {
+                return null;
+            }
+        } catch (SQLException|NullPointerException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

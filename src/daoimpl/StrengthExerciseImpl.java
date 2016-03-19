@@ -41,19 +41,23 @@ public class StrengthExerciseImpl implements StrengthExerciseDao{
     }
 
     @Override
-    public StrengthExercise selectById(int id) {
+    public StrengthExercise selectById(int id) {  // Returns null if the id doesn't exist
         String q = String.format("SELECT * FROM strength_exercise JOIN workout_exercise ON strength_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         ResultSet rs = runQuery(q);
         try {
-            return new StrengthExercise(rs.getInt("id"),
-                    rs.getInt("workout_collection_id"),
-                    rs.getInt("exercise_id"),
-                    rs.getInt("load"),
-                    rs.getInt("repetitions"),
-                    rs.getInt("sets"),
-                    rs.getInt("form"),
-                    rs.getInt("performance"));
+            if (rs != null) {
+                return new StrengthExercise(rs.getInt("id"),
+                        rs.getInt("workout_collection_id"),
+                        rs.getInt("exercise_id"),
+                        rs.getInt("load"),
+                        rs.getInt("repetitions"),
+                        rs.getInt("sets"),
+                        rs.getInt("form"),
+                        rs.getInt("performance"));
+            } else {
+                return null;
+            }
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }

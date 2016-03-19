@@ -28,10 +28,14 @@ public class ExerciseImpl {
         insertInto("exercise (name, description)", exercise.getName(), exercise.getDescription());
     }
 
-    public static Exercise selectById(int id) {
+    public static Exercise selectById(int id) {  // Returns null if the id doesn't exist
         ResultSet rs = runQuery("SELECT * FROM exercise WHERE id = " + id);
         try {
-            return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+            if (rs != null) {
+                return new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description"));
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,12 +46,13 @@ public class ExerciseImpl {
         ResultSet rs = runQuery("SELECT * FROM exercise");
         List<Exercise> l = new ArrayList<>();
         try {
-            assert rs != null;
-            while (rs.next()) {
-                try {
-                    l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+            if (rs != null) {
+                while (rs.next()) {
+                    try {
+                        l.add(new Exercise(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return l;
