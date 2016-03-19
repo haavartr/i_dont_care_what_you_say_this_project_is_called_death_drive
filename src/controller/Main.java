@@ -1,6 +1,7 @@
 package controller;
 
-import daoimpl.ExerciseImpl;
+import daoimpl.*;
+import entities.StrengthExercise;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,13 @@ public class Main extends Application {
 
         final Connection connection = ConnectionConfiguration.getConnection();
         ExerciseImpl.createExerciseTable();
+        WorkoutExerciseImpl.createWorkoutExerciseTable();
+        //StrengthExerciseImpl.createStrengthExerciseTable();
+        //CardioExerciseImpl.createCardioExerciseTable();
+
+        WorkoutImpl.createWorkoutTable();
+        //IndoorWorkoutImpl.createIndoorWorkoutTable();
+        //OutdoorWorkoutImpl.createOutdoorWorkoutTable();
     }
 
     public static void main(String[] args) {

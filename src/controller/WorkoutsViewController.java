@@ -1,5 +1,6 @@
 package controller;
 
+import daoimpl.ExerciseImpl;
 import daoimpl.WorkoutExerciseImpl;
 import entities.Exercise;
 import entities.Workout;
@@ -17,13 +18,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextFlow;
 
-import java.awt.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class WorkoutsViewController implements Initializable {
@@ -67,7 +67,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private ArrayList<Exercise> exercises = new ArrayList<>();
+    private List<Exercise> exercises = ExerciseImpl.selectAll();
     private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
@@ -77,11 +77,6 @@ public class WorkoutsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*exercises.add(new Exercise("Markløft", "Olsen"));
-        exercises.add(new Exercise("Knebøy", "Pedersen"));
-        exercises.add(new Exercise("Pushups", "Johnsen"));
-        exercises.add(new Exercise("Benkpress", "Knutsen"));*/
-
         hideAllControls();
         loadAllWorkoutsToList();
 

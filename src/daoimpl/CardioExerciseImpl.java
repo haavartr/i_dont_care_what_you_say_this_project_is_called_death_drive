@@ -7,20 +7,18 @@ import java.util.ArrayList;
 import static daoimpl.RunQuery.insertInto;
 import static daoimpl.RunQuery.runQuery;
 
-public class CardioExerciseImpl implements CardioExerciseDao {
-    @Override
-    public void createCardioExerciseTable() {
+public class CardioExerciseImpl {
+    public static void createCardioExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS cardio_exercise (" +
                 "id INT NOT NULL UNIQUE," +
                 "distance INT," +
                 "time INT," +
                 "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE))";
+                "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
         runQuery(q);
     }
 
-    @Override
-    public void insert(CardioExercise cardioExercise) {
+    public static void insert(CardioExercise cardioExercise) {
         String workoutCollectionId = cardioExercise.getWorkoutCollectionId().toString();
         String exerciseId = cardioExercise.getExerciseId().toString();
         String load = cardioExercise.getLoad().toString();
@@ -40,8 +38,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
         }
     }
 
-    @Override
-    public CardioExercise selectById(int id) {
+    public static CardioExercise selectById(int id) {
         String q = String.format("SELECT * FROM cardio_exercise JOIN workout_exercise ON cardio_exercise.id = %d " +
                 "AND workout_exercise.id = %d", id, id);
         ResultSet rs = runQuery(q);
@@ -62,8 +59,7 @@ public class CardioExerciseImpl implements CardioExerciseDao {
         return null;
     }
 
-    @Override
-    public ArrayList<CardioExercise> selectAll() {
+    public static ArrayList<CardioExercise> selectAll() {
         ResultSet rs = runQuery("SELECT * FROM cardio_exercise JOIN workout_exercise");
         ArrayList<CardioExercise> l = new ArrayList<>();
         try {
@@ -90,13 +86,12 @@ public class CardioExerciseImpl implements CardioExerciseDao {
         return null;
     }
 
-    @Override  // Delete the entry in the highest parent and let the deletion cascade
-    public void delete(int id) {
+    // Delete the entry in the highest parent and let the deletion cascade
+    public static void delete(int id) {
         runQuery("DELETE FROM TABLE workout_exercise WHERE id = " + id);
     }
 
-    @Override
-    public void update(CardioExercise cardioExercise) {
+    public static void update(CardioExercise cardioExercise) {
         String workoutCollectionId = cardioExercise.getWorkoutCollectionId().toString();
         String exerciseId = cardioExercise.getExerciseId().toString();
         String load = cardioExercise.getLoad().toString();
