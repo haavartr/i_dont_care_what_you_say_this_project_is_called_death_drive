@@ -14,15 +14,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 700, 500));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-
         final Connection connection = ConnectionConfiguration.getConnection();
         ExerciseDao.createExerciseTable();
-        GoalDao.createGoalsTable();
+        GoalDao.createGoalTable();
         GroupingExerciseDao.createGroupingExerciseTable();
         GroupingGroupingDao.createGroupingGroupingTable();
         TemplateDao.createTemplateTable();
@@ -31,10 +25,15 @@ public class Main extends Application {
         WorkoutExerciseDao.createWorkoutExerciseTable();
         StrengthExerciseDao.createStrengthExerciseTable();
         CardioExerciseDao.createCardioExerciseTable();
-
         WorkoutDao.createWorkoutTable();
         IndoorWorkoutDao.createIndoorWorkoutTable();
         OutdoorWorkoutDao.createOutdoorWorkoutTable();
+
+        Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 700, 500));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

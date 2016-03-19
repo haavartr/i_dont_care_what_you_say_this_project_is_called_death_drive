@@ -14,7 +14,7 @@ import java.util.TreeMap;
 import static dao.RunQuery.*;
 
 public class GoalDao {
-    public static void createGoalsTable() {
+    public static void createGoalTable() {
         String q = "CREATE TABLE IF NOT EXISTS goal (" +
                 "id INT NOT NULL auto_increment primary key," +
                 "exercise INT NOT NULL," +
