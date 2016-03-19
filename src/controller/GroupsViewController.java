@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ExerciseDao;
 import dao.GoalDao;
 import dao.GroupDao;
 import dao.GroupExerciseDao;
@@ -87,6 +88,7 @@ public class GroupsViewController implements Initializable {
                 Exercise exerciseToAdd = notGroupExercisesList.getSelectionModel().getSelectedItem();
                 if (exerciseToAdd != null) {
                     GroupExerciseDao.insert(new GroupExercise(groupsList.getSelectionModel().getSelectedItem().getId(), exerciseToAdd.getId()));
+                    loadAllGroupExercisesForGroup(groupsList.getSelectionModel().getSelectedItem());
                 }
             }
         });
@@ -102,11 +104,11 @@ public class GroupsViewController implements Initializable {
     }
 
     private void loadAllGroupExercisesForGroup(Group group) {
-        ObservableList<GroupExercise> list = FXCollections.observableArrayList();
+        ObservableList<Exercise> list = FXCollections.observableArrayList();
 
         for(GroupExercise ge : GroupExerciseDao.selectAll()) {
             if (ge.getGroupId() == group.getId()) {
-                list.add(ge);
+                list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
         }
 
