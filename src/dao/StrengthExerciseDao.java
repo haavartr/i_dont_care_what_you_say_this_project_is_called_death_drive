@@ -17,6 +17,9 @@ public class StrengthExerciseDao {
     public static void createStrengthExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS strength_exercise (" +
                 "id INT NOT NULL UNIQUE," +
+                "weight int, " +
+                "repetitions int, " +
+                "sets int, " +
                 "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
         runUpdate(q);
@@ -32,7 +35,7 @@ public class StrengthExerciseDao {
         String form = "form " + strengthExercise.getForm().toString();
         String performance = "performance " + strengthExercise.getPerformance().toString();
 
-        insertInto("workout_exercise", workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
+        insertInto("workout_exercise", workoutCollectionId, exerciseId, form, performance);
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
@@ -45,7 +48,7 @@ public class StrengthExerciseDao {
                 id += rs.getString("last_id");
                 System.out.println(id);
             }
-            insertInto("strength_exercise", id);
+            insertInto("strength_exercise", id, weight, repetitions, sets);
         } catch (SQLException |NullPointerException e) {
             e.printStackTrace();
         } finally {
