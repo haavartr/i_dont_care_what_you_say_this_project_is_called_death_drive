@@ -1,5 +1,7 @@
 package entities;
 
+import dao.ExerciseDao;
+
 public class CardioExercise extends WorkoutExercise {
     private Integer distance;
     private Integer time;
@@ -26,5 +28,10 @@ public class CardioExercise extends WorkoutExercise {
 
     public void setTime(Integer time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return ExerciseDao.selectById(this.getExerciseId()).toString();
     }
 }

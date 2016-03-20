@@ -1,10 +1,7 @@
 package controller;
 
 import dao.ExerciseDao;
-import entities.Exercise;
-import entities.StrengthExercise;
-import entities.Workout;
-import entities.WorkoutExercise;
+import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -243,28 +240,51 @@ public class WorkoutsViewController implements Initializable {
         saveWorkoutExerciseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Integer weight;
-                Integer reps;
-                Integer sets;
-
-                try {
-                    weight = Integer.parseInt(weightField.getText());
-                    reps = Integer.parseInt(repsField.getText());
-                    sets = Integer.parseInt(setsField.getText());
-
-                } catch (Exception e) {
-                    System.out.println("Ikke gyldig vekt, reps eller sett.");
-                    return;
-                }
-
                 if (allExercisesList.getValue() != null) {
                     if(styrke) {
+                        Integer weight = null;
+                        Integer reps = null;
+                        Integer sets = null;
+
+                        try {
+                            weight = Integer.parseInt(weightField.getText());
+                            reps = Integer.parseInt(repsField.getText());
+                            sets = Integer.parseInt(setsField.getText());
+
+                        } catch (Exception e) {
+                            System.out.println("Ikke gyldig vekt, reps eller sett.");
+                            return;
+                        }
+
                         StrengthExercise e = new StrengthExercise();
+                        e.setWeight(weight);
+                        e.setRepetitions(reps);
+                        e.setSets(sets);
+                        e.setForm(formList.getSelectionModel().getSelectedItem());
+                        e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
+                        tempWorkoutExercises.add(e);
+                    } else {
+                        Integer distance = null;
+                        Integer duration = null;
+
+                        try {
+                            distance = Integer.parseInt(distanceField.getText());
+                            Integer hours = Integer.parseInt(weHoursField.getText());
+                            Integer minutes = Integer.parseInt(weMinutesField.getText());
+                            Integer seconds = Integer.parseInt(weSecondsField.getText());
+                            duration = (hours * 3600) + (minutes * 60) + (seconds);
+                        } catch (Exception e) {
+                            System.out.println("Ugyldigheter");
+                        }
+
+                        CardioExercise e = new CardioExercise();
+                        e.setDistance(distance);
+                        e.setTime(duration);
+                        e.setForm(formList.getSelectionModel().getSelectedItem());
+                        e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
+                        tempWorkoutExercises.add(e);
                     }
 
-                    tempWorkoutExercises.add(new WorkoutExercise());
-
-                    //workoutExercises.add(new WorkoutExercise(0, (String)allExercisesList.getValue(), weight, reps, sets, formList.getValue(), performanceList.getValue(), 0));
                     reloadWorkoutExercisesForNewWorkout();
                     newWorkoutExercisePane.setVisible(false);
 
