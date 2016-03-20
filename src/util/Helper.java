@@ -75,5 +75,6 @@ public class Helper {
         RunQuery.runUpdate("DROP TABLE workout_collection");
         RunQuery.runUpdate("DROP TABLE workout");
         RunQuery.runUpdate("DROP TABLE workout_exercise");
+        RunQuery.runUpdate("DROP DATABASE exercise_diary");
     }
 }

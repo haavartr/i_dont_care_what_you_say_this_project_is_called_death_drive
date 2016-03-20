@@ -17,14 +17,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         final Connection connection = ConnectionConfiguration.getConnection();
-        //Helper.deleteAllTables();
+
         ExerciseDao.createExerciseTable();
         GoalDao.createGoalTable();
         GroupingDao.createGroupingTable();
         GroupingExerciseDao.createGroupingExerciseTable();
         GroupingGroupingDao.createGroupingGroupingTable();
-        TemplateDao.createTemplateTable();
         WorkoutCollectionDao.createWorkoutCollectionTable();
+        TemplateDao.createTemplateTable();
         ExerciseReplacementsDao.createExerciseReplacementsTable();
         WorkoutExerciseDao.createWorkoutExerciseTable();
         StrengthExerciseDao.createStrengthExerciseTable();
@@ -32,6 +32,8 @@ public class Main extends Application {
         WorkoutDao.createWorkoutTable();
         IndoorWorkoutDao.createIndoorWorkoutTable();
         OutdoorWorkoutDao.createOutdoorWorkoutTable();
+
+        Helper.deleteAllTables();
 
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
         primaryStage.setTitle("Treningsdagbok");
