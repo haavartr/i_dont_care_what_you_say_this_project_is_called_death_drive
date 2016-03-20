@@ -43,11 +43,24 @@ public class GoalsViewController implements Initializable {
     @FXML private AnchorPane newGoalPane;
     @FXML private Button saveNewGoalButton;
     @FXML private Button cancelNewGoalButton;
+
     @FXML private TextField goalWeightField;
     @FXML private TextField goalRepetitionsField;
     @FXML private TextField goalSetsField;
+    @FXML private TextField goalDistanceField;
+    @FXML private TextField goalDurationField;
+
+    @FXML private Label newGoalDistanceLabel;
+    @FXML private Label newGoalDurationLabel;
+    @FXML private Label newGoalWeightLabel;
+    @FXML private Label newGoalRepsLabel;
+    @FXML private Label newGoalSetsLabel;
+
+    @FXML private ToggleButton strengthCardioToggle;
 
     Goal selectedGoal;
+
+    Boolean strength = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +84,24 @@ public class GoalsViewController implements Initializable {
             public void handle(MouseEvent event) {
                 newGoalPane.setVisible(true);
                 allExercisesList.setItems(Helper.getAllExercises());
+            }
+        });
+
+        strengthCardioToggle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                strength = !strengthCardioToggle.isSelected();
+                if(strength) {
+                    strengthCardioToggle.setText("Styrke");
+                } else {
+                    strengthCardioToggle.setText("Utholdenhet");
+                }
+
+                goalWeightField.setVisible(strength);
+                goalRepetitionsField.setVisible(strength);
+                goalSetsField.setVisible(strength);
+                goalDistanceField.setVisible(!strength);
+                goalDurationField.setVisible(!strength);
             }
         });
 

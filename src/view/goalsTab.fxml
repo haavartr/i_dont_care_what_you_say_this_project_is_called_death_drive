@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -19,23 +20,30 @@
         </AnchorPane>
         <AnchorPane>
          <children>
-            <AnchorPane fx:id="newGoalPane" layoutX="112.0" layoutY="147.0" prefHeight="241.0" prefWidth="283.0" style="-fx-border-radius: 20; -fx-border-color: #CCC; -fx-background-color: #FFF;">
+            <AnchorPane fx:id="newGoalPane" layoutX="112.0" layoutY="147.0" prefHeight="241.0" prefWidth="324.0" style="-fx-border-radius: 20; -fx-border-color: #CCC; -fx-background-color: #FFF;">
                <children>
-                  <ComboBox fx:id="allExercisesList" layoutX="21.0" layoutY="54.0" prefHeight="27.0" prefWidth="244.0" />
+                  <ComboBox fx:id="allExercisesList" layoutX="21.0" layoutY="54.0" prefHeight="27.0" prefWidth="183.0" />
                   <Label layoutX="25.0" layoutY="35.0" text="Velg øvelse:" />
                   <Label layoutX="129.0" layoutY="14.0" text="Nytt mål">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="saveNewGoalButton" layoutX="149.0" layoutY="200.0" mnemonicParsing="false" text="Lagre" />
-                  <TextField fx:id="goalWeightField" layoutX="193.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
                   <Button fx:id="cancelNewGoalButton" layoutX="85.0" layoutY="200.0" mnemonicParsing="false" text="Avbryt" />
-                  <TextField fx:id="goalRepetitionsField" layoutX="193.0" layoutY="126.0" prefHeight="27.0" prefWidth="72.0" />
-                  <TextField fx:id="goalSetsField" layoutX="193.0" layoutY="163.0" prefHeight="27.0" prefWidth="72.0" />
-                  <Label layoutX="29.0" layoutY="94.0" text="Vekt:" />
-                  <Label layoutX="29.0" layoutY="168.0" text="Repetisjoner/sett:" />
-                  <Label layoutX="29.0" layoutY="131.0" text="Sett:" />
+                   <Button fx:id="saveNewGoalButton" layoutX="149.0" layoutY="200.0" mnemonicParsing="false" text="Lagre" />
+                   <TextField visible="false" fx:id="goalDistanceField" layoutX="226.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
+                   <TextField visible="false" fx:id="goalDurationField" layoutX="226.0" layoutY="126.0" prefHeight="27.0" prefWidth="72.0" />
+                   <TextField fx:id="goalWeightField" layoutX="226.0" layoutY="89.0" prefHeight="27.0" prefWidth="72.0" />
+                   <TextField fx:id="goalRepetitionsField" layoutX="226.0" layoutY="126.0" prefHeight="27.0" prefWidth="72.0" />
+                  <TextField fx:id="goalSetsField" layoutX="226.0" layoutY="163.0" prefHeight="27.0" prefWidth="72.0" />
+                   <Label fx:id="newGoalDistanceLabel" visible="false" layoutX="29.0" layoutY="94.0" text="Distanse:" />
+                   <Label fx:id="newGoalDurationLabel" visible="false" layoutX="29.0" layoutY="168.0" text="Tid:" />
+
+                   <Label fx:id="newGoalWeightLabel" layoutX="29.0" layoutY="94.0" text="Vekt:" />
+                  <Label fx:id="newGoalRepsLabel" layoutX="29.0" layoutY="168.0" text="Repetisjoner/sett:" />
+
+                  <Label fx:id="newGoalSetsLabel" layoutX="29.0" layoutY="131.0" text="Sett:" />
+                  <ToggleButton fx:id="strengthCardioToggle" layoutX="204.0" layoutY="54.0" mnemonicParsing="false" text="Styrke" />
                </children>
             </AnchorPane>
             <Label fx:id="goalWeightTitleLabel" layoutX="14.0" layoutY="76.0" text="Vekt:" />
