@@ -4,7 +4,7 @@ public class WorkoutCollection {  // Superclass of Workout and Template
     private Integer id;  // Auto-incremented
     private String name;
 
-    public WorkoutCollection(Integer wcId, String name) {
+    public WorkoutCollection(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

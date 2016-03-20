@@ -91,7 +91,7 @@ public class IndoorWorkoutDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM indoor_workout JOIN workout JOIN workout_collection";
+        String q = "SELECT * FROM indoor_workout JOIN workout JOIN workout_collection GROUP BY indoor_workout.id";
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
@@ -113,6 +113,7 @@ public class IndoorWorkoutDao {
                     }
                 }
             }
+            System.out.println(l.size());
             return l;
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
