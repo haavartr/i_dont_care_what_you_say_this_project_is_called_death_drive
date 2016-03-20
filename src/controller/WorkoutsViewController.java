@@ -200,10 +200,10 @@ public class WorkoutsViewController implements Initializable {
 
                 LocalDate date = workoutDatePicker.getValue() != null ? workoutDatePicker.getValue() : LocalDate.now();
 
-                Float temperature = null;
+                Float temperature = (float)-273.15;
                 String weather = null;
                 String airQuality = null;
-                Integer spectators = null;
+                Integer spectators = -100;
 
                 if (!tempSpectatorsField.getText().equals("")) {
                     try {
@@ -221,7 +221,7 @@ public class WorkoutsViewController implements Initializable {
                 if (inne) {
                     IndoorWorkout iw = new IndoorWorkout();
                     iw.setAirQuality(weatherAirField.getSelectionModel().getSelectedIndex());
-                    iw.setSpectators(Integer.parseInt(tempSpectatorsField.getText()));
+                    iw.setSpectators(spectators);
                     iw.setDate(date);
                     iw.setLength((hours * 3600) + (minutes * 60) + seconds);
                     iw.setNote(descriptionText.getText());
@@ -235,11 +235,7 @@ public class WorkoutsViewController implements Initializable {
                     ow.setLength((hours * 3600) + (minutes * 60) + seconds);
                     ow.setDate(date);
                     ow.setNote(descriptionText.getText());
-                    try {
-                        ow.setTemperature(Float.parseFloat(tempSpectatorsField.getText()));
-                    } catch (NumberFormatException e){
-                        ow.setTemperature((float) -273.15);
-                    }
+                    ow.setTemperature(temperature);
                     ow.setWeather(weatherAirField.getSelectionModel().getSelectedItem());
 
                     OutdoorWorkoutDao.insert(ow);
