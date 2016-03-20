@@ -58,8 +58,8 @@ public class IndoorWorkoutDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = String.format("SELECT * FROM indoor_workout JOIN indoor_workout ON indoor_workout.id = %d " +
-                "AND workout.id = %d", id, id);
+        String q = String.format("SELECT * FROM outdoor_workout JOIN workout JOIN workout_collection " +
+                "WHERE workout_collection.id = %d", id);
         try {
             connection = ConnectionConfiguration.getConnection();
             statement = connection.createStatement();
