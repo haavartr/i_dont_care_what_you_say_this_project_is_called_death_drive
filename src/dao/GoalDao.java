@@ -82,8 +82,9 @@ public class GoalDao {
                 }
             }
             return l;
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -93,7 +94,6 @@ public class GoalDao {
                 }
             }
         }
-        return null;
     }
 
     public static void delete(int id) {

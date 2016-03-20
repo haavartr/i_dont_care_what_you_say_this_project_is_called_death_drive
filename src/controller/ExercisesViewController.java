@@ -107,8 +107,12 @@ public class ExercisesViewController implements Initializable {
     private void selectExercise(Exercise exercise) {
         exerciseList.getSelectionModel().select(exercise);
 
-        exerciseNameLabel.setText(exercise.getName());
-        exerciseDescriptionLabel.setText(exercise.getDescription());
+        try {
+            exerciseNameLabel.setText(exercise.getName());
+            exerciseDescriptionLabel.setText(exercise.getDescription());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         setExerciseReplacements();
     }
 
@@ -116,13 +120,11 @@ public class ExercisesViewController implements Initializable {
         ObservableList<Exercise> replacements = FXCollections.observableArrayList();
         Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
 
-        if (ExerciseReplacementsDao.selectAll() != null) {
-            for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
-                if(er.getExerciseId1().equals(selectedExercise.getId())) {
-                    replacements.add(ExerciseDao.selectById(er.getExerciseId2()));
-                } else if(er.getExerciseId2().equals(selectedExercise.getId())){
-                    replacements.add(ExerciseDao.selectById(er.getExerciseId1()));
-                }
+        for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
+            if(er.getExerciseId1().equals(selectedExercise.getId())) {
+                replacements.add(ExerciseDao.selectById(er.getExerciseId2()));
+            } else if(er.getExerciseId2().equals(selectedExercise.getId())){
+                replacements.add(ExerciseDao.selectById(er.getExerciseId1()));
             }
         }
         exerciseReplacementsList.setItems(replacements);

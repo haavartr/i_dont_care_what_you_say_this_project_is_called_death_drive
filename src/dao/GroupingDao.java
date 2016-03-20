@@ -76,8 +76,9 @@ public class GroupingDao {
                 }
             }
             return l;
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -87,7 +88,6 @@ public class GroupingDao {
                 }
             }
         }
-        return null;
     }
 
     public static void delete(int id) {

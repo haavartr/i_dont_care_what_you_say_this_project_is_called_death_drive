@@ -77,8 +77,9 @@ public class ExerciseDao {
                 }
             }
             return l;
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -88,7 +89,6 @@ public class ExerciseDao {
                 }
             }
         }
-        return l;
     }
 
     public static void delete(int id) {

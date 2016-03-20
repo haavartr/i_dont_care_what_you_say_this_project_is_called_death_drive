@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class Helper {
     public static ObservableList<Exercise> getAllExercises() {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
+
         for (Exercise exercise : ExerciseDao.selectAll()) {
             list.add(exercise);
         }
@@ -26,6 +27,7 @@ public class Helper {
 
     public static ObservableList<Exercise> getAllExercisesExcept(ObservableList<Exercise> exceptions) {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
+
         for (Exercise exercise : ExerciseDao.selectAll()) {
             if(exceptions.stream().noneMatch(e -> e.getId().equals(exercise.getId()))) {
                 list.add(exercise);

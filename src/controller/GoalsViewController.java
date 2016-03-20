@@ -16,6 +16,7 @@ import util.Helper;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -111,6 +112,7 @@ public class GoalsViewController implements Initializable {
 
     private void loadAllGoalsToList() {
         ObservableList<Goal> list = FXCollections.observableArrayList();
+
         for (Goal goal : GoalDao.selectAll()) {
             list.add(goal);
         }
