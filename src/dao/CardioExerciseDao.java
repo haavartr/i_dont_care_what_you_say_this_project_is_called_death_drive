@@ -24,14 +24,11 @@ public class CardioExerciseDao {
     public static void insert(CardioExercise cardioExercise) {
         String workoutCollectionId = "workout_collection_id " + cardioExercise.getWorkoutCollectionId().toString();
         String exerciseId = "exercise_id " + cardioExercise.getExerciseId().toString();
-        String weight = "weight " + cardioExercise.getWeight().toString();
-        String repetitions = "repetitions " + cardioExercise.getRepetitions().toString();
-        String sets = "sets " + cardioExercise.getSets().toString();
         String form = "form " + cardioExercise.getForm().toString();
         String performance = "performance " + cardioExercise.getPerformance().toString();
         String distance = "distance " + cardioExercise.getDistance().toString();
         String time = "time " + cardioExercise.getTime().toString();
-        insertInto("workout_exercise", workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
+        insertInto("workout_exercise", workoutCollectionId, exerciseId, form, performance);
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
@@ -73,9 +70,6 @@ public class CardioExerciseDao {
                 return new CardioExercise(rs.getInt("id"),
                         rs.getInt("workout_collection_id"),
                         rs.getInt("exercise_id"),
-                        rs.getInt("weight"),
-                        rs.getInt("repetitions"),
-                        rs.getInt("sets"),
                         rs.getInt("form"),
                         rs.getInt("performance"),
                         rs.getInt("distance"),
@@ -122,9 +116,6 @@ public class CardioExerciseDao {
                         l.add(new CardioExercise(rs.getInt("id"),
                                 rs.getInt("workout_collection_id"),
                                 rs.getInt("exercise_id"),
-                                rs.getInt("weight"),
-                                rs.getInt("repetitions"),
-                                rs.getInt("sets"),
                                 rs.getInt("form"),
                                 rs.getInt("performance"),
                                 rs.getInt("distance"),
@@ -157,9 +148,6 @@ public class CardioExerciseDao {
     public static void update(CardioExercise cardioExercise) {
         String workoutCollectionId = cardioExercise.getWorkoutCollectionId().toString();
         String exerciseId = cardioExercise.getExerciseId().toString();
-        String weight = cardioExercise.getWeight().toString();
-        String repetitions = cardioExercise.getRepetitions().toString();
-        String sets = cardioExercise.getSets().toString();
         String form = cardioExercise.getForm().toString();
         String performance = cardioExercise.getPerformance().toString();
         String distance = cardioExercise.getDistance().toString();
@@ -168,7 +156,7 @@ public class CardioExerciseDao {
 
         String q1 = String.format("UPDATE workout_exercise SET workout_collection_id = %s, exercise_id = %s, weight = %s," +
                 "repetitions = %s, sets = %s, form = %s, performance = %s WHERE id = %s", workoutCollectionId,
-                exerciseId, weight, repetitions, sets, form, performance, id);
+                exerciseId, form, performance, id);
         String q2 = String.format("UPDATE cardio_exercise SET distance = %s, time = %s WHERE id = %s", distance, time, id);
         runUpdate(q1);
         runUpdate(q2);

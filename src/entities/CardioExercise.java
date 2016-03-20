@@ -4,9 +4,8 @@ public class CardioExercise extends WorkoutExercise {
     private Integer distance;
     private Integer time;
 
-    public CardioExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer weight, Integer repetitions,
-                          Integer sets, Integer form, Integer performance, Integer distance, Integer time) {
-        super(id, workoutCollectionId, exerciseId, weight, repetitions, sets, form, performance);
+    public CardioExercise(Integer id, Integer workoutCollectionId, Integer exerciseId, Integer form, Integer performance, Integer distance, Integer time) {
+        super(id, workoutCollectionId, exerciseId, form, performance);
         this.distance = distance;
         this.time = time;
     }
