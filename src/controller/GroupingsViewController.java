@@ -40,12 +40,14 @@ public class GroupingsViewController implements Initializable {
     @FXML private Label notGroupingExercisesTitleLabel;
     @FXML private Label groupingExercisesTitleLabel;
 
-    Grouping selectedGrouping;
+    @FXML private Button deleteGroupingButton;
+
+    private Grouping selectedGrouping;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadAllGroupingsToList();
-        hideAllControls();
+        setControlsToVisible(false);
 
         groupingsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -61,7 +63,7 @@ public class GroupingsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 Grouping newGrouping = new Grouping();
-                newGrouping.setName("New grouping");
+                newGrouping.setName("Ny gruppe");
 
                 GroupingDao.insert(newGrouping);
                 loadAllGroupingsToList();
@@ -111,6 +113,15 @@ public class GroupingsViewController implements Initializable {
                 }
             }
         });
+
+        deleteGroupingButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                GroupingDao.delete(selectedGrouping.getId());
+                loadAllGroupingsToList();
+                setControlsToVisible(false);
+            }
+        });
     }
 
     private void loadAllGroupingsToList() {
@@ -123,26 +134,16 @@ public class GroupingsViewController implements Initializable {
         groupingsList.setItems(list);
     }
 
-    private void hideAllControls() {
-        groupingNameLabel.setVisible(false);
-        changeGroupingNameButton.setVisible(false);
-        groupingExercisesList.setVisible(false);
-        notGroupingExercisesList.setVisible(false);
-        addNewGroupingExerciseButton.setVisible(false);
-        removeGroupingExerciseButton.setVisible(false);
-        notGroupingExercisesTitleLabel.setVisible(false);
-        groupingExercisesTitleLabel.setVisible(false);
-    }
-
-    private void showAllControls() {
-        groupingNameLabel.setVisible(true);
-        changeGroupingNameButton.setVisible(true);
-        groupingExercisesList.setVisible(true);
-        notGroupingExercisesList.setVisible(true);
-        addNewGroupingExerciseButton.setVisible(true);
-        removeGroupingExerciseButton.setVisible(true);
-        notGroupingExercisesTitleLabel.setVisible(true);
-        groupingExercisesTitleLabel.setVisible(true);
+    private void setControlsToVisible(Boolean visible) {
+        groupingNameLabel.setVisible(visible);
+        changeGroupingNameButton.setVisible(visible);
+        groupingExercisesList.setVisible(visible);
+        notGroupingExercisesList.setVisible(visible);
+        addNewGroupingExerciseButton.setVisible(visible);
+        removeGroupingExerciseButton.setVisible(visible);
+        notGroupingExercisesTitleLabel.setVisible(visible);
+        groupingExercisesTitleLabel.setVisible(visible);
+        deleteGroupingButton.setVisible(visible);
     }
 
     private void loadAllGroupingExercisesForGrouping() {
@@ -164,6 +165,6 @@ public class GroupingsViewController implements Initializable {
         groupingNameLabel.setText(selectedGrouping.getName());
         loadAllGroupingExercisesForGrouping();
 
-        showAllControls();
+        setControlsToVisible(true);
     }
 }
