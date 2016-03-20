@@ -33,7 +33,7 @@ public class Main extends Application {
         IndoorWorkoutDao.createIndoorWorkoutTable();
         OutdoorWorkoutDao.createOutdoorWorkoutTable();
 
-        Helper.deleteAllTables();
+        //Helper.deleteAllTables();
 
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
         primaryStage.setTitle("Treningsdagbok");

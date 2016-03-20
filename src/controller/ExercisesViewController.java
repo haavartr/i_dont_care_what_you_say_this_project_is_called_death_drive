@@ -1,9 +1,7 @@
 package controller;
 
-import dao.ExerciseDao;
-import dao.ExerciseReplacementsDao;
-import entities.Exercise;
-import entities.ExerciseReplacements;
+import dao.*;
+import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -19,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 /**
  * Created by Magnus on 17.03.2016.
@@ -40,13 +39,15 @@ public class ExercisesViewController implements Initializable {
     @FXML private Button saveNewExercise;
     @FXML private TextField newExerciseName;
     @FXML private TextArea newExerciseDescription;
+    @FXML private Label exerciseLogLabel;
+    @FXML private ListView<Workout> exerciseLogList;
 
     private Exercise selectedExercise;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         newExercisePane.setVisible(false);
-        hideAllControls();
+        setControlsToVisible(false);
 
         exerciseList.setItems(Helper.getAllExercises());
 
@@ -122,7 +123,27 @@ public class ExercisesViewController implements Initializable {
         exerciseDescriptionLabel.setText(exercise.getDescription());
         setExerciseReplacements();
 
-        showAllControls();
+        ObservableList<Workout> isInWorkouts = FXCollections.observableArrayList();
+        ArrayList<WorkoutExercise> allIndoorAndOutdoor = new ArrayList<>();
+        allIndoorAndOutdoor.addAll(StrengthExerciseDao.selectAll());
+        allIndoorAndOutdoor.addAll(CardioExerciseDao.selectAll());
+
+        for(WorkoutExercise e : allIndoorAndOutdoor) {
+            if (e.getExerciseId().equals(selectedExercise.getId())) {
+                IndoorWorkout iw = IndoorWorkoutDao.selectById(e.getWorkoutCollectionId());
+                if (iw == null) {
+                    OutdoorWorkout ow = OutdoorWorkoutDao.selectById(e.getWorkoutCollectionId());
+                    isInWorkouts.add(ow);
+                } else {
+                    isInWorkouts.add(iw);
+                }
+
+            }
+        }
+
+        exerciseLogList.setItems(isInWorkouts);
+
+        setControlsToVisible(true);
     }
 
     private void setExerciseReplacements() {
@@ -139,21 +160,14 @@ public class ExercisesViewController implements Initializable {
         notExerciseReplacementsList.setItems(Helper.getAllExercisesExcept(replacements));
     }
 
-    private void hideAllControls() {
-        canBeReplacedByLabel.setVisible(false);
-        exerciseNameLabel.setVisible(false);
-        exerciseDescriptionLabel.setVisible(false);
-        addNewExerciseReplacement.setVisible(false);
-        exerciseReplacementsList.setVisible(false);
-        notExerciseReplacementsList.setVisible(false);
-    }
-
-    private void showAllControls() {
-        canBeReplacedByLabel.setVisible(true);
-        exerciseNameLabel.setVisible(true);
-        exerciseDescriptionLabel.setVisible(true);
-        addNewExerciseReplacement.setVisible(true);
-        exerciseReplacementsList.setVisible(true);
-        notExerciseReplacementsList.setVisible(true);
+    private void setControlsToVisible(Boolean visible) {
+        canBeReplacedByLabel.setVisible(visible);
+        exerciseNameLabel.setVisible(visible);
+        exerciseDescriptionLabel.setVisible(visible);
+        addNewExerciseReplacement.setVisible(visible);
+        exerciseReplacementsList.setVisible(visible);
+        notExerciseReplacementsList.setVisible(visible);
+        exerciseLogLabel.setVisible(visible);
+        exerciseLogList.setVisible(visible);
     }
 }
