@@ -290,6 +290,8 @@ public class WorkoutsViewController implements Initializable {
                         e.setSets(sets);
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
+                        e.setExerciseId(allExercisesList.getValue().getId());
+                        e.setWorkoutCollectionId(selectedWorkout.getId());
                         tempStrengthExercises.add(e);
                     } else {
                         Integer distance = null;
@@ -310,6 +312,8 @@ public class WorkoutsViewController implements Initializable {
                         e.setTime(duration);
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
+                        e.setExerciseId(allExercisesList.getValue().getId());
+                        e.setWorkoutCollectionId(selectedWorkout.getId());
                         tempCardioExercises.add(e);
                     }
 
