@@ -221,6 +221,7 @@ public class WorkoutsViewController implements Initializable {
                     }
                 }
 
+                Integer id = IndoorWorkoutDao.nextId();
                 if (inne) {
                     IndoorWorkout iw = new IndoorWorkout();
                     iw.setAirQuality(weatherAirField.getSelectionModel().getSelectedIndex());
@@ -245,9 +246,11 @@ public class WorkoutsViewController implements Initializable {
                 }
 
                 for (StrengthExercise se : tempStrengthExercises) {
+                    se.setWorkoutCollectionId(id);
                     StrengthExerciseDao.insert(se);
                 }
                 for (CardioExercise ce : tempCardioExercises) {
+                    ce.setWorkoutCollectionId(id);
                     CardioExerciseDao.insert(ce);
                 }
 

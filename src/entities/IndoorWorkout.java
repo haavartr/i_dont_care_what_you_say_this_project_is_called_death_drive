@@ -18,32 +18,6 @@ public class IndoorWorkout extends Workout {
         this.spectators = spectators;
     }
 
-    public static Integer nextId() {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
-        Integer id = null;
-        try {
-            connection = ConnectionConfiguration.getConnection();
-            statement = connection.createStatement();
-            rs = statement.executeQuery("SELECT COUNT(*) as last_id from workout_collection");
-            if (rs.next()) {
-                id = rs.getInt("last_id");
-            }
-        } catch (SQLException|NullPointerException e) {
-            e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return id;
-    }
-
     public IndoorWorkout(){}
 
     public Integer getAirQuality() {

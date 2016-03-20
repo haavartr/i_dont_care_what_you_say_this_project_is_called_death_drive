@@ -1,5 +1,6 @@
 package dao;
 
+import entities.IndoorWorkout;
 import entities.OutdoorWorkout;
 import util.ConnectionConfiguration;
 
@@ -93,6 +94,10 @@ public class OutdoorWorkoutDao {
             }
         }
         return null;
+    }
+
+    public Integer nextId () {
+        return IndoorWorkoutDao.nextId();
     }
 
     public static ArrayList<OutdoorWorkout> selectAll() {  // Returns an empty ArrayList if the table is empty
