@@ -41,7 +41,7 @@ public class ExercisesViewController implements Initializable {
     @FXML private TextField newExerciseName;
     @FXML private TextArea newExerciseDescription;
 
-    Exercise selectedExercise;
+    private Exercise selectedExercise;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

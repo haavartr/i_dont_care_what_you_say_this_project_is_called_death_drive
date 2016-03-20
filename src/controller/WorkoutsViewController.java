@@ -2,6 +2,7 @@ package controller;
 
 import dao.ExerciseDao;
 import entities.Exercise;
+import entities.StrengthExercise;
 import entities.Workout;
 import entities.WorkoutExercise;
 import javafx.collections.FXCollections;
@@ -60,19 +61,33 @@ public class WorkoutsViewController implements Initializable {
     @FXML private Button saveWorkoutExerciseButton;
     @FXML private Button cancelWorkoutExerciseButton;
     @FXML private ComboBox<Exercise> allExercisesList;
+    @FXML private ToggleButton styrkeUtholdenhetToggle;
+
     @FXML private TextField weightField;
     @FXML private TextField repsField;
     @FXML private TextField setsField;
+    @FXML private TextField distanceField;
+    @FXML private TextField weHoursField;
+    @FXML private TextField weMinutesField;
+    @FXML private TextField weSecondsField;
+
+    @FXML private Label weightTitleLabel;
+    @FXML private Label repsTitleLabel;
+    @FXML private Label setsTitleLabel;
+    @FXML private Label distanceTitleLabel;
+    @FXML private Label durationTitleLabel;
+
     @FXML private ComboBox<Integer> performanceList;
     @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
+    private ArrayList<WorkoutExercise> tempWorkoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
     private ObservableList<String> airQualityList = FXCollections.observableArrayList("Bra", "Middels", "Dårlig");
 
     private Boolean inne = false;
+    private Boolean styrke = true;
     private Workout selectedWorkout;
 
     @Override
@@ -242,10 +257,13 @@ public class WorkoutsViewController implements Initializable {
                     return;
                 }
 
-                //public WorkoutExercise(int id, String workout, int weight, int repetitions, int sets, int form, int preformance, int group) {
-
                 if (allExercisesList.getValue() != null) {
-                    System.out.println(formList.getValue());
+                    if(styrke) {
+                        StrengthExercise e = new StrengthExercise();
+                    }
+
+                    tempWorkoutExercises.add(new WorkoutExercise());
+
                     //workoutExercises.add(new WorkoutExercise(0, (String)allExercisesList.getValue(), weight, reps, sets, formList.getValue(), performanceList.getValue(), 0));
                     reloadWorkoutExercisesForNewWorkout();
                     newWorkoutExercisePane.setVisible(false);
@@ -257,17 +275,32 @@ public class WorkoutsViewController implements Initializable {
             }
         });
 
-        newWorkoutTime.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        styrkeUtholdenhetToggle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                //System.out.println(newWorkoutTime.getText().len);
+            public void handle(MouseEvent event) {
+                styrke = !styrkeUtholdenhetToggle.isSelected();
+                if(styrke) { styrkeUtholdenhetToggle.setText("Styrke"); }
+                else { styrkeUtholdenhetToggle.setText("Utholdenhet"); }
+
+                weightField.setVisible(styrke);
+                repsField.setVisible(styrke);
+                setsField.setVisible(styrke);
+                distanceField.setVisible(!styrke);
+                weHoursField.setVisible(!styrke);
+                weMinutesField.setVisible(!styrke);
+                weSecondsField.setVisible(!styrke);
+                weightTitleLabel.setVisible(styrke);
+                repsTitleLabel.setVisible(styrke);
+                setsTitleLabel.setVisible(styrke);
+                distanceTitleLabel.setVisible(!styrke);
+                durationTitleLabel.setVisible(!styrke);
             }
         });
     }
 
     private void reloadWorkoutExercisesForNewWorkout() {
         ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
-        for (WorkoutExercise workoutExercise : workoutExercises) {
+        for (WorkoutExercise workoutExercise : tempWorkoutExercises) {
             list.add(workoutExercise);
         }
 
