@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import util.Helper;
 
 import javax.smartcardio.Card;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -78,7 +79,8 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> performanceList;
     @FXML private ComboBox<Integer> formList;
 
-    private ArrayList<WorkoutExercise> tempWorkoutExercises = new ArrayList<>();
+    private ArrayList<StrengthExercise> tempStrengthExercises = new ArrayList<>();
+    private ArrayList<CardioExercise> tempCardioExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
     private ObservableList<String> airQualityList = FXCollections.observableArrayList("Bra", "Middels", "Dårlig");
@@ -242,13 +244,11 @@ public class WorkoutsViewController implements Initializable {
                     OutdoorWorkoutDao.insert(ow);
                 }
 
-                for (WorkoutExercise we : tempWorkoutExercises) {
-                    if(we.getClass().equals(StrengthExercise.class)) {
-                        StrengthExerciseDao.insert((StrengthExercise)we);
-
-                    } else {
-                        CardioExerciseDao.insert((CardioExercise)we);
-                    }
+                for (StrengthExercise se : tempStrengthExercises) {
+                    StrengthExerciseDao.insert(se);
+                }
+                for (CardioExercise ce : tempCardioExercises) {
+                    CardioExerciseDao.insert(ce);
                 }
 
                 loadAllWorkoutsToList();
@@ -290,7 +290,7 @@ public class WorkoutsViewController implements Initializable {
                         e.setSets(sets);
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
-                        tempWorkoutExercises.add(e);
+                        tempStrengthExercises.add(e);
                     } else {
                         Integer distance = null;
                         Integer duration = null;
@@ -310,7 +310,7 @@ public class WorkoutsViewController implements Initializable {
                         e.setTime(duration);
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
-                        tempWorkoutExercises.add(e);
+                        tempCardioExercises.add(e);
                     }
 
                     reloadWorkoutExercisesForNewWorkout();
@@ -348,7 +348,11 @@ public class WorkoutsViewController implements Initializable {
 
     private void reloadWorkoutExercisesForNewWorkout() {
         ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
-        for (WorkoutExercise workoutExercise : tempWorkoutExercises) {
+        ArrayList<WorkoutExercise> wes = new ArrayList<>();
+        wes.addAll(tempCardioExercises);
+        wes.addAll(tempStrengthExercises);
+
+        for (WorkoutExercise workoutExercise : wes) {
             list.add(workoutExercise);
         }
 
