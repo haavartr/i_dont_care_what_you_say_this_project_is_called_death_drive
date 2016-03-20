@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import util.Helper;
 
+import javax.smartcardio.Card;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -241,6 +242,15 @@ public class WorkoutsViewController implements Initializable {
                     OutdoorWorkoutDao.insert(ow);
                 }
 
+                for (WorkoutExercise we : tempWorkoutExercises) {
+                    if(we.getClass().equals(StrengthExercise.class)) {
+                        StrengthExerciseDao.insert((StrengthExercise)we);
+
+                    } else {
+                        CardioExerciseDao.insert((CardioExercise)we);
+                    }
+                }
+
                 loadAllWorkoutsToList();
                 clearAllNewWorkoutFields();
 
@@ -393,6 +403,16 @@ public class WorkoutsViewController implements Initializable {
         showAllControls();
 
         ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
+        ArrayList<WorkoutExercise> allWorkoutExercises = new ArrayList<>();
+        allWorkoutExercises.addAll(StrengthExerciseDao.selectAll());
+        allWorkoutExercises.addAll(CardioExerciseDao.selectAll());
+
+        for(WorkoutExercise e : allWorkoutExercises) {
+            if(e.getWorkoutCollectionId().equals(selectedWorkout.getId())) {
+                list.add(e);
+            }
+        }
+
         workoutExercisesList.setItems(list);
     }
 }

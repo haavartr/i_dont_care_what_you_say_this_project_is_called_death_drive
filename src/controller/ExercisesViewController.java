@@ -124,11 +124,11 @@ public class ExercisesViewController implements Initializable {
         setExerciseReplacements();
 
         ObservableList<Workout> isInWorkouts = FXCollections.observableArrayList();
-        ArrayList<WorkoutExercise> allIndoorAndOutdoor = new ArrayList<>();
-        allIndoorAndOutdoor.addAll(StrengthExerciseDao.selectAll());
-        allIndoorAndOutdoor.addAll(CardioExerciseDao.selectAll());
+        ArrayList<WorkoutExercise> allWorkoutExercises = new ArrayList<>();
+        allWorkoutExercises.addAll(StrengthExerciseDao.selectAll());
+        allWorkoutExercises.addAll(CardioExerciseDao.selectAll());
 
-        for(WorkoutExercise e : allIndoorAndOutdoor) {
+        for(WorkoutExercise e : allWorkoutExercises) {
             if (e.getExerciseId().equals(selectedExercise.getId())) {
                 IndoorWorkout iw = IndoorWorkoutDao.selectById(e.getWorkoutCollectionId());
                 if (iw == null) {
