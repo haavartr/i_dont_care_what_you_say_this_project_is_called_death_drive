@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import util.ConnectionConfiguration;
+import util.Helper;
 
 import java.sql.Connection;
 
@@ -16,6 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         final Connection connection = ConnectionConfiguration.getConnection();
+        //Helper.deleteAllTables();
         ExerciseDao.createExerciseTable();
         GoalDao.createGoalTable();
         GroupingDao.createGroupingTable();
