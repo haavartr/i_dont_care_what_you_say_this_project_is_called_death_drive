@@ -42,4 +42,9 @@ public class Workout extends WorkoutCollection {   // Superclass of IndoorWorkou
     public void setNote(String note) {
         this.note = note;
     }
+
+    @Override
+    public String toString() {
+        return date.toString();
+    }
 }
