@@ -1,8 +1,10 @@
 package util;
 
 import dao.ExerciseDao;
+import dao.GroupingDao;
 import dao.RunQuery;
 import entities.Exercise;
+import entities.Grouping;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -32,6 +34,27 @@ public class Helper {
         for (Exercise exercise : ExerciseDao.selectAll()) {
             if(exceptions.stream().noneMatch(e -> e.getId().equals(exercise.getId()))) {
                 list.add(exercise);
+            }
+        }
+        return list;
+    }
+
+    public static ObservableList<Grouping> getAllGroupings() {
+        ObservableList<Grouping> list = FXCollections.observableArrayList();
+
+        for (Grouping grouping : GroupingDao.selectAll()) {
+            list.add(grouping);
+        }
+
+        return list;
+    }
+
+    public static ObservableList<Grouping> getAllGroupingsExcept(ObservableList<Grouping> exceptions) {
+        ObservableList<Grouping> list = FXCollections.observableArrayList();
+
+        for (Grouping grouping : GroupingDao.selectAll()) {
+            if(exceptions.stream().noneMatch(e -> e.getId().equals(grouping.getId()))) {
+                list.add(grouping);
             }
         }
         return list;

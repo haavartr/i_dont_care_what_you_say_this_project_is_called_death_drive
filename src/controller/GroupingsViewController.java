@@ -1,18 +1,13 @@
 package controller;
 
-import dao.ExerciseDao;
-import dao.GoalDao;
-import dao.GroupingDao;
-import dao.GroupingExerciseDao;
-import entities.Exercise;
-import entities.Goal;
-import entities.Grouping;
-import entities.GroupingExercise;
+import dao.*;
+import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import util.Helper;
@@ -39,14 +34,22 @@ public class GroupingsViewController implements Initializable {
     @FXML private Button removeGroupingExerciseButton;
     @FXML private Label notGroupingExercisesTitleLabel;
     @FXML private Label groupingExercisesTitleLabel;
-
     @FXML private Button deleteGroupingButton;
+
+    @FXML private Label supergroupTitleLabel;
+    @FXML private ComboBox<Grouping> supergroupsList;
+    @FXML private Button saveSupergroupButton;
+
+    @FXML private Label containsGroupsLabel;
+    @FXML private ListView<Grouping> containsGroupsList;
+    @FXML private Label belongsToGroupsLabel;
+    @FXML private ListView<Grouping> belongsToGroupsList;
 
     private Grouping selectedGrouping;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadAllGroupingsToList();
+        groupingsList.setItems(Helper.getAllGroupings());
         setControlsToVisible(false);
 
         groupingsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -66,7 +69,7 @@ public class GroupingsViewController implements Initializable {
                 newGrouping.setName("Ny gruppe");
 
                 GroupingDao.insert(newGrouping);
-                loadAllGroupingsToList();
+                groupingsList.setItems(Helper.getAllGroupings());
             }
         });
 
@@ -78,7 +81,7 @@ public class GroupingsViewController implements Initializable {
                         selectedGrouping.setName(newGroupingNameField.getText());
                         newGroupingNameField.setText("");
                         GroupingDao.update(selectedGrouping);
-                        loadAllGroupingsToList();
+                        groupingsList.setItems(Helper.getAllGroupings());
                         selectGrouping(selectedGrouping);
                     }
 
@@ -118,20 +121,22 @@ public class GroupingsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 GroupingDao.delete(selectedGrouping.getId());
-                loadAllGroupingsToList();
+                groupingsList.setItems(Helper.getAllGroupings());
                 setControlsToVisible(false);
             }
         });
-    }
 
-    private void loadAllGroupingsToList() {
-        ObservableList<Grouping> list = FXCollections.observableArrayList();
-
-        for (Grouping grouping : GroupingDao.selectAll()) {
-            list.add(grouping);
-        }
-
-        groupingsList.setItems(list);
+        saveSupergroupButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Grouping selected = supergroupsList.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    GroupingGroupingDao.insert(new GroupingGrouping(selected.getId(), selectedGrouping.getId()));
+                    getSupergroups();
+                    supergroupsList.setItems(Helper.getAllGroupingsExcept(belongsToGroupsList.getItems()));
+                }
+            }
+        });
     }
 
     private void setControlsToVisible(Boolean visible) {
@@ -144,6 +149,13 @@ public class GroupingsViewController implements Initializable {
         notGroupingExercisesTitleLabel.setVisible(visible);
         groupingExercisesTitleLabel.setVisible(visible);
         deleteGroupingButton.setVisible(visible);
+        supergroupsList.setVisible(visible);
+        supergroupTitleLabel.setVisible(visible);
+        saveSupergroupButton.setVisible(visible);
+        containsGroupsList.setVisible(visible);
+        containsGroupsLabel.setVisible(visible);
+        belongsToGroupsLabel.setVisible(visible);
+        belongsToGroupsList.setVisible(visible);
     }
 
     private void loadAllGroupingExercisesForGrouping() {
@@ -162,9 +174,37 @@ public class GroupingsViewController implements Initializable {
     private void selectGrouping(Grouping grouping) {
         selectedGrouping = grouping;
 
+        getSubgroups();
+        getSupergroups();
         groupingNameLabel.setText(selectedGrouping.getName());
         loadAllGroupingExercisesForGrouping();
 
+        supergroupsList.setItems(Helper.getAllGroupingsExcept(belongsToGroupsList.getItems()));
+
         setControlsToVisible(true);
+    }
+
+    private void getSupergroups() {
+        ObservableList<Grouping> list = FXCollections.observableArrayList();
+
+        for(GroupingGrouping gg : GroupingGroupingDao.selectAll()) {
+            if(gg.getContainedGroupingId().equals(selectedGrouping.getId())) {
+                list.add(GroupingDao.selectById(gg.getContainerGroupingId()));
+            }
+        }
+
+        belongsToGroupsList.setItems(list);
+    }
+
+    private void getSubgroups() {
+        ObservableList<Grouping> list = FXCollections.observableArrayList();
+
+        for(GroupingGrouping gg : GroupingGroupingDao.selectAll()) {
+            if(gg.getContainerGroupingId().equals(selectedGrouping.getId())) {
+                list.add(GroupingDao.selectById(gg.getContainedGroupingId()));
+            }
+        }
+
+        containsGroupsList.setItems(list);
     }
 }

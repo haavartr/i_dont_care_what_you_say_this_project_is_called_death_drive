@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class Workout extends WorkoutCollection{   // Superclass of IndoorWorkout and OutdoorWorkout
+public class Workout extends WorkoutCollection {   // Superclass of IndoorWorkout and OutdoorWorkout
     private LocalDate date;
     private Integer length;
     private String note;

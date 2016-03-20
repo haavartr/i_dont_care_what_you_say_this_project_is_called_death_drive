@@ -30,6 +30,8 @@ public class GroupingGroupingDao {  // Many-to-many
         insertInto("grouping_grouping", containerGroupingId, containedGroupingId);
     }
 
+
+
     public static ArrayList<GroupingGrouping> selectAll() {  // Returns an empty ArrayList if the table is empty
         Connection connection = null;
         ResultSet rs;

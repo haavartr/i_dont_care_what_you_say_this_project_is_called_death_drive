@@ -2,7 +2,7 @@ package entities;
 
 import java.time.LocalDate;
 
-public class OutdoorWorkout extends Workout{
+public class OutdoorWorkout extends Workout {
     private float temperature;
     private String weather;
 
