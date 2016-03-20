@@ -53,8 +53,9 @@ public class ExerciseReplacementsDao {  // Many-to-many
                 }
             }
             return l;
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -64,7 +65,6 @@ public class ExerciseReplacementsDao {  // Many-to-many
                 }
             }
         }
-        return null;
     }
 
     public static void delete(int exerciseId1, int exerciseId2) {

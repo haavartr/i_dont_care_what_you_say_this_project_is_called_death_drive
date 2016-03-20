@@ -51,8 +51,9 @@ public class GroupingExerciseDao {  // Many-to-many
                 }
             }
             return l;
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -62,7 +63,6 @@ public class GroupingExerciseDao {  // Many-to-many
                 }
             }
         }
-        return null;
     }
 
     public static void delete(int groupingId, int exerciseId) {

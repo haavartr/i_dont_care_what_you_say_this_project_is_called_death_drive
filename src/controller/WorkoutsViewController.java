@@ -67,7 +67,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private List<Exercise> exercises = ExerciseDao.selectAll();
+    private ArrayList<Exercise> exercises = ExerciseDao.selectAll();
     private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");

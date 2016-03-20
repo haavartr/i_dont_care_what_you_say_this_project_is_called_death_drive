@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import util.Helper;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -121,6 +122,7 @@ public class GroupingsViewController implements Initializable {
 
     private void loadAllGroupingsToList() {
         ObservableList<Grouping> list = FXCollections.observableArrayList();
+
         for (Grouping grouping : GroupingDao.selectAll()) {
             list.add(grouping);
         }
@@ -132,7 +134,7 @@ public class GroupingsViewController implements Initializable {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
 
         for(GroupingExercise ge : GroupingExerciseDao.selectAll()) {
-            if (ge.getGroupingId() == grouping.getId()) {
+            if (ge.getGroupingId().equals(grouping.getId())) {
                 list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
         }

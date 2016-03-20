@@ -124,6 +124,7 @@ public class OutdoorWorkoutDao {
             return l;
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
+            return l;
         } finally {
             if (statement != null) {
                 try {
@@ -133,7 +134,6 @@ public class OutdoorWorkoutDao {
                 }
             }
         }
-        return null;
     }
 
     public static void delete(int id) {  // Delete the entry in the highest parent and let the deletion cascade
