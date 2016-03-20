@@ -12,6 +12,10 @@ public class OutdoorWorkout extends Workout {
         this.weather = weather;
     }
 
+    public Integer nextId () {
+        return IndoorWorkout.nextId();
+    }
+
     public OutdoorWorkout(){}
 
     public float getTemperature() {
