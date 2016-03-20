@@ -1,8 +1,6 @@
 package controller;
 
-import dao.ExerciseDao;
-import dao.IndoorWorkoutDao;
-import dao.OutdoorWorkoutDao;
+import dao.*;
 import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -79,7 +77,6 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> performanceList;
     @FXML private ComboBox<Integer> formList;
 
-    private ArrayList<Workout> workouts = new ArrayList<>();
     private ArrayList<WorkoutExercise> tempWorkoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
@@ -375,7 +372,11 @@ public class WorkoutsViewController implements Initializable {
 
     private void loadAllWorkoutsToList() {
         ObservableList<Workout> list = FXCollections.observableArrayList();
-        for (Workout workout : workouts) {
+        ArrayList<Workout> all = new ArrayList<>();
+        all.addAll(IndoorWorkoutDao.selectAll());
+        all.addAll(OutdoorWorkoutDao.selectAll());
+
+        for (Workout workout : all) {
             list.add(workout);
         }
 
