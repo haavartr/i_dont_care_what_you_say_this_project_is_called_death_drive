@@ -143,8 +143,10 @@ public class GroupingsViewController implements Initializable {
     }
 
     private void loadSelectedGrouping() {
-        groupingNameLabel.setText(selectedGrouping.getName());
-        loadAllGroupingExercisesForGrouping(selectedGrouping);
+        if (selectedGrouping != null) {
+            groupingNameLabel.setText(selectedGrouping.getName());
+            loadAllGroupingExercisesForGrouping(selectedGrouping);
+        }
         notGroupingExercisesList.setItems(Helper.getAllExercisesExcept(groupingExercisesList.getItems()));
     }
 }

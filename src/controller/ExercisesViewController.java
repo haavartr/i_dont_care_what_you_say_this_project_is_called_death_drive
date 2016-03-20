@@ -107,12 +107,8 @@ public class ExercisesViewController implements Initializable {
     private void selectExercise(Exercise exercise) {
         exerciseList.getSelectionModel().select(exercise);
 
-        try {
-            exerciseNameLabel.setText(exercise.getName());
-            exerciseDescriptionLabel.setText(exercise.getDescription());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        exerciseNameLabel.setText(exercise.getName());
+        exerciseDescriptionLabel.setText(exercise.getDescription());
         setExerciseReplacements();
     }
 
