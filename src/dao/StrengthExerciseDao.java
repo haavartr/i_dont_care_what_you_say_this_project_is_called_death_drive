@@ -16,7 +16,8 @@ import static dao.RunQuery.*;
 public class StrengthExerciseDao {
     public static void createStrengthExerciseTable() {
         String q = "CREATE TABLE IF NOT EXISTS strength_exercise (" +
-                "id int primary key unique auto_increment," +
+                "id INT NOT NULL UNIQUE," +
+                "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
         runUpdate(q);
     }

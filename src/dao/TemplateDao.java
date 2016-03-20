@@ -18,9 +18,9 @@ import static dao.RunQuery.runUpdate;
 public class TemplateDao {
     public static void createTemplateTable() {
         String q ="CREATE TABLE IF NOT EXISTS template (" +
-                "id INT NOT NULL," +
+                "id INT NOT NULL UNIQUE," +
                 "PRIMARY KEY(id)," +
-                "FOREIGN KEY(id) REFERENCES workout_collection(id))";
+                "FOREIGN KEY(id) REFERENCES workout_exercise(id) ON DELETE CASCADE)";
         runUpdate(q);
     }
 

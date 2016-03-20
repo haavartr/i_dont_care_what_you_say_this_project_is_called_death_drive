@@ -18,9 +18,10 @@ import static dao.RunQuery.runUpdate;
 public class IndoorWorkoutDao {
     public static void createIndoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS indoor_workout (" +
-                "id int primary key unique auto_increment," +
+                "id INT NOT NULL UNIQUE," +
                 "air_quality float," +
                 "spectators varchar(55)," +
+                "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runUpdate(q);
     }

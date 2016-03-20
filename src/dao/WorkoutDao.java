@@ -5,10 +5,12 @@ import static dao.RunQuery.runUpdate;
 public class WorkoutDao {  // Parent
     public static void createWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS workout (" +
-                    "id int primary key unique auto_increment," +
+                    "id INT NOT NULL UNIQUE," +
                     "date datetime NOT NULL DEFAULT current_timestamp," +
                     "length int," +
-                    "note varchar (255));";
+                    "note varchar (255)," +
+                    "PRIMARY KEY(id)," +
+                    "FOREIGN KEY(id) REFERENCES workout_collection(id) ON DELETE CASCADE);";
         runUpdate(q);
     }
 }

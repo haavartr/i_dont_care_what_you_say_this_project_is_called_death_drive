@@ -18,9 +18,10 @@ import static dao.RunQuery.runUpdate;
 public class OutdoorWorkoutDao {
     public static void createOutdoorWorkoutTable() {
         String q = "CREATE TABLE IF NOT EXISTS outdoor_workout (" +
-                "id int primary key unique not null," +
+                "id INT NOT NULL UNIQUE," +
                 "temperature float," +
                 "weather varchar(55)," +
+                "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id) REFERENCES workout(id) ON DELETE CASCADE);";
         RunQuery.runUpdate(q);
     }
