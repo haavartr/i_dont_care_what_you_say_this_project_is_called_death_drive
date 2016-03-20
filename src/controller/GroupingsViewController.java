@@ -37,30 +37,23 @@ public class GroupingsViewController implements Initializable {
     @FXML private ComboBox<Exercise> notGroupingExercisesList;
     @FXML private Button addNewGroupingExerciseButton;
     @FXML private Button removeGroupingExerciseButton;
+    @FXML private Label notGroupingExercisesTitleLabel;
+    @FXML private Label groupingExercisesTitleLabel;
+
     Grouping selectedGrouping;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadAllGroupingsToList();
-
-        groupingNameLabel.setVisible(false);
-        changeGroupingNameButton.setVisible(false);
-        groupingExercisesList.setVisible(false);
-        notGroupingExercisesList.setVisible(false);
-        addNewGroupingExerciseButton.setVisible(false);
+        hideAllControls();
 
         groupingsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                groupingNameLabel.setVisible(true);
-                changeGroupingNameButton.setVisible(true);
-                groupingExercisesList.setVisible(true);
-                notGroupingExercisesList.setVisible(true);
-                addNewGroupingExerciseButton.setVisible(true);
-
-                selectedGrouping = groupingsList.getSelectionModel().getSelectedItem();
-
-                loadSelectedGrouping();
+                Grouping selection = groupingsList.getSelectionModel().getSelectedItem();
+                if (selection != null) {
+                    selectGrouping(selection);
+                }
             }
         });
 
@@ -84,7 +77,7 @@ public class GroupingsViewController implements Initializable {
                         newGroupingNameField.setText("");
                         GroupingDao.update(selectedGrouping);
                         loadAllGroupingsToList();
-                        loadSelectedGrouping();
+                        selectGrouping(selectedGrouping);
                     }
 
                     newGroupingNameField.setVisible(false);
@@ -103,7 +96,7 @@ public class GroupingsViewController implements Initializable {
                 Exercise exerciseToAdd = notGroupingExercisesList.getSelectionModel().getSelectedItem();
                 if (exerciseToAdd != null) {
                     GroupingExerciseDao.insert(new GroupingExercise(selectedGrouping.getId(), exerciseToAdd.getId()));
-                    loadSelectedGrouping();
+                    loadAllGroupingExercisesForGrouping();
                 }
             }
         });
@@ -114,7 +107,7 @@ public class GroupingsViewController implements Initializable {
                 Exercise exerciseToRemove = groupingExercisesList.getSelectionModel().getSelectedItem();
                 if (exerciseToRemove != null) {
                     GroupingExerciseDao.delete(selectedGrouping.getId(), exerciseToRemove.getId());
-                    loadSelectedGrouping();
+                    loadAllGroupingExercisesForGrouping();
                 }
             }
         });
@@ -130,21 +123,47 @@ public class GroupingsViewController implements Initializable {
         groupingsList.setItems(list);
     }
 
-    private void loadAllGroupingExercisesForGrouping(Grouping grouping) {
+    private void hideAllControls() {
+        groupingNameLabel.setVisible(false);
+        changeGroupingNameButton.setVisible(false);
+        groupingExercisesList.setVisible(false);
+        notGroupingExercisesList.setVisible(false);
+        addNewGroupingExerciseButton.setVisible(false);
+        removeGroupingExerciseButton.setVisible(false);
+        notGroupingExercisesTitleLabel.setVisible(false);
+        groupingExercisesTitleLabel.setVisible(false);
+    }
+
+    private void showAllControls() {
+        groupingNameLabel.setVisible(true);
+        changeGroupingNameButton.setVisible(true);
+        groupingExercisesList.setVisible(true);
+        notGroupingExercisesList.setVisible(true);
+        addNewGroupingExerciseButton.setVisible(true);
+        removeGroupingExerciseButton.setVisible(true);
+        notGroupingExercisesTitleLabel.setVisible(true);
+        groupingExercisesTitleLabel.setVisible(true);
+    }
+
+    private void loadAllGroupingExercisesForGrouping() {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
 
         for(GroupingExercise ge : GroupingExerciseDao.selectAll()) {
-            if (ge.getGroupingId().equals(grouping.getId())) {
+            if (ge.getGroupingId().equals(selectedGrouping.getId())) {
                 list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
         }
 
         groupingExercisesList.setItems(list);
+        notGroupingExercisesList.setItems(Helper.getAllExercisesExcept(list));
     }
 
-    private void loadSelectedGrouping() {
+    private void selectGrouping(Grouping grouping) {
+        selectedGrouping = grouping;
+
         groupingNameLabel.setText(selectedGrouping.getName());
-        loadAllGroupingExercisesForGrouping(selectedGrouping);
-        notGroupingExercisesList.setItems(Helper.getAllExercisesExcept(groupingExercisesList.getItems()));
+        loadAllGroupingExercisesForGrouping();
+
+        showAllControls();
     }
 }

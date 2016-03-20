@@ -24,40 +24,45 @@ import java.util.ResourceBundle;
  */
 public class GoalsViewController implements Initializable {
 
+    // LEFT COLUMN
     @FXML private ListView<Goal> goalsList;
     @FXML private Button createNewGoalButton;
-    @FXML private TextField goalWeightField;
-    @FXML private TextField goalRepetitionsField;
-    @FXML private TextField goalSetsField;
 
+    // GOAL INFORMATION
     @FXML private Label goalExerciseNameLabel;
     @FXML private Label goalSetDateLabel;
     @FXML private Label goalWeightLabel;
     @FXML private Label goalRepetitionsLabel;
     @FXML private Label goalSetsLabel;
+    @FXML private Label goalWeightTitleLabel;
+    @FXML private Label goalRepetitionsTitleLabel;
+    @FXML private Label goalSetsTitleLabel;
 
     // NEW GOAL PANE
     @FXML private ComboBox<Exercise> allExercisesList;
     @FXML private AnchorPane newGoalPane;
     @FXML private Button saveNewGoalButton;
     @FXML private Button cancelNewGoalButton;
+    @FXML private TextField goalWeightField;
+    @FXML private TextField goalRepetitionsField;
+    @FXML private TextField goalSetsField;
+
+    Goal selectedGoal;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadAllGoalsToList();
+        hideAllControls();
         newGoalPane.setVisible(false);
 
         goalsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Goal selectedGoal = goalsList.getSelectionModel().getSelectedItem();
+                Goal selection = goalsList.getSelectionModel().getSelectedItem();
 
-                goalExerciseNameLabel.setText(ExerciseDao.selectById(selectedGoal.getExercise()).getName());
-                goalSetDateLabel.setText(selectedGoal.getDate().toString());
-                goalWeightLabel.setText(selectedGoal.getWeight().toString());
-                goalRepetitionsLabel.setText(selectedGoal.getRepetitions().toString());
-                goalSetsLabel.setText(selectedGoal.getSets().toString());
-
+                if(selection != null) {
+                    selectGoal(selection);
+                }
             }
         });
 
@@ -118,5 +123,39 @@ public class GoalsViewController implements Initializable {
         }
 
         goalsList.setItems(list);
+    }
+
+    private void selectGoal(Goal goal) {
+        selectedGoal = goal;
+        showAllControls();
+
+        goalExerciseNameLabel.setText(ExerciseDao.selectById(selectedGoal.getExercise()).getName());
+        goalSetDateLabel.setText(selectedGoal.getDate().toString());
+        goalWeightLabel.setText(selectedGoal.getWeight().toString());
+        goalRepetitionsLabel.setText(selectedGoal.getRepetitions().toString());
+        goalSetsLabel.setText(selectedGoal.getSets().toString());
+
+    }
+
+    private void hideAllControls() {
+        goalWeightTitleLabel.setVisible(false);
+        goalRepetitionsTitleLabel.setVisible(false);
+        goalSetsTitleLabel.setVisible(false);
+        goalExerciseNameLabel.setVisible(false);
+        goalSetDateLabel.setVisible(false);
+        goalWeightLabel.setVisible(false);
+        goalRepetitionsLabel.setVisible(false);
+        goalSetsLabel.setVisible(false);
+    }
+
+    private void showAllControls() {
+        goalWeightTitleLabel.setVisible(true);
+        goalRepetitionsTitleLabel.setVisible(true);
+        goalSetsTitleLabel.setVisible(true);
+        goalExerciseNameLabel.setVisible(true);
+        goalSetDateLabel.setVisible(true);
+        goalWeightLabel.setVisible(true);
+        goalRepetitionsLabel.setVisible(true);
+        goalSetsLabel.setVisible(true);
     }
 }

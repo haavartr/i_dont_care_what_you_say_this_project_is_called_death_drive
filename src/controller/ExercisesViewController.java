@@ -29,6 +29,7 @@ public class ExercisesViewController implements Initializable {
     @FXML private Button createNewExerciseButton;
     @FXML private Text exerciseNameLabel;
     @FXML private Text exerciseDescriptionLabel;
+    @FXML private Label canBeReplacedByLabel;
 
     @FXML private Button addNewExerciseReplacement;
     @FXML private ListView<Exercise> exerciseReplacementsList;
@@ -40,18 +41,23 @@ public class ExercisesViewController implements Initializable {
     @FXML private TextField newExerciseName;
     @FXML private TextArea newExerciseDescription;
 
-    private List<Exercise> exercises = new ArrayList<>();
+    Exercise selectedExercise;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         newExercisePane.setVisible(false);
+        hideAllControls();
 
         exerciseList.setItems(Helper.getAllExercises());
 
         exerciseList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                selectExercise(exerciseList.getSelectionModel().getSelectedItem());
+                Exercise selection = exerciseList.getSelectionModel().getSelectedItem();
+                if (selection != null) {
+                    selectExercise(selection);
+                }
+
             }
         });
 
@@ -99,26 +105,32 @@ public class ExercisesViewController implements Initializable {
         exerciseReplacementsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                selectExercise(exerciseReplacementsList.getSelectionModel().getSelectedItem());
+                Exercise selection = exerciseReplacementsList.getSelectionModel().getSelectedItem();
+
+                if(selection != null) {
+                    selectExercise(exerciseReplacementsList.getSelectionModel().getSelectedItem());
+                }
             }
         });
     }
 
     private void selectExercise(Exercise exercise) {
-        exerciseList.getSelectionModel().select(exercise);
+        selectedExercise = exercise;
+        exerciseList.getSelectionModel().select(selectedExercise);
 
         try {
-            exerciseNameLabel.setText(exercise.getName());
-            exerciseDescriptionLabel.setText(exercise.getDescription());
+            exerciseNameLabel.setText(selectedExercise.getName());
+            exerciseDescriptionLabel.setText(selectedExercise.getDescription());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
         setExerciseReplacements();
+
+        showAllControls();
     }
 
     private void setExerciseReplacements() {
         ObservableList<Exercise> replacements = FXCollections.observableArrayList();
-        Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
 
         for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
             if(er.getExerciseId1().equals(selectedExercise.getId())) {
@@ -129,5 +141,23 @@ public class ExercisesViewController implements Initializable {
         }
         exerciseReplacementsList.setItems(replacements);
         notExerciseReplacementsList.setItems(Helper.getAllExercisesExcept(replacements));
+    }
+
+    private void hideAllControls() {
+        canBeReplacedByLabel.setVisible(false);
+        exerciseNameLabel.setVisible(false);
+        exerciseDescriptionLabel.setVisible(false);
+        addNewExerciseReplacement.setVisible(false);
+        exerciseReplacementsList.setVisible(false);
+        notExerciseReplacementsList.setVisible(false);
+    }
+
+    private void showAllControls() {
+        canBeReplacedByLabel.setVisible(true);
+        exerciseNameLabel.setVisible(true);
+        exerciseDescriptionLabel.setVisible(true);
+        addNewExerciseReplacement.setVisible(true);
+        exerciseReplacementsList.setVisible(true);
+        notExerciseReplacementsList.setVisible(true);
     }
 }

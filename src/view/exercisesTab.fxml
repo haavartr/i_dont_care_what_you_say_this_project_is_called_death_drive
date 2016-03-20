@@ -27,10 +27,8 @@
                </font>
             </Text>
             <Text fx:id="exerciseDescriptionLabel" layoutX="10.0" layoutY="45.0" text="Øvelsesbeskrivelse." />
-            <Button layoutX="286.0" layoutY="105.0" mnemonicParsing="false" text="Vis alle øvelser i gruppe" />
-            <Label layoutX="286.0" layoutY="85.0" text="Gruppe: Arm" />
             <ListView fx:id="exerciseReplacementsList" layoutX="10.0" layoutY="108.0" prefHeight="293.0" prefWidth="243.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="10.0" />
-            <Label layoutX="10.0" layoutY="85.0" text="Kan erstattes av:" />
+            <Label fx:id="canBeReplacedByLabel" layoutX="10.0" layoutY="85.0" text="Kan erstattes av:" />
             <AnchorPane fx:id="newExercisePane" layoutX="65.0" layoutY="149.0" prefHeight="200.0" prefWidth="424.0" style="-fx-border-radius: 20; -fx-background-color: #FFF; -fx-border-color: #CCC;">
                <children>
                   <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ny øvelse">

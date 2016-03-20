@@ -52,7 +52,7 @@ public class WorkoutsViewController implements Initializable {
 
     @FXML private Label tempSpectatorsLabel;
     @FXML private TextField tempSpectatorsField;
-    @FXML private ComboBox weatherAirField;
+    @FXML private ComboBox<String> weatherAirField;
     @FXML private ComboBox<WorkoutExercise> workoutExercisesForNewWorkoutList;
 
     // New workout exercise pane
@@ -67,13 +67,13 @@ public class WorkoutsViewController implements Initializable {
     @FXML private ComboBox<Integer> formList;
 
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private ArrayList<Exercise> exercises = ExerciseDao.selectAll();
     private ArrayList<WorkoutExercise> workoutExercises = new ArrayList<>();
 
     private ObservableList<String> weatherList = FXCollections.observableArrayList("Sol", "Overskyet", "Regn");
     private ObservableList<String> airQualityList = FXCollections.observableArrayList("Bra", "Middels", "Dårlig");
 
     private Boolean inne = false;
+    private Workout selectedWorkout;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,17 +85,11 @@ public class WorkoutsViewController implements Initializable {
         workoutList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Workout workout = workoutList.getSelectionModel().getSelectedItem();
+                Workout selection = workoutList.getSelectionModel().getSelectedItem();
 
-                timeLabel.setText(workout.getName());
-                descriptionText.setText(workout.getNote());
-                durationLabel.setText(String.valueOf(workout.getLength()));
-
-                showAllControls();
-
-                ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
-
-                workoutExercisesList.setItems(list);
+                if(selection != null) {
+                    selectWorkout(selection);
+                }
             }
         });
 
@@ -116,8 +110,6 @@ public class WorkoutsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 newWorkoutExercisePane.setVisible(true);
-
-                ObservableList<String> list = FXCollections.observableArrayList();
 
                 ObservableList<Integer> oneToTen = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 formList.setItems(oneToTen);
@@ -314,5 +306,18 @@ public class WorkoutsViewController implements Initializable {
         }
 
         workoutList.setItems(list);
+    }
+
+    private void selectWorkout(Workout workout) {
+        selectedWorkout = workout;
+
+        timeLabel.setText(selectedWorkout.getName());
+        descriptionText.setText(selectedWorkout.getNote());
+        durationLabel.setText(String.valueOf(selectedWorkout.getLength()));
+
+        showAllControls();
+
+        ObservableList<WorkoutExercise> list = FXCollections.observableArrayList();
+        workoutExercisesList.setItems(list);
     }
 }
