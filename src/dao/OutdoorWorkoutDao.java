@@ -34,7 +34,6 @@ public class OutdoorWorkoutDao {
         String note = "note " + outdoorWorkout.getNote();
         String temperature = "temperature " + Float.toString(outdoorWorkout.getTemperature());
         String weather = "weather " + outdoorWorkout.getWeather();
-
         insertInto("workout", workoutID, name, date, length, note);
 
         Connection connection = null;

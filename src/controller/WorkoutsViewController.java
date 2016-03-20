@@ -1,6 +1,8 @@
 package controller;
 
 import dao.ExerciseDao;
+import dao.IndoorWorkoutDao;
+import dao.OutdoorWorkoutDao;
 import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -219,10 +221,29 @@ public class WorkoutsViewController implements Initializable {
                     }
                 }
 
-                if (inne) { airQuality = (String)weatherAirField.getValue(); }
-                else { weather = (String)weatherAirField.getValue(); }
+                if (inne) {
+                    IndoorWorkout iw = new IndoorWorkout();
+                    iw.setAirQuality(weatherAirField.getSelectionModel().getSelectedIndex());
+                    iw.setSpectators(Integer.parseInt(tempSpectatorsField.getText()));
+                    iw.setDate(date);
+                    iw.setLength((hours * 3600) + (minutes * 60) + seconds);
+                    iw.setNote(descriptionText.getText());
 
-                //workouts.add(new Workout(date, time, hours, minutes, seconds, newWorkoutDescription.getText(), temperature, weather, airQuality, spectators, workoutExercises));
+                    IndoorWorkoutDao.insert(iw);
+                }
+                else {
+                    weather = (String)weatherAirField.getValue();
+
+                    OutdoorWorkout ow = new OutdoorWorkout();
+                    ow.setLength((hours * 3600) + (minutes * 60) + seconds);
+                    ow.setDate(date);
+                    ow.setNote(descriptionText.getText());
+                    ow.setTemperature(Integer.parseInt(tempSpectatorsField.getText()));
+                    ow.setWeather(weatherAirField.getSelectionModel().getSelectedItem());
+
+                    OutdoorWorkoutDao.insert(ow);
+                }
+
                 loadAllWorkoutsToList();
                 clearAllNewWorkoutFields();
 
