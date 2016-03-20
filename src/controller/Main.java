@@ -24,8 +24,8 @@ public class Main extends Application {
         GroupingExerciseDao.createGroupingExerciseTable();
         GroupingGroupingDao.createGroupingGroupingTable();
         WorkoutCollectionDao.createWorkoutCollectionTable();
-        TemplateDao.createTemplateTable();
         ExerciseReplacementsDao.createExerciseReplacementsTable();
+        TemplateDao.createTemplateTable();
         WorkoutExerciseDao.createWorkoutExerciseTable();
         StrengthExerciseDao.createStrengthExerciseTable();
         CardioExerciseDao.createCardioExerciseTable();
@@ -33,7 +33,7 @@ public class Main extends Application {
         IndoorWorkoutDao.createIndoorWorkoutTable();
         OutdoorWorkoutDao.createOutdoorWorkoutTable();
 
-        Helper.deleteAllTables();
+        //Helper.deleteAllTables();
 
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
         primaryStage.setTitle("Treningsdagbok");
