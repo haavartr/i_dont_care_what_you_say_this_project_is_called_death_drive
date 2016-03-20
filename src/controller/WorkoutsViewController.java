@@ -235,7 +235,11 @@ public class WorkoutsViewController implements Initializable {
                     ow.setLength((hours * 3600) + (minutes * 60) + seconds);
                     ow.setDate(date);
                     ow.setNote(descriptionText.getText());
-                    ow.setTemperature(Integer.parseInt(tempSpectatorsField.getText()));
+                    try {
+                        ow.setTemperature(Float.parseFloat(tempSpectatorsField.getText()));
+                    } catch (NumberFormatException e){
+                        ow.setTemperature((float) -273.15);
+                    }
                     ow.setWeather(weatherAirField.getSelectionModel().getSelectedItem());
 
                     OutdoorWorkoutDao.insert(ow);
