@@ -24,8 +24,8 @@ public class Main extends Application {
         GroupingExerciseDao.createGroupingExerciseTable();
         GroupingGroupingDao.createGroupingGroupingTable();
         WorkoutCollectionDao.createWorkoutCollectionTable();
-        TemplateDao.createTemplateTable();
         ExerciseReplacementsDao.createExerciseReplacementsTable();
+        TemplateDao.createTemplateTable();
         WorkoutExerciseDao.createWorkoutExerciseTable();
         StrengthExerciseDao.createStrengthExerciseTable();
         CardioExerciseDao.createCardioExerciseTable();
