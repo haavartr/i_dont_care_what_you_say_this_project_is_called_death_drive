@@ -66,4 +66,9 @@ public class Goal {
     public Integer getSets() {
         return sets;
     }
+
+    @Override
+    public String toString() {
+        return ExerciseDao.selectById(this.getExercise()).getName() + " " + this.getSets() + "x" + this.getRepetitions() + " (" + this.getWeight() + " kg)";
+    }
 }

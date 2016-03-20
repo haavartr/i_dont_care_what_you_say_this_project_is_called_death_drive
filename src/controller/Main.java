@@ -1,6 +1,7 @@
 package controller;
 
 import dao.*;
+import entities.Grouping;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ public class Main extends Application {
         final Connection connection = ConnectionConfiguration.getConnection();
         ExerciseDao.createExerciseTable();
         GoalDao.createGoalTable();
+        GroupingDao.createGroupingTable();
         GroupingExerciseDao.createGroupingExerciseTable();
         GroupingGroupingDao.createGroupingGroupingTable();
         TemplateDao.createTemplateTable();
@@ -30,7 +32,7 @@ public class Main extends Application {
         OutdoorWorkoutDao.createOutdoorWorkoutTable();
 
         Parent root = FXMLLoader.load(getClass().getResource("../view/main.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Treningsdagbok");
         primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.setResizable(false);
         primaryStage.show();

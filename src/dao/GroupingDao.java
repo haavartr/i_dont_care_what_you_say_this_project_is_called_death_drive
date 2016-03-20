@@ -18,12 +18,15 @@ import static dao.RunQuery.runUpdate;
 public class GroupingDao {
     public static void createGroupingTable() {
         String q = "CREATE TABLE IF NOT EXISTS grouping (" +
-                    "id int primary key unique auto_increment)";
+                    "id int primary key unique auto_increment, " +
+                    "name varchar(15))";
         runUpdate(q);
     }
 
     public static void insert(Grouping grouping) {
-        insertInto("grouping");
+        String name = "name " + grouping.getName();
+
+        insertInto("grouping", name);
     }
 
     public static Grouping selectById(int id) {
@@ -36,7 +39,7 @@ public class GroupingDao {
             statement = connection.createStatement();
             rs = statement.executeQuery(q);
             if (rs.next()) {
-                return new Grouping(rs.getInt("id"));
+                return new Grouping(rs.getInt("id"), rs.getString("name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +69,7 @@ public class GroupingDao {
                 rs.beforeFirst();
                 while (rs.next()) {
                     try {
-                        l.add(new Grouping(rs.getInt("id")));
+                        l.add(new Grouping(rs.getInt("id"), rs.getString("name")));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -89,5 +92,12 @@ public class GroupingDao {
 
     public static void delete(int id) {
         runUpdate("DELETE FROM grouping WHERE id = " + id);
+    }
+
+    public static void update(Grouping grouping) {
+        String name = grouping.getName();
+        String id = Integer.toString(grouping.getId());
+        String q = String.format("UPDATE grouping SET name = '%s' WHERE id = '%s'", name, id);
+        runUpdate(q);
     }
 }

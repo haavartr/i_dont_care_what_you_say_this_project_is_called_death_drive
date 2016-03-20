@@ -51,7 +51,7 @@ public class GoalsViewController implements Initializable {
             public void handle(MouseEvent event) {
                 Goal selectedGoal = goalsList.getSelectionModel().getSelectedItem();
 
-                goalExerciseNameLabel.setText(selectedGoal.getExercise().toString());
+                goalExerciseNameLabel.setText(ExerciseDao.selectById(selectedGoal.getExercise()).getName());
                 goalSetDateLabel.setText(selectedGoal.getDate().toString());
                 goalWeightLabel.setText(selectedGoal.getWeight().toString());
                 goalRepetitionsLabel.setText(selectedGoal.getRepetitions().toString());

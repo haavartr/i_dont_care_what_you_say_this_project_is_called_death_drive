@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import util.Helper;
 
 import java.net.URL;
 import java.util.List;
@@ -34,6 +35,8 @@ public class GroupingsViewController implements Initializable {
     @FXML private ListView<Exercise> groupingExercisesList;
     @FXML private ComboBox<Exercise> notGroupingExercisesList;
     @FXML private Button addNewGroupingExerciseButton;
+    @FXML private Button removeGroupingExerciseButton;
+    Grouping selectedGrouping;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,17 +57,19 @@ public class GroupingsViewController implements Initializable {
                 notGroupingExercisesList.setVisible(true);
                 addNewGroupingExerciseButton.setVisible(true);
 
-                Grouping selectedGrouping = groupingsList.getSelectionModel().getSelectedItem();
+                selectedGrouping = groupingsList.getSelectionModel().getSelectedItem();
 
-                groupingNameLabel.setText(selectedGrouping.getId().toString());
-                loadAllGroupingExercisesForGrouping(selectedGrouping);
+                loadSelectedGrouping();
             }
         });
 
         createNewGroupingButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                GroupingDao.insert(new Grouping());
+                Grouping newGrouping = new Grouping();
+                newGrouping.setName("New grouping");
+
+                GroupingDao.insert(newGrouping);
                 loadAllGroupingsToList();
             }
         });
@@ -73,9 +78,18 @@ public class GroupingsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (newGroupingNameField.isVisible()) {
+                    if(!newGroupingNameField.getText().equals("")) {
+                        selectedGrouping.setName(newGroupingNameField.getText());
+                        newGroupingNameField.setText("");
+                        GroupingDao.update(selectedGrouping);
+                        loadAllGroupingsToList();
+                        loadSelectedGrouping();
+                    }
+
                     newGroupingNameField.setVisible(false);
                     changeGroupingNameButton.setText("Endre navn");
                 } else {
+                    newGroupingNameField.setPromptText(selectedGrouping.getName());
                     newGroupingNameField.setVisible(true);
                     changeGroupingNameButton.setText("Lagre");
                 }
@@ -87,8 +101,19 @@ public class GroupingsViewController implements Initializable {
             public void handle(MouseEvent event) {
                 Exercise exerciseToAdd = notGroupingExercisesList.getSelectionModel().getSelectedItem();
                 if (exerciseToAdd != null) {
-                    GroupingExerciseDao.insert(new GroupingExercise(groupingsList.getSelectionModel().getSelectedItem().getId(), exerciseToAdd.getId()));
-                    loadAllGroupingExercisesForGrouping(groupingsList.getSelectionModel().getSelectedItem());
+                    GroupingExerciseDao.insert(new GroupingExercise(selectedGrouping.getId(), exerciseToAdd.getId()));
+                    loadSelectedGrouping();
+                }
+            }
+        });
+
+        removeGroupingExerciseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Exercise exerciseToRemove = groupingExercisesList.getSelectionModel().getSelectedItem();
+                if (exerciseToRemove != null) {
+                    GroupingExerciseDao.delete(selectedGrouping.getId(), exerciseToRemove.getId());
+                    loadSelectedGrouping();
                 }
             }
         });
@@ -96,9 +121,9 @@ public class GroupingsViewController implements Initializable {
 
     private void loadAllGroupingsToList() {
         ObservableList<Grouping> list = FXCollections.observableArrayList();
-        /*for (Grouping grouping : GroupingDao.selectAll()) {
+        for (Grouping grouping : GroupingDao.selectAll()) {
             list.add(grouping);
-        }*/
+        }
 
         groupingsList.setItems(list);
     }
@@ -106,12 +131,18 @@ public class GroupingsViewController implements Initializable {
     private void loadAllGroupingExercisesForGrouping(Grouping grouping) {
         ObservableList<Exercise> list = FXCollections.observableArrayList();
 
-        /*for(GroupingExercise ge : GroupingExerciseDao.selectAll()) {
+        for(GroupingExercise ge : GroupingExerciseDao.selectAll()) {
             if (ge.getGroupingId() == grouping.getId()) {
                 list.add(ExerciseDao.selectById(ge.getExerciseId()));
             }
-        }*/
+        }
 
         groupingExercisesList.setItems(list);
+    }
+
+    private void loadSelectedGrouping() {
+        groupingNameLabel.setText(selectedGrouping.getName());
+        loadAllGroupingExercisesForGrouping(selectedGrouping);
+        notGroupingExercisesList.setItems(Helper.getAllExercisesExcept(groupingExercisesList.getItems()));
     }
 }

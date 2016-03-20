@@ -51,11 +51,7 @@ public class ExercisesViewController implements Initializable {
         exerciseList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Exercise exercise = exerciseList.getSelectionModel().getSelectedItem();
-
-                exerciseNameLabel.setText(exercise.getName());
-                exerciseDescriptionLabel.setText(exercise.getDescription());
-                setExerciseReplacements();
+                selectExercise(exerciseList.getSelectionModel().getSelectedItem());
             }
         });
 
@@ -99,17 +95,26 @@ public class ExercisesViewController implements Initializable {
                 }
             }
         });
+
+        exerciseReplacementsList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectExercise(exerciseReplacementsList.getSelectionModel().getSelectedItem());
+            }
+        });
+    }
+
+    private void selectExercise(Exercise exercise) {
+        exerciseList.getSelectionModel().select(exercise);
+
+        exerciseNameLabel.setText(exercise.getName());
+        exerciseDescriptionLabel.setText(exercise.getDescription());
+        setExerciseReplacements();
     }
 
     private void setExerciseReplacements() {
         ObservableList<Exercise> replacements = FXCollections.observableArrayList();
-        ObservableList<Exercise> notReplacements = FXCollections.observableArrayList();
-
         Exercise selectedExercise = exerciseList.getSelectionModel().getSelectedItem();
-
-        for(Exercise e : ExerciseDao.selectAll()) {
-            notReplacements.add(e);
-        }
 
         if (ExerciseReplacementsDao.selectAll() != null) {
             for(ExerciseReplacements er : ExerciseReplacementsDao.selectAll()) {
@@ -121,6 +126,6 @@ public class ExercisesViewController implements Initializable {
             }
         }
         exerciseReplacementsList.setItems(replacements);
-        notExerciseReplacementsList.setItems(notReplacements);
+        notExerciseReplacementsList.setItems(Helper.getAllExercisesExcept(replacements));
     }
 }

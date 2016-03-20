@@ -25,13 +25,14 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField visible="false" fx:id="newGroupingNameField" layoutX="14.0" layoutY="12.0" prefHeight="27.0" prefWidth="211.0" />
+            <TextField fx:id="newGroupingNameField" layoutX="14.0" layoutY="12.0" prefHeight="27.0" prefWidth="211.0" visible="false" />
             <Button fx:id="changeGroupingNameButton" layoutX="14.0" layoutY="47.0" mnemonicParsing="false" text="Endre navn" />
-            <ListView fx:id="groupingExercisesList" layoutX="14.0" layoutY="135.0" prefHeight="349.0" prefWidth="252.0" />
+            <ListView fx:id="groupingExercisesList" layoutX="14.0" layoutY="135.0" prefHeight="324.0" prefWidth="252.0" />
             <Label layoutX="14.0" layoutY="111.0" text="Øvelser:" />
             <ComboBox fx:id="notGroupingExercisesList" layoutX="286.0" layoutY="135.0" prefHeight="27.0" prefWidth="252.0" />
             <Button fx:id="addNewGroupingExerciseButton" layoutX="474.0" layoutY="170.0" mnemonicParsing="false" text="Legg til" />
             <Label layoutX="286.0" layoutY="111.0" text="Andre øvelser:" />
+            <Button fx:id="removeGroupingExerciseButton" layoutX="286.0" layoutY="170.0" mnemonicParsing="false" text="Fjern" />
          </children></AnchorPane>
     </items>
 </SplitPane>
