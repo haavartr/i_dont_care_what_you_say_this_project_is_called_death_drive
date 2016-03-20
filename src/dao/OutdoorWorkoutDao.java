@@ -99,7 +99,7 @@ public class OutdoorWorkoutDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM outdoor_workout JOIN workout";
+        String q = "SELECT * FROM outdoor_workout JOIN workout JOIN workout_collection";
         ArrayList<OutdoorWorkout> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
