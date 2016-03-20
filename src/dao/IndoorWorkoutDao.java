@@ -91,7 +91,7 @@ public class IndoorWorkoutDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM indoor_workout JOIN workout JOIN workout_collection GROUP BY indoor_workout.id";
+        String q = "SELECT * FROM indoor_workout JOIN workout JOIN workout_collection WHERE indoor_workout.id = workout.id GROUP BY indoor_workout.id";
         ArrayList<IndoorWorkout> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
