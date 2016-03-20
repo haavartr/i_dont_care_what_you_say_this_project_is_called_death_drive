@@ -47,8 +47,8 @@ public class IndoorWorkoutDao {
                 id += rs.getString("last_id");
                 System.out.println(id);
             }
-            insertInto("indoor_workout", id, airQuality, spectators);
             insertInto("workout", id, date, length, note);
+            insertInto("indoor_workout", id, airQuality, spectators);
         } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }
