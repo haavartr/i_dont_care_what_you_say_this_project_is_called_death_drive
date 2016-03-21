@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -14,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.2" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkoutsViewController">
+<SplitPane dividerPositions="0.2" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkoutsViewController">
     <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -24,12 +29,12 @@
       </AnchorPane>
         <AnchorPane>
             <children>
-                <Label fx:id="timeLabel" layoutX="47.0" layoutY="40.0" text="28. mars 2016 - kl. 13:37" AnchorPane.rightAnchor="332.0">
+                <Label fx:id="timeLabel" layoutX="47.0" layoutY="40.0" text="28. mars 2016 - kl. 13:37" textFill="TRANSPARENT" AnchorPane.rightAnchor="332.0">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Label fx:id="durationLabel" layoutX="107.0" layoutY="69.0" text="02:22:30" />
+                <Label fx:id="durationLabel" layoutX="107.0" layoutY="69.0" text="02:22:30" textFill="TRANSPARENT" />
                 <ListView fx:id="workoutExercisesList" layoutX="320.0" layoutY="14.0" prefHeight="446.0" prefWidth="275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                 <Button fx:id="createTemplateButton" layoutX="102.0" layoutY="110.0" mnemonicParsing="false" text="Lag mal" />
                 <TextArea fx:id="descriptionText" layoutX="99.0" layoutY="192.0" prefHeight="300.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
@@ -75,16 +80,16 @@
                          <TextField fx:id="weightField" layoutX="235.0" layoutY="111.0" prefHeight="27.0" prefWidth="53.0" promptText="Vekt" />
                         <TextField fx:id="repsField" layoutX="235.0" layoutY="147.0" prefHeight="27.0" prefWidth="53.0" promptText="Reps" />
                         <TextField fx:id="setsField" layoutX="235.0" layoutY="183.0" prefHeight="27.0" prefWidth="53.0" promptText="Sett" />
-                         <TextField visible="false" fx:id="distanceField" layoutX="235.0" layoutY="111.0" prefHeight="27.0" prefWidth="53.0" promptText="Distanse" />
-                         <TextField visible="false" fx:id="weHoursField" layoutX="168.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="t" />
-                         <TextField visible="false" fx:id="weMinutesField" layoutX="208.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="min" />
-                         <TextField visible="false" fx:id="weSecondsField" layoutX="248.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="sek" />
+                         <TextField fx:id="distanceField" layoutX="235.0" layoutY="111.0" prefHeight="27.0" prefWidth="53.0" promptText="Distanse" visible="false" />
+                         <TextField fx:id="weHoursField" layoutX="168.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="t" visible="false" />
+                         <TextField fx:id="weMinutesField" layoutX="208.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="min" visible="false" />
+                         <TextField fx:id="weSecondsField" layoutX="248.0" layoutY="147.0" prefHeight="27.0" prefWidth="40.0" promptText="sek" visible="false" />
 
                          <Label fx:id="weightTitleLabel" layoutX="88.0" layoutY="116.0" text="Vekt (kg):" />
                         <Label fx:id="repsTitleLabel" layoutX="88.0" layoutY="153.0" text="Repetisjoner/sett:" />
                         <Label fx:id="setsTitleLabel" layoutX="88.0" layoutY="188.0" text="Sett:" />
-                         <Label fx:id="distanceTitleLabel" visible="false" layoutX="88.0" layoutY="116.0" text="Distanse (km):" />
-                         <Label fx:id="durationTitleLabel" visible="false" layoutX="88.0" layoutY="153.0" text="Lengde:" />
+                         <Label fx:id="distanceTitleLabel" layoutX="88.0" layoutY="116.0" text="Distanse (km):" visible="false" />
+                         <Label fx:id="durationTitleLabel" layoutX="88.0" layoutY="153.0" text="Lengde:" visible="false" />
 
                          <Button fx:id="cancelWorkoutExerciseButton" layoutX="116.0" layoutY="301.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Avbryt" />
                         <ComboBox fx:id="performanceList" layoutX="194.0" layoutY="259.0" prefHeight="27.0" prefWidth="88.0" promptText="Ytelse" />
