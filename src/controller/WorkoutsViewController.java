@@ -33,7 +33,6 @@ public class WorkoutsViewController implements Initializable {
     @FXML private Label timeLabel;
     @FXML private Label durationLabel;
     @FXML private TextArea descriptionText;
-    @FXML private Button createTemplateButton;
     @FXML private Button createNewWorkoutButton;
     @FXML private ListView<WorkoutExercise> workoutExercisesList;
 
@@ -379,7 +378,6 @@ public class WorkoutsViewController implements Initializable {
         timeLabel.setVisible(false);
         durationLabel.setVisible(false);
         descriptionText.setVisible(false);
-        createTemplateButton.setVisible(false);
         workoutExercisesList.setVisible(false);
     }
 
@@ -387,7 +385,6 @@ public class WorkoutsViewController implements Initializable {
         timeLabel.setVisible(true);
         durationLabel.setVisible(true);
         descriptionText.setVisible(true);
-        createTemplateButton.setVisible(true);
         workoutExercisesList.setVisible(true);
     }
 
