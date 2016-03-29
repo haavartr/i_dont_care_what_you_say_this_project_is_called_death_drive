@@ -30,11 +30,16 @@ public class WorkoutsViewController implements Initializable {
 
     // Root pane
     @FXML private ListView<Workout> workoutList;
+    @FXML private Button createNewWorkoutButton;
+    @FXML private Button createNewWorkoutFromTemplateButton;
+    @FXML private Button showLogButton;
+    @FXML private ListView<WorkoutExercise> workoutExercisesList;
+
+    // Workout pane
     @FXML private Label timeLabel;
     @FXML private Label durationLabel;
     @FXML private TextArea descriptionText;
-    @FXML private Button createNewWorkoutButton;
-    @FXML private ListView<WorkoutExercise> workoutExercisesList;
+    @FXML private Button createTemplateButton;
 
     // New workout pane
     @FXML private AnchorPane newWorkoutPane;
@@ -149,7 +154,6 @@ public class WorkoutsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 clearAllNewWorkoutFields();
-
                 newWorkoutPane.setVisible(false);
             }
         });
@@ -263,6 +267,7 @@ public class WorkoutsViewController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 newWorkoutExercisePane.setVisible(false);
+                clearExerciseWorkoutFields();
             }
         });
 
@@ -320,6 +325,7 @@ public class WorkoutsViewController implements Initializable {
                     }
 
                     reloadWorkoutExercisesForNewWorkout();
+                    clearExerciseWorkoutFields();
                     newWorkoutExercisePane.setVisible(false);
 
                 } else {
@@ -350,6 +356,37 @@ public class WorkoutsViewController implements Initializable {
                 durationTitleLabel.setVisible(!styrke);
             }
         });
+
+        createTemplateButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // TODO
+            }
+        });
+
+        createNewWorkoutFromTemplateButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // TODO
+            }
+        });
+
+        showLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // TODO
+            }
+        });
+    }
+
+    private void clearExerciseWorkoutFields() {
+        weightField.setText("");
+        repsField.setText("");
+        setsField.setText("");
+        distanceField.setText("");
+        weSecondsField.setText("");
+        weMinutesField.setText("");
+        weHoursField.setText("");
     }
 
     private void reloadWorkoutExercisesForNewWorkout() {
