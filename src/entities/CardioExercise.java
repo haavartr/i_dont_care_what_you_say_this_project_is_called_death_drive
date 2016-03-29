@@ -32,6 +32,7 @@ public class CardioExercise extends WorkoutExercise {
 
     @Override
     public String toString() {
-        return this.getDistance() + " km in " + this.getTime() + " seconds.";
+        Exercise exercise = ExerciseDao.selectById(this.getExerciseId());
+        return this.getDistance() + " km " + exercise.getName() + " in " + this.getTime() + " seconds.";
     }
 }
