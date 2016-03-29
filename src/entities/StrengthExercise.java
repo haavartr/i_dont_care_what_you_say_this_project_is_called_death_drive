@@ -1,5 +1,7 @@
 package entities;
 
+import dao.ExerciseDao;
+import dao.StrengthExerciseDao;
 import util.ConnectionConfiguration;
 
 import java.sql.Connection;
@@ -47,40 +49,7 @@ public class StrengthExercise extends WorkoutExercise {
     }
 
     public String toString() {
-        Connection connection = null;
-        ResultSet rs;
-        Statement statement = null;
-        Integer id = this.getId();
-        String q = String.format("SELECT name FROM exercise WHERE exercise.id = %d ", id);
-        String name = "Huge rod";
-        try {
-            connection = ConnectionConfiguration.getConnection();
-            statement = connection.createStatement();
-            rs = statement.executeQuery(q);
-            if (rs.next()) {
-                name = rs.getString("name");
-            } else {
-                return null;
-            }
-        } catch (SQLException |NullPointerException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return name + ": " + this.getSets() + "x" + this.getRepetitions() + " - " + " (" + this.getWeight() + " kg)";
+        Exercise exercise = ExerciseDao.selectById(this.getExerciseId());
+        return exercise.getName() + " (" + getRepetitions() + "x" + getSets() + ", " + getWeight() + "kg)";
     }
 }

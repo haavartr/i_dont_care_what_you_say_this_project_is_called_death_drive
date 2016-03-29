@@ -220,7 +220,6 @@ public class WorkoutsViewController implements Initializable {
                     }
                 }
 
-                Integer id = IndoorWorkoutDao.nextId();
                 if (inne) {
                     IndoorWorkout iw = new IndoorWorkout();
                     iw.setAirQuality(weatherAirField.getSelectionModel().getSelectedIndex());
@@ -245,11 +244,11 @@ public class WorkoutsViewController implements Initializable {
                 }
 
                 for (StrengthExercise se : tempStrengthExercises) {
-                    se.setWorkoutCollectionId(id);
+                    se.setWorkoutCollectionId(WorkoutCollectionDao.nextId());
                     StrengthExerciseDao.insert(se);
                 }
                 for (CardioExercise ce : tempCardioExercises) {
-                    ce.setWorkoutCollectionId(id);
+                    ce.setWorkoutCollectionId(WorkoutCollectionDao.nextId());
                     CardioExerciseDao.insert(ce);
                 }
 
@@ -293,7 +292,7 @@ public class WorkoutsViewController implements Initializable {
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
                         e.setExerciseId(allExercisesList.getValue().getId());
-                        e.setWorkoutCollectionId(selectedWorkout.getId());
+                        e.setWorkoutCollectionId(WorkoutCollectionDao.nextId());
                         tempStrengthExercises.add(e);
                     } else {
                         Integer distance = null;
@@ -307,6 +306,7 @@ public class WorkoutsViewController implements Initializable {
                             duration = (hours * 3600) + (minutes * 60) + (seconds);
                         } catch (Exception e) {
                             System.out.println("Ugyldigheter");
+                            return;
                         }
 
                         CardioExercise e = new CardioExercise();
@@ -315,7 +315,7 @@ public class WorkoutsViewController implements Initializable {
                         e.setForm(formList.getSelectionModel().getSelectedItem());
                         e.setPerformance(performanceList.getSelectionModel().getSelectedItem());
                         e.setExerciseId(allExercisesList.getValue().getId());
-                        e.setWorkoutCollectionId(selectedWorkout.getId());
+                        e.setWorkoutCollectionId(WorkoutCollectionDao.nextId());
                         tempCardioExercises.add(e);
                     }
 
@@ -357,6 +357,7 @@ public class WorkoutsViewController implements Initializable {
         ArrayList<WorkoutExercise> wes = new ArrayList<>();
         wes.addAll(tempCardioExercises);
         wes.addAll(tempStrengthExercises);
+        System.out.println(wes.size());
 
         for (WorkoutExercise workoutExercise : wes) {
             list.add(workoutExercise);
