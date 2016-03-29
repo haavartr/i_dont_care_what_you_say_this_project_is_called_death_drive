@@ -4,9 +4,13 @@ import dao.*;
 import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,9 +19,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import util.Helper;
 
 import javax.smartcardio.Card;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
@@ -63,6 +69,7 @@ public class WorkoutsViewController implements Initializable {
     @FXML private AnchorPane newWorkoutExercisePane;
     @FXML private Button saveWorkoutExerciseButton;
     @FXML private Button cancelWorkoutExerciseButton;
+    @FXML private Button showNotesbutton;
     @FXML private ComboBox<Exercise> allExercisesList;
     @FXML private ToggleButton styrkeUtholdenhetToggle;
 
@@ -230,7 +237,7 @@ public class WorkoutsViewController implements Initializable {
                     iw.setSpectators(spectators);
                     iw.setDate(date);
                     iw.setLength((hours * 3600) + (minutes * 60) + seconds);
-                    iw.setNote(descriptionText.getText());
+                    iw.setNote(newWorkoutDescription.getText());
 
                     IndoorWorkoutDao.insert(iw);
                 }
@@ -240,7 +247,7 @@ public class WorkoutsViewController implements Initializable {
                     OutdoorWorkout ow = new OutdoorWorkout();
                     ow.setLength((hours * 3600) + (minutes * 60) + seconds);
                     ow.setDate(date);
-                    ow.setNote(descriptionText.getText());
+                    ow.setNote(newWorkoutDescription.getText());
                     ow.setTemperature(temperature);
                     ow.setWeather(weatherAirField.getSelectionModel().getSelectedItem());
 
@@ -374,7 +381,17 @@ public class WorkoutsViewController implements Initializable {
         showLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                // TODO
+                Parent notes;
+                try {
+                    notes = FXMLLoader.load(getClass().getResource("../view/notes.fxml"));
+                    Stage notesStage = new Stage();
+                    notesStage.setTitle("Notatlogg");
+                    notesStage.setScene(new Scene(notes, 700, 500));
+                    notesStage.setResizable(false);
+                    notesStage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
