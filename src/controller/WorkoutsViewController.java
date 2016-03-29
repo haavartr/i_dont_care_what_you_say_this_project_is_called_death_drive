@@ -470,12 +470,9 @@ public class WorkoutsViewController implements Initializable {
         ArrayList<WorkoutExercise> allWorkoutExercises = new ArrayList<>();
         allWorkoutExercises.addAll(StrengthExerciseDao.selectAll());
         allWorkoutExercises.addAll(CardioExerciseDao.selectAll());
-
-
-        System.out.println(selectedWorkout.getId());
+        
         for(WorkoutExercise e : allWorkoutExercises) {
             if(e.getWorkoutCollectionId().equals(selectedWorkout.getId())) {
-                System.out.println(e.getWorkoutCollectionId());
                 list.add(e);
             }
         }
