@@ -377,6 +377,7 @@ public class WorkoutsViewController implements Initializable {
                 // TODO
             }
         });
+
     }
 
     private void clearExerciseWorkoutFields() {
@@ -453,12 +454,14 @@ public class WorkoutsViewController implements Initializable {
         allWorkoutExercises.addAll(StrengthExerciseDao.selectAll());
         allWorkoutExercises.addAll(CardioExerciseDao.selectAll());
 
+
+        System.out.println(selectedWorkout.getId());
         for(WorkoutExercise e : allWorkoutExercises) {
             if(e.getWorkoutCollectionId().equals(selectedWorkout.getId())) {
+                System.out.println(e.getWorkoutCollectionId());
                 list.add(e);
             }
         }
-
         workoutExercisesList.setItems(list);
     }
 }

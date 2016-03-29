@@ -103,7 +103,7 @@ public class CardioExerciseDao {
         Connection connection = null;
         ResultSet rs;
         Statement statement = null;
-        String q = "SELECT * FROM cardio_exercise JOIN workout_exercise GROUP BY cardio_exercise.id";
+        String q = "SELECT * FROM cardio_exercise JOIN workout_exercise ON cardio_exercise.id = workout_exercise.id  GROUP BY cardio_exercise.id";
         ArrayList<CardioExercise> l = new ArrayList<>();
         try {
             connection = ConnectionConfiguration.getConnection();
