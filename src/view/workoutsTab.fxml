@@ -23,8 +23,9 @@
     <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-              <ListView fx:id="workoutList" layoutY="70.0" prefHeight="429.0" prefWidth="139.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+              <ListView fx:id="workoutList" layoutY="70.0" prefHeight="400.0" prefWidth="137.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <Button fx:id="createNewWorkoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Ny økt" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <Button layoutX="25.0" layoutY="36.0" mnemonicParsing="false" text="Vis notatlogg" />
          </children>
       </AnchorPane>
         <AnchorPane>
@@ -93,10 +94,12 @@
                          <Button fx:id="cancelWorkoutExerciseButton" layoutX="116.0" layoutY="301.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Avbryt" />
                         <ComboBox fx:id="performanceList" layoutX="194.0" layoutY="259.0" prefHeight="27.0" prefWidth="88.0" promptText="Ytelse" />
                         <ComboBox fx:id="formList" layoutX="94.0" layoutY="259.0" prefHeight="27.0" prefWidth="88.0" promptText="Form" />
+                        <Button layoutX="40.0" layoutY="14.0" mnemonicParsing="false" text="Bruk mal" />
                      </children>
                   </AnchorPane>
                </children>
             </AnchorPane>
+            <Button layoutX="14.0" layoutY="21.0" mnemonicParsing="false" text="Lag mal" />
             </children>
         </AnchorPane>
     </items>
